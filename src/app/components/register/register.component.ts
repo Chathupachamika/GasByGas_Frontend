@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule,FormsModule, HttpClientModule]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule]
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -27,11 +27,11 @@ export class RegisterComponent {
     private loginService: LoginService
   ) {
     this.registerForm = this.formBuilder.group({
-      userId: [''],
-      mobileNumber: [''],
-      name: [''],
-      password: [''],
-      termsConditions: [false]
+      userId: ['', Validators.required],
+      mobileNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      name: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      termsConditions: [false, Validators.requiredTrue]
     });
   }
 
@@ -45,18 +45,17 @@ export class RegisterComponent {
       const formData = new FormData();
       Object.keys(this.user).forEach(key => {
         const value = this.user[key as keyof RegisterModel];
-        formData.append(key, typeof value === 'boolean' ? value.toString() : value);
+        formData.append(key, typeof value === 'boolean' ? value.toString() : value || '');
       });
 
       // Call the LoginService to handle registration
-      this.loginService.registerUser(formData).subscribe({
-
-        next: (response) => {
+      this.loginService.createUser(formData).subscribe({
+        next: (response: any) => {
           alert('Registration successful!');
-          console.log(response);
+          console.log('Server Response:', response);
         },
-        error: (error) => {
-          console.error('Registration failed', error);
+        error: (error: any) => {
+          console.error('Registration failed:', error);
           alert('Registration failed. Please try again.');
         }
       });

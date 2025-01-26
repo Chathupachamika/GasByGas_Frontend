@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
 import { LoginModel } from '../../model/login.model';
 import { CommonModule } from '@angular/common';
@@ -22,8 +21,7 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
-    private router: Router
+    private loginService: LoginService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
@@ -32,45 +30,36 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    this.user = {
+      ...this.user,
+      ...this.loginForm.value
+    };
+
     if (this.loginForm.valid) {
-      this.user = { ...this.user, ...this.loginForm.value };
-
-      const formData = new FormData();
-      formData.append('username', this.user.username);
-      formData.append('password', this.user.password);
-
-      this.loginService.loginUser(formData).subscribe({
+      // Call the LoginService to handle login
+      this.loginService.loginUser(this.user).subscribe({
         next: (response) => {
-          // Store token or user info in local storage
-          localStorage.setItem('authToken', response.token);
-          // Navigate to dashboard or home page
-          this.router.navigate(['/dashboard']);
+          alert('Login successful!');
+          console.log(response);
+          // Handle successful login (e.g., navigate to dashboard)
         },
         error: (error) => {
           console.error('Login failed', error);
-          alert(error.error.message || 'Login failed. Please check your credentials.');
+          alert('Login failed. Please check your credentials.');
         }
       });
     } else {
-      Object.keys(this.loginForm.controls).forEach(field => {
-        const control = this.loginForm.get(field);
-        if (control?.invalid) {
-          control.markAsTouched();
-        }
-      });
+      alert('Please fill in all required fields.');
     }
   }
 
-  forgotPassword() {
-    this.router.navigate(['/forgot-password']);
-  }
-
+  // Optional: Method to handle social login
   // socialLogin(provider: 'google' | 'facebook') {
-  //   // Implement social login logic
   //   this.loginService.socialLogin(provider).subscribe({
   //     next: (response) => {
-  //       localStorage.setItem('authToken', response.token);
-  //       this.router.navigate(['/dashboard']);
+  //       alert(`${provider} login successful!`);
+  //       console.log(response);
+  //       // Handle successful social login
   //     },
   //     error: (error) => {
   //       console.error(`${provider} login failed`, error);
