@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'GasByGas_frontend' title`, () => {
+  it(`should have the 'demo-app' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('GasByGas_frontend');
+    expect(app.title).toEqual('demo-app');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, GasByGas_frontend');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, demo-app');
   });
 });
