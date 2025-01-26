@@ -8,14 +8,11 @@ GasByGas is an innovative LP gas distribution platform in Sri Lanka, revolutioni
 - 📱 User-friendly mobile and web interfaces
 - 🕒 Delivery schedule management
 - 🚚 Outlet-based gas distribution system
-- 📲 SMS/Email notifications
 
 ## 🛠️ Tech Stack
-- React.js
+- Angukar.js
 - TypeScript
 - Tailwind CSS
-- Redux
-- Firebase Authentication
 
 ## 🚀 Getting Started
 
