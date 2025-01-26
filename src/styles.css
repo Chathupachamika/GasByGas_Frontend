@@ -2,5 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import FontAwesome styles */
-@import '~@fortawesome/fontawesome-svg-core/styles.css';
