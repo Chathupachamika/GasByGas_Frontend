@@ -1,0 +1,120 @@
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+
+    <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">Create your account</h2>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div>
+        <label for="userId" class="block text-sm font-medium text-gray-900">User ID</label>
+        <div class="mt-2">
+          <input
+            type="text"
+            id="userId"
+            formControlName="userId"
+            required
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
+            placeholder="Enter your User ID"
+          >
+        </div>
+      </div>
+
+      <div>
+        <label for="mobileNumber" class="block text-sm font-medium text-gray-900">Mobile Number</label>
+        <div class="mt-2">
+          <input
+            type="tel"
+            id="mobileNumber"
+            formControlName="mobileNumber"
+            required
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
+            placeholder="Enter your Mobile Number"
+          >
+        </div>
+      </div>
+
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
+        <div class="mt-2">
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            required
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
+            placeholder="Enter your Name"
+          >
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
+        <div class="mt-2">
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            required
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
+            placeholder="Enter your Password"
+          >
+        </div>
+      </div>
+
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          id="termsConditions"
+          formControlName="termsConditions"
+          class="mr-2 text-indigo-600 focus:ring-indigo-500"
+        >
+        <label for="termsConditions" class="text-sm text-gray-900">
+          I agree to terms & conditions
+        </label>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-500">
+        Already have an account?
+        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign in</a>
+      </p>
+    </div>
+
+    <div class="mt-6">
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="bg-white px-2 text-gray-500">Or continue with</span>
+        </div>
+      </div>
+
+      <div class="mt-6 grid grid-cols-2 gap-3">
+        <button
+          class="inline-flex w-full justify-center rounded-md bg-white px-2 py-1 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+        >
+          <span class="sr-only">Sign in with Google</span>
+          <i class="fab fa-google text-red-500"></i>
+        </button>
+        <button
+          class="inline-flex w-full justify-center rounded-md bg-white px-2 py-1 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+        >
+          <span class="sr-only">Sign in with Facebook</span>
+          <i class="fab fa-facebook-f text-blue-600"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
