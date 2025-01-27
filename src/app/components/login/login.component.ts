@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from '../../service/login.service';
 import { LoginModel } from '../../model/login.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   loginError: string = '';
 
   constructor(
+    private router: Router ,
     private formBuilder: FormBuilder,
     private loginService: LoginService
   ) {
@@ -39,7 +41,7 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           console.log('Login successful:', response);
           alert('Login successful!');
-          // Add navigation logic here
+          this.router.navigate(['/admin-dashboard']);
         },
         error: (error) => {
           console.error('Login error:', error);
