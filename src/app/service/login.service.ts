@@ -19,6 +19,13 @@ export class LoginService {
   createUser(userData: UserModel): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post(`${this.userEndpoint}`, userData, { headers }).pipe(
+      tap((response: any) => {
+        // Store user details in localStorage after successful registration
+        if (response) {
+          localStorage.setItem('userDetails', JSON.stringify(response));
+          console.log('User details saved after registration:', response);
+        }
+      }),
       catchError(this.handleError)
     );
   }
@@ -29,6 +36,11 @@ export class LoginService {
       tap((response: any) => {
         if (response?.token) {
           this.saveToken(response.token);
+          // Store user details in localStorage after successful login
+          if (response.user) {
+            localStorage.setItem('userDetails', JSON.stringify(response.user));
+            console.log('User details saved after login:', response.user);
+          }
         }
       }),
       catchError(this.handleError)
@@ -60,5 +72,7 @@ export class LoginService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('userDetails');
+    console.log('User logged out, details cleared from localStorage');
   }
 }
