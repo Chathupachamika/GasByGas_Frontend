@@ -3,6 +3,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { OrderComponent } from './components/order/order.component';
+import { AboutComponent } from './components/about/about.component';
 
 export const routes: Routes = [
   {
@@ -24,5 +25,9 @@ export const routes: Routes = [
   {
     path: 'admin-dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
   }
 ];
