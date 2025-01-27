@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { LoginService } from '../../service/login.service';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css'] // Corrected property name
+  styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit { // Added 'implements' keyword
+export class SidebarComponent implements OnInit {
   userDetails: any = null;
 
   constructor(private loginService: LoginService) {}
@@ -18,6 +20,7 @@ export class SidebarComponent implements OnInit { // Added 'implements' keyword
       if (userDetailsStr) {
         this.userDetails = JSON.parse(userDetailsStr);
         console.log('Logged in user details:', this.userDetails);
+        console.log('User name:', this.userDetails.name); // Added line to log user's name
       }
     }
   }
