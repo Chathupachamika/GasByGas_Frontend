@@ -1,0 +1,227 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto">
+    <!-- Progress Steps -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center step-item active">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="ml-2 font-medium">Customer Details</span>
+        </div>
+        <div class="flex-1 h-px mx-4 bg-gray-300"></div>
+
+        <div class="flex items-center step-item">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
+            <i class="fas fa-gas-pump"></i>
+          </div>
+          <span class="ml-2 font-medium">Gas Selection</span>
+        </div>
+        <div class="flex-1 h-px mx-4 bg-gray-300"></div>
+
+        <div class="flex items-center step-item">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <span class="ml-2 font-medium">Location</span>
+        </div>
+        <div class="flex-1 h-px mx-4 bg-gray-300"></div>
+
+        <div class="flex items-center step-item">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <span class="ml-2 font-medium">Payment</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Content -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <!-- Customer Details Step -->
+      <div id="step1" class="step-content">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Customer Details</h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">First Name</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Last Name</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
+            <input type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+        </div>
+      </div>
+
+      <!-- Gas Selection Step -->
+      <div id="step2" class="step-content hidden">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Select Gas</h2>
+        <div class="grid grid-cols-3 gap-6" id="gasOptions">
+          <div class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors" data-size="2.3">
+            <i class="fas fa-flask text-4xl mb-3"></i>
+            <div class="font-bold">2.3 KG</div>
+            <div class="text-gray-600">Rs 230</div>
+          </div>
+          <div class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors" data-size="5">
+            <i class="fas fa-flask text-4xl mb-3"></i>
+            <div class="font-bold">5 KG</div>
+            <div class="text-gray-600">Rs 500</div>
+          </div>
+          <div class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors" data-size="12.5">
+            <i class="fas fa-flask text-4xl mb-3"></i>
+            <div class="font-bold">12.5 KG</div>
+            <div class="text-gray-600">Rs 1250</div>
+          </div>
+        </div>
+        <div class="mt-6">
+          <label class="block text-sm font-medium text-gray-700">Do You Have Empty Gas Cylinder?</label>
+          <div class="mt-2 space-x-4">
+            <label class="inline-flex items-center">
+              <input type="radio" name="hasEmptyCylinder" value="yes" class="form-radio text-blue-600">
+              <span class="ml-2">Yes</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="radio" name="hasEmptyCylinder" value="no" class="form-radio text-blue-600">
+              <span class="ml-2">No</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Location Step -->
+      <div id="step3" class="step-content hidden">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Delivery Location</h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Address Line 1</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Address Line 2</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">City</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Postal Code</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Step -->
+      <div id="step4" class="step-content hidden">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment Details</h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Card Number</label>
+            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Expiry Date</label>
+              <input type="text" placeholder="MM/YY" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">CVV</label>
+              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="mt-8 flex justify-between">
+        <button id="prevBtn" class="bg-gray-100 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors hidden prev-step">
+          <i class="fas fa-arrow-left mr-2 text-red-500"></i> Back
+        </button>
+        <button id="nextBtn" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors next-step">
+          Next <i class="fas fa-arrow-right ml-2 text-green-500"></i>
+        </button>
+        <button id="completeBtn" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors hidden">
+          Complete Order <i class="fas fa-check ml-2 text-yellow-500"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 4;
+
+// Function to update step visibility
+function showStep(step) {
+  // Hide all steps
+  document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+  // Show current step
+  document.getElementById(`step${step}`).classList.remove('hidden');
+
+  // Update progress indicators
+  document.querySelectorAll('.step-item').forEach((el, index) => {
+    if (index + 1 <= step) {
+      el.classList.add('text-blue-600');
+      el.querySelector('div').classList.add('bg-blue-600', 'text-white');
+      el.querySelector('div').classList.remove('bg-gray-200');
+    } else {
+      el.classList.remove('text-blue-600');
+      el.querySelector('div').classList.remove('bg-blue-600', 'text-white');
+      el.querySelector('div').classList.add('bg-gray-200');
+    }
+  });
+
+  // Update buttons
+  document.getElementById('prevBtn').classList.toggle('hidden', step === 1);
+  document.getElementById('nextBtn').classList.toggle('hidden', step === totalSteps);
+  document.getElementById('completeBtn').classList.toggle('hidden', step !== totalSteps);
+}
+
+// Gas selection
+document.querySelectorAll('#gasOptions > div').forEach(option => {
+  option.addEventListener('click', function() {
+    // Remove selection from all options
+    document.querySelectorAll('#gasOptions > div').forEach(el => {
+      el.classList.remove('border-blue-500', 'bg-blue-50');
+      el.querySelector('i').classList.remove('text-blue-600');
+    });
+    // Add selection to clicked option
+    this.classList.add('border-blue-500', 'bg-blue-50');
+    this.querySelector('i').classList.add('text-blue-600');
+  });
+});
+
+// Navigation button handlers
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (currentStep > 1) {
+    currentStep--;
+    showStep(currentStep);
+  }
+});
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (currentStep < totalSteps) {
+    currentStep++;
+    showStep(currentStep);
+  }
+});
+
+document.getElementById('completeBtn').addEventListener('click', () => {
+  // Add your order completion logic here
+  alert('Order completed successfully!');
+});
+
+// Initialize first step
+showStep(1);
+</script>
