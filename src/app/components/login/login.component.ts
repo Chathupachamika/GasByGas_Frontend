@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from '../../service/login.service';
 import { LoginModel } from '../../model/login.model';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,60 +12,44 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  user: LoginModel = {
-    username: '',
-    password: ''
-  };
+  loginError: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
-    private router: Router
+    private loginService: LoginService
   ) {
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  onSubmit() {
-    this.user = {
-      ...this.user,
-      ...this.loginForm.value
-    };
+  ngOnInit(): void {}
 
+  onSubmit(): void {
     if (this.loginForm.valid) {
-      // Call the LoginService to handle login
-      this.loginService.loginUser(this.user).subscribe({
+      const loginData: LoginModel = {
+        email: this.loginForm.get('email')?.value,
+        password: this.loginForm.get('password')?.value
+      };
+
+      this.loginService.loginUser(loginData).subscribe({
         next: (response) => {
+          console.log('Login successful:', response);
           alert('Login successful!');
-          console.log(response);
-          this.router.navigate(['/admin-dashboard']);
+          // Add navigation logic here
         },
         error: (error) => {
-          console.error('Login failed', error);
-          alert('Login failed. Please check your credentials.');
+          console.error('Login error:', error);
+          this.loginError = 'Login failed. Please check your credentials.';
+          alert(this.loginError);
         }
       });
     } else {
-      alert('Please fill in all required fields.');
+      this.loginError = 'Please fill in all required fields correctly.';
+      alert(this.loginError);
     }
   }
-
-  // Optional: Method to handle social login
-  // socialLogin(provider: 'google' | 'facebook') {
-  //   this.loginService.socialLogin(provider).subscribe({
-  //     next: (response) => {
-  //       alert(`${provider} login successful!`);
-  //       console.log(response);
-  //       // Handle successful social login
-  //     },
-  //     error: (error) => {
-  //       console.error(`${provider} login failed`, error);
-  //       alert(`${provider} login failed. Please try again.`);
-  //     }
-  //   });
-  // }
 }

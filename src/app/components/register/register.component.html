@@ -1,23 +1,25 @@
 <div class="flex min-h-full flex-col justify-center px-6 py-3 sm:mx-auto sm:w-full sm:max-w-md shadow-lg border-t border-b border-gray-200 p-6 rounded-lg my-4">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
-
     <h2 class="mt-4 text-center text-3xl font-bold tracking-tight text-gray-900">Create your account</h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
       <div>
-        <label for="userId" class="block text-sm font-medium text-gray-900">User ID</label>
+        <label for="userId" class="block text-sm font-medium text-gray-900">Email</label>
         <div class="mt-2">
           <input
             type="text"
-            id="userId"
-            [(ngModel)]="user.userId"
-            formControlName="userId"
+            id="email"
+            [(ngModel)]="user.email"
+            formControlName="email"
             required
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-            placeholder="Enter your User ID"
+            placeholder="Enter your Email"
           >
+          <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-red-500 text-sm">
+            {{ getErrorMessage('email') }}
+          </div>
         </div>
       </div>
 
@@ -33,8 +35,12 @@
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
             placeholder="Enter your Mobile Number"
           >
+          <div *ngIf="registerForm.get('mobileNumber')?.touched && registerForm.get('mobileNumber')?.invalid" class="text-red-500 text-sm">
+            {{ getErrorMessage('mobileNumber') }}
+          </div>
         </div>
       </div>
+
 
       <div>
         <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
@@ -48,6 +54,9 @@
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
             placeholder="Enter your Name"
           >
+          <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="text-red-500 text-sm">
+            {{ getErrorMessage('name') }}
+          </div>
         </div>
       </div>
 
@@ -63,6 +72,27 @@
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
             placeholder="Enter your Password"
           >
+          <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-red-500 text-sm">
+            {{ getErrorMessage('password') }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="role" class="block text-sm font-medium text-gray-900">Role</label>
+        <div class="mt-2">
+          <select
+            id="role"
+            [(ngModel)]="user.role"
+            formControlName="role"
+            required
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
+          >
+            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          </select>
+          <div *ngIf="registerForm.get('role')?.touched && registerForm.get('role')?.invalid" class="text-red-500 text-sm">
+            {{ getErrorMessage('role') }}
+          </div>
         </div>
       </div>
 
@@ -76,6 +106,9 @@
         <label for="termsConditions" class="text-sm text-gray-900">
           I agree to terms & conditions
         </label>
+        <div *ngIf="registerForm.get('termsConditions')?.touched && registerForm.get('termsConditions')?.invalid" class="text-red-500 text-sm">
+          {{ getErrorMessage('termsConditions') }}
+        </div>
       </div>
 
       <div>
