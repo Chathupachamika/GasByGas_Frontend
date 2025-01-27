@@ -43,7 +43,7 @@ export class RegisterComponent {
   ) {
     this.registerForm = this.formBuilder.group({
       userId: [''],
-      email: ['', [Validators.required, Validators.email]], // Add Validators for email
+      email: ['', [Validators.required, Validators.email]],
       mobileNumber: [''],
       name: [''],
       password: [''],
@@ -52,7 +52,6 @@ export class RegisterComponent {
     });
   }
 
-  // Getter methods for form controls
   get f() {
     return this.registerForm.controls;
   }
@@ -92,11 +91,10 @@ export class RegisterComponent {
     this.isSubmitting = true;
     this.errorMessage = '';
 
-    // Transform the form data to match the backend model
     const backendUser: BackendUserModel = {
       name: this.registerForm.value.name,
       contactNo: parseInt(this.registerForm.value.mobileNumber),
-      email: this.registerForm.value.email, // Corrected to use email instead of userId
+      email: this.registerForm.value.email,
       password: this.registerForm.value.password,
       roles: [`ROLE_${this.registerForm.value.role.toUpperCase()}`]
     };
@@ -104,8 +102,20 @@ export class RegisterComponent {
     this.loginService.createUser(backendUser).subscribe({
       next: (response) => {
         console.log('Registration successful', response);
-        // Navigate to login page after successful registration
-        this.router.navigate(['/login']);
+
+        // After successful registration, fetch user details by email
+        this.loginService.searchByEmail(backendUser.email).subscribe({
+          next: (userDetails) => {
+            localStorage.setItem('userDetails', JSON.stringify(userDetails));
+            console.log('User details saved after registration:', userDetails);
+            this.router.navigate(['/login']);
+          },
+          error: (error) => {
+            console.error('Error fetching user details:', error);
+            // Still navigate even if fetching additional details fails
+            this.router.navigate(['/login']);
+          }
+        });
       },
       error: (error) => {
         console.error('Registration failed', error);

@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   loginError: string = '';
 
   constructor(
-    private router: Router ,
+    private router: Router,
     private formBuilder: FormBuilder,
     private loginService: LoginService
   ) {
@@ -40,8 +40,21 @@ export class LoginComponent implements OnInit {
       this.loginService.loginUser(loginData).subscribe({
         next: (response) => {
           console.log('Login successful:', response);
-          alert('Login successful!');
-          this.router.navigate(['/admin-dashboard']);
+
+          // After successful login, fetch user details by email
+          this.loginService.searchByEmail(loginData.email).subscribe({
+            next: (userDetails) => {
+              localStorage.setItem('userDetails', JSON.stringify(userDetails));
+              console.log('User details saved:', userDetails);
+              alert('Login successful!');
+              this.router.navigate(['/admin-dashboard']);
+            },
+            error: (error) => {
+              console.error('Error fetching user details:', error);
+              // Still navigate even if fetching additional details fails
+              this.router.navigate(['/admin-dashboard']);
+            }
+          });
         },
         error: (error) => {
           console.error('Login error:', error);

@@ -47,6 +47,43 @@ export class LoginService {
     );
   }
 
+  searchByEmail(email: string): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get(`${this.userEndpoint}/email/${email}`, { headers }).pipe(
+      tap((response: any) => {
+        if (response) {
+          console.log('User details fetched by email:', response);
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateUser(userData: any): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.put(`${this.userEndpoint}/${userData.id}`, userData, { headers }).pipe(
+      tap((response: any) => {
+        if (response) {
+          localStorage.setItem('userDetails', JSON.stringify(response));
+          console.log('User details updated:', response);
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  searchById(id: string): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get(`${this.userEndpoint}/${id}`, { headers }).pipe(
+      tap((response: any) => {
+        if (response) {
+          console.log('User details fetched by ID:', response);
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: any): Observable<never> {
     let errorMessage = 'An error occurred';
     if (error.error instanceof ErrorEvent) {

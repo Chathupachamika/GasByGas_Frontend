@@ -6,15 +6,17 @@
                   <i class="ri-user-line"></i>
               </div>
               <div class="profile-info" *ngIf="userDetails">
-                  <div class="profile-name">{{ userDetails.name || 'Guest User' }}</div>
-
+                <p>Name: {{userDetails.name}}</p>
+                <p>Email: {{userDetails.email}}</p>
+                <p>Role: {{getUserRole()}}</p>
+                <p>Contact: {{userDetails.contactNo}}</p>
               </div>
           </div>
 
           <nav>
               <ul class="nav-links">
                   <li class="nav-item">
-                      <a href="#" class="nav-link active">
+                      <a href="/admin-dashboard" class="nav-link active">
                           <i class="ri-home-line"></i>
                           <span>Home</span>
                       </a>

@@ -15,13 +15,25 @@ export class SidebarComponent implements OnInit {
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
-    if (this.loginService.isLoggedIn()) {
-      const userDetailsStr = localStorage.getItem('userDetails');
-      if (userDetailsStr) {
-        this.userDetails = JSON.parse(userDetailsStr);
-        console.log('Logged in user details:', this.userDetails);
-        console.log('User name:', this.userDetails.name); // Added line to log user's name
-      }
+    // Get the stored user details from localStorage
+    const storedDetails = localStorage.getItem('userDetails');
+    if (storedDetails) {
+      this.userDetails = JSON.parse(storedDetails);
+      console.log('Loaded user details:', this.userDetails);
     }
+  }
+
+  // Helper method to check if user is logged in
+  isLoggedIn(): boolean {
+    return this.loginService.isLoggedIn();
+  }
+
+  // Method to get user role
+  getUserRole(): string {
+    if (this.userDetails && this.userDetails.roles && this.userDetails.roles.length > 0) {
+      // Remove 'ROLE_' prefix if present
+      return this.userDetails.roles[0].replace('ROLE_', '');
+    }
+    return '';
   }
 }

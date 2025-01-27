@@ -6,9 +6,9 @@
     <main class="main-content">
         <div class="header">
             <h1>Dashboard</h1>
-            <div class="contact-info">
-                <i class="ri-phone-line"></i>
-                <span>0701587223</span>
+            <div class="contact-info" *ngIf="userDetails">
+                <i class="ri-phone-line" style="margin-right: 10px; font-size: 24px;"></i>
+                <a href="tel:{{userDetails.contactNo}}">{{userDetails.contactNo}}</a>
             </div>
         </div>
 

@@ -4,6 +4,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { OrderComponent } from './components/order/order.component';
 import { AboutComponent } from './components/about/about.component';
+import { ProductsComponent } from './components/products/products.component';
 
 export const routes: Routes = [
   {
@@ -27,12 +28,12 @@ export const routes: Routes = [
     component: DashboardComponent
   },
   {
-<<<<<<< HEAD
-    path:'about',
-    component:AboutComponent
-=======
-    path: 'about',
-    component: AboutComponent
->>>>>>> 47524664fbf4bbb21cab28c81000e0eae5d24931
-  }
+    path:'product',
+    component: ProductsComponent
+  },
+
+{
+  path: 'about',
+  component: AboutComponent
+}
 ];
