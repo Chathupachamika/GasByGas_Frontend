@@ -27,7 +27,12 @@ export const routes: Routes = [
     component: DashboardComponent
   },
   {
+<<<<<<< HEAD
     path:'about',
     component:AboutComponent
+=======
+    path: 'about',
+    component: AboutComponent
+>>>>>>> 47524664fbf4bbb21cab28c81000e0eae5d24931
   }
 ];
