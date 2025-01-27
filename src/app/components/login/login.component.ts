@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from '../../service/login.service';
 import { LoginModel } from '../../model/login.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
@@ -41,7 +43,7 @@ export class LoginComponent {
         next: (response) => {
           alert('Login successful!');
           console.log(response);
-          // Handle successful login (e.g., navigate to dashboard)
+          this.router.navigate(['/admin-dashboard']);
         },
         error: (error) => {
           console.error('Login failed', error);

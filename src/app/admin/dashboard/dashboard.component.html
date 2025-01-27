@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GasCollector Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Add sidebar -->
+        <app-sidebar></app-sidebar>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div class="contact-info">
+                    <i class="ri-phone-line"></i>
+                    <span>0701587223</span>
+                </div>
+            </div>
+
+            <div class="banner-image">
+                <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80" 
+                     alt="Gas delivery trucks">
+            </div>
+
+            <div class="customer-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Contact No</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>110700</td>
+                            <td>Harsha John</td>
+                            <td>No 36, Gate Road, Colombo 06</td>
+                            <td>076 - 1107694</td>
+                            <td><button class="action-button">Cancel</button></td>
+                        </tr>
+                        <tr>
+                            <td>110600</td>
+                            <td>M.R.P Karunathilaka</td>
+                            <td>No 36, Gate Road, Panadura</td>
+                            <td>075 - 1123748</td>
+                            <td><button class="action-button">Cancel</button></td>
+                        </tr>
+                        <tr>
+                            <td>110550</td>
+                            <td>D.P Jayasena</td>
+                            <td>No 154, Gate Road, Moratuwa</td>
+                            <td>070 - 4321344</td>
+                            <td><button class="action-button">Cancel</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
