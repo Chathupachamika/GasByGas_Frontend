@@ -1,0 +1,244 @@
+:host {
+    display: block;
+}
+
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background-color: white;
+}
+
+.top-bar {
+    background-color: #0F3B7A;
+    padding: 0.5rem 0;
+    color: white;
+}
+
+.top-bar-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.top-contact {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+}
+
+.header-main {
+    padding: 1rem 0;
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0F3B7A;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+        color: #FF6B35;
+    }
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+
+    a {
+        color: #2D3748;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0.5rem 0;
+        position: relative;
+        font-size: 1rem;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #FF6B35;
+            transition: width 0.3s ease;
+        }
+
+        &:hover {
+            color: #0F3B7A;
+            
+            &::after {
+                width: 100%;
+            }
+        }
+
+        &.active {
+            color: #0F3B7A;
+            
+            &::after {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-left: 2rem;
+    border-left: 1px solid #E2E8F0;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #2D3748;
+    font-size: 1.25rem;
+    transition: all 0.3s ease;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: #F7FAFC;
+        color: #0F3B7A;
+    }
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #FF6B35;
+    color: white;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #F7FAFC;
+    border-radius: 24px;
+    padding: 0.5rem 1rem;
+    margin-right: 2rem;
+}
+
+.search-input {
+    border: none;
+    background: none;
+    padding: 0.5rem;
+    outline: none;
+    width: 200px;
+    color: #2D3748;
+
+    &::placeholder {
+        color: #A0AEC0;
+    }
+}
+
+.search-btn {
+    background: none;
+    border: none;
+    color: #0F3B7A;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2D3748;
+    padding: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+    .search-container {
+        display: none;
+    }
+    
+    .nav-links {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+        display: none;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-menu.active .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-icons {
+        padding-left: 0;
+        border-left: none;
+    }
+}
