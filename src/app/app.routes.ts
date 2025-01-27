@@ -2,22 +2,27 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { OrderComponent } from './components/order/order.component';
 
 export const routes: Routes = [
   {
-    path:'',
-   component:LoginComponent
+    path: '',
+    component: LoginComponent
   },
   {
-    path:'login',
-    component:LoginComponent
+    path: 'order',
+    component: OrderComponent
   },
   {
-    path:'register',
-    component:RegisterComponent
+    path: 'login',
+    component: LoginComponent
   },
   {
-    path:'admin-dashboard',
-    component:DashboardComponent
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'admin-dashboard',
+    component: DashboardComponent
   }
 ];
