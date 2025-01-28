@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { SidebarComponent } from '../../common/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+  styleUrls: ['./order.component.css'],
+  imports: [SidebarComponent]
+  
 })
 export class OrderComponent implements OnInit {
   currentStep: number = 1;

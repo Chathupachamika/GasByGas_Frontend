@@ -1,145 +1,108 @@
-<div class="flex min-h-full flex-col justify-center px-6 py-3 sm:mx-auto sm:w-full sm:max-w-md shadow-lg border-t border-b border-gray-200 p-6 rounded-lg my-4">
-  <div class="sm:mx-auto sm:w-full sm:max-w-md">
-    <h2 class="mt-4 text-center text-3xl font-bold tracking-tight text-gray-900">Create your account</h2>
-  </div>
+<div class="register-container">
+  <div class="register-card">
+    <div class="text-center mb-8">
+      <i class="fas fa-user-plus header-icon"></i>
+      <h2 class="text-3xl font-bold text-gray-900">Create Account</h2>
+      <p class="text-gray-600 mt-2">Join our community today</p>
+    </div>
 
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
-      <div>
-        <label for="userId" class="block text-sm font-medium text-gray-900">Email</label>
-        <div class="mt-2">
-          <input
-            type="text"
-            id="email"
-            [(ngModel)]="user.email"
-            formControlName="email"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-            placeholder="Enter your Email"
-          >
-          <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-red-500 text-sm">
-            {{ getErrorMessage('email') }}
-          </div>
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input
+          type="email"
+          formControlName="email"
+          [(ngModel)]="user.email"
+          placeholder="Email address"
+        >
+        <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" 
+             class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ getErrorMessage('email') }}
         </div>
       </div>
 
-      <div>
-        <label for="mobileNumber" class="block text-sm font-medium text-gray-900">Mobile Number</label>
-        <div class="mt-2">
-          <input
-            type="tel"
-            id="mobileNumber"
-            [(ngModel)]="user.mobileNumber"
-            formControlName="mobileNumber"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-            placeholder="Enter your Mobile Number"
-          >
-          <div *ngIf="registerForm.get('mobileNumber')?.touched && registerForm.get('mobileNumber')?.invalid" class="text-red-500 text-sm">
-            {{ getErrorMessage('mobileNumber') }}
-          </div>
+      <div class="input-group">
+        <i class="fas fa-phone"></i>
+        <input
+          type="tel"
+          formControlName="mobileNumber"
+          [(ngModel)]="user.mobileNumber"
+          placeholder="Mobile number"
+        >
+        <div *ngIf="registerForm.get('mobileNumber')?.touched && registerForm.get('mobileNumber')?.invalid" 
+             class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ getErrorMessage('mobileNumber') }}
         </div>
       </div>
 
-
-      <div>
-        <label for="name" class="block text-sm font-medium text-gray-900">Name</label>
-        <div class="mt-2">
-          <input
-            type="text"
-            id="name"
-            [(ngModel)]="user.name"
-            formControlName="name"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-            placeholder="Enter your Name"
-          >
-          <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="text-red-500 text-sm">
-            {{ getErrorMessage('name') }}
-          </div>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input
+          type="text"
+          formControlName="name"
+          [(ngModel)]="user.name"
+          placeholder="Full name"
+        >
+        <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" 
+             class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ getErrorMessage('name') }}
         </div>
       </div>
 
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
-        <div class="mt-2">
-          <input
-            type="password"
-            [(ngModel)]="user.password"
-            id="password"
-            formControlName="password"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-            placeholder="Enter your Password"
-          >
-          <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-red-500 text-sm">
-            {{ getErrorMessage('password') }}
-          </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input
+          type="password"
+          formControlName="password"
+          [(ngModel)]="user.password"
+          placeholder="Password"
+        >
+        <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" 
+             class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ getErrorMessage('password') }}
         </div>
       </div>
 
-      <div>
-        <label for="role" class="block text-sm font-medium text-gray-900">Role</label>
-        <div class="mt-2">
-          <select
-            id="role"
-            [(ngModel)]="user.role"
-            formControlName="role"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-          >
-            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
-          </select>
-          <div *ngIf="registerForm.get('role')?.touched && registerForm.get('role')?.invalid" class="text-red-500 text-sm">
-            {{ getErrorMessage('role') }}
-          </div>
-        </div>
+      <div class="input-group">
+        <i class="fas fa-user-tag"></i>
+        <select formControlName="role" [(ngModel)]="user.role">
+          <option value="" disabled selected>Select your role</option>
+          <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+        </select>
       </div>
 
-      <div class="flex items-center">
+      <div class="flex items-center gap-3 my-6">
         <input
           type="checkbox"
           id="termsConditions"
           formControlName="termsConditions"
-          class="mr-2 text-indigo-600 focus:ring-indigo-500"
+          class="w-4 h-4 text-indigo-600 rounded"
         >
-        <label for="termsConditions" class="text-sm text-gray-900">
-          I agree to terms & conditions
+        <label for="termsConditions" class="text-sm text-gray-700">
+          I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms of Service</a> and
+          <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
         </label>
-        <div *ngIf="registerForm.get('termsConditions')?.touched && registerForm.get('termsConditions')?.invalid" class="text-red-500 text-sm">
-          {{ getErrorMessage('termsConditions') }}
-        </div>
       </div>
 
-      <div>
-        <button
-          type="submit"
-          (click)="onSubmit()"
-          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Register
-        </button>
-      </div>
-    </form>
+      <button type="submit" class="submit-button">
+        <i class="fas fa-user-plus"></i>
+        Create Account
+      </button>
 
-    <div class="mt-6 text-center">
-      <p class="text-sm text-gray-500">
-        Already have an account?
-        <a href="/login" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign in</a>
-      </p>
-    </div>
-
-    <div class="mt-6">
-      <div class="relative">
+      <div class="relative my-8">
         <div class="absolute inset-0 flex items-center">
           <div class="w-full border-t border-gray-300"></div>
         </div>
         <div class="relative flex justify-center text-sm">
-          <span class="bg-white px-2 text-gray-500">Or continue with</span>
+          <span class="px-2 bg-white text-gray-500">Or continue with</span>
         </div>
       </div>
 
-      <div class="mt-6 grid grid-cols-2 gap-3">
+      <div class="social-buttons">
         <button
           class="inline-flex w-full justify-end rounded-md bg-white px-2 py-1 text-gray-500"
         >
@@ -157,6 +120,11 @@
             </svg>
         </button>
       </div>
-    </div>
+
+      <p class="text-center text-gray-600 mt-6">
+        Already have an account?
+        <a href="/login" class="text-indigo-600 font-semibold hover:text-indigo-500 ml-1">Sign in</a>
+      </p>
+    </form>
   </div>
 </div>

@@ -1,0 +1,140 @@
+.register-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f6f7ff 0%, #eef1ff 100%);
+    padding: 20px;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05),
+                0 5px 10px rgba(0, 0, 0, 0.02);
+    animation: cardFloat 0.8s ease-out;
+}
+
+.header-icon {
+    font-size: 2rem;
+    color: #4f46e5;
+    margin-bottom: 1rem;
+    animation: pulse 2s infinite;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.input-group input, 
+.input-group select {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.input-group i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.input-group input:focus + i {
+    color: #4f46e5;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.social-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.social-button {
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.social-button:hover {
+    background: #f8fafc;
+    border-color: #4f46e5;
+}
+
+@keyframes cardFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@media (max-width: 480px) {
+    .register-card {
+        padding: 2rem;
+    }
+}
