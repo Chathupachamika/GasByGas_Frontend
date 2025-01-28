@@ -3,32 +3,44 @@
     <!-- Progress Steps -->
     <div class="mb-8">
       <div class="flex items-center justify-between">
-        <div class="flex items-center step-item active">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white">
+        <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(1)">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full"
+               [class.bg-blue-600]="isStepActive(1)"
+               [class.bg-gray-200]="!isStepActive(1)"
+               [class.text-white]="isStepActive(1)">
             <i class="fas fa-user"></i>
           </div>
           <span class="ml-2 font-medium">Customer Details</span>
         </div>
         <div class="flex-1 h-px mx-4 bg-gray-300"></div>
 
-        <div class="flex items-center step-item">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
+        <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(2)">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full"
+               [class.bg-blue-600]="isStepActive(2)"
+               [class.bg-gray-200]="!isStepActive(2)"
+               [class.text-white]="isStepActive(2)">
             <i class="fas fa-gas-pump"></i>
           </div>
           <span class="ml-2 font-medium">Gas Selection</span>
         </div>
         <div class="flex-1 h-px mx-4 bg-gray-300"></div>
 
-        <div class="flex items-center step-item">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
+        <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(3)">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full"
+               [class.bg-blue-600]="isStepActive(3)"
+               [class.bg-gray-200]="!isStepActive(3)"
+               [class.text-white]="isStepActive(3)">
             <i class="fas fa-map-marker-alt"></i>
           </div>
           <span class="ml-2 font-medium">Location</span>
         </div>
         <div class="flex-1 h-px mx-4 bg-gray-300"></div>
 
-        <div class="flex items-center step-item">
-          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200">
+        <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(4)">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full"
+               [class.bg-blue-600]="isStepActive(4)"
+               [class.bg-gray-200]="!isStepActive(4)"
+               [class.text-white]="isStepActive(4)">
             <i class="fas fa-credit-card"></i>
           </div>
           <span class="ml-2 font-medium">Payment</span>
@@ -39,189 +51,253 @@
     <!-- Form Content -->
     <div class="bg-white rounded-lg shadow-lg p-6">
       <!-- Customer Details Step -->
-      <div id="step1" class="step-content">
+      <div [hidden]="currentStep !== 1">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">Customer Details</h2>
-        <div class="space-y-4">
+        <form [formGroup]="customerForm" class="space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-700">First Name</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" formControlName="firstName"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <div *ngIf="customerForm.get('firstName')?.touched && customerForm.get('firstName')?.invalid"
+                 class="text-red-500 text-sm mt-1">
+              First name is required
+            </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Last Name</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" formControlName="lastName"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <div *ngIf="customerForm.get('lastName')?.touched && customerForm.get('lastName')?.invalid"
+                 class="text-red-500 text-sm mt-1">
+              Last name is required
+            </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
-            <input type="tel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="tel" formControlName="mobileNumber"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <div *ngIf="customerForm.get('mobileNumber')?.touched && customerForm.get('mobileNumber')?.invalid"
+                 class="text-red-500 text-sm mt-1">
+              Please enter a valid 10-digit mobile number
+            </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="email" formControlName="email"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <div *ngIf="customerForm.get('email')?.touched && customerForm.get('email')?.invalid"
+                 class="text-red-500 text-sm mt-1">
+              Please enter a valid email address
+            </div>
           </div>
-        </div>
+        </form>
       </div>
 
       <!-- Gas Selection Step -->
-      <div id="step2" class="step-content hidden">
+      <div [hidden]="currentStep !== 2">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">Select Gas</h2>
-        <div class="grid grid-cols-3 gap-6" id="gasOptions">
-          <div class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors" data-size="2.3">
-            <i class="fas fa-flask text-4xl mb-3"></i>
-            <div class="font-bold">2.3 KG</div>
-            <div class="text-gray-600">Rs 230</div>
+        <form [formGroup]="gasSelectionForm" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Select Outlet</label>
+            <select formControlName="outletId" title="Select Outlet"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+              <option value="">Select an outlet</option>
+              <option *ngFor="let outlet of outlets" [value]="outlet.id">
+                {{outlet.name}} - {{outlet.location}}
+              </option>
+            </select>
           </div>
-          <div class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors" data-size="5">
-            <i class="fas fa-flask text-4xl mb-3"></i>
-            <div class="font-bold">5 KG</div>
-            <div class="text-gray-600">Rs 500</div>
+
+          <div class="grid grid-cols-3 gap-6">
+            <div *ngFor="let gas of availableGases"
+                 class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors"
+                 [class.border-blue-500]="gasSelectionForm.get('selectedGasId')?.value === gas.id"
+                 (click)="gasSelectionForm.patchValue({selectedGasId: gas.id})">
+              <i class="fas fa-flask text-4xl mb-3"></i>
+              <div class="font-bold">{{gas.capacity}} KG</div>
+              <div class="text-gray-600">Rs {{gas.price}}</div>
+              <div class="text-sm text-gray-500">Stock: {{gas.stock}}</div>
+            </div>
           </div>
-          <div class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors" data-size="12.5">
-            <i class="fas fa-flask text-4xl mb-3"></i>
-            <div class="font-bold">12.5 KG</div>
-            <div class="text-gray-600">Rs 1250</div>
+
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Quantity</label>
+              <input type="number" 
+                     formControlName="quantity" 
+                     min="1"
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Location</label>
+              <input type="text" 
+                     formControlName="location" 
+                     placeholder="Enter delivery location"
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
           </div>
-        </div>
-        <div class="mt-6">
-          <label class="block text-sm font-medium text-gray-700">Do You Have Empty Gas Cylinder?</label>
-          <div class="mt-2 space-x-4">
-            <label class="inline-flex items-center">
-              <input type="radio" name="hasEmptyCylinder" value="yes" class="form-radio text-blue-600">
-              <span class="ml-2">Yes</span>
-            </label>
-            <label class="inline-flex items-center">
-              <input type="radio" name="hasEmptyCylinder" value="no" class="form-radio text-blue-600">
-              <span class="ml-2">No</span>
-            </label>
+          <div class="mt-4">
+            <button type="button" 
+                    (click)="addGasToOrder()"
+                    class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+              Add to Order
+            </button>
           </div>
-        </div>
+
+          <div class="mt-6">
+            <h3 class="font-medium text-gray-900">Selected Items</h3>
+            <div class="mt-2 space-y-2">
+              <div *ngFor="let item of selectedGases; let i = index"
+                   class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                <div class="flex flex-col">
+                  <span class="font-medium">
+                    {{availableGases[item.gasId].capacity}} KG x {{item.quantity}}
+                  </span>
+                  <span class="text-sm text-gray-500" *ngIf="item.location">
+                    Location: {{item.location}}
+                  </span>
+                </div>
+                <button type="button" 
+                        (click)="removeGasFromOrder(i)"
+                        class="text-red-600 hover:text-red-800">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <label class="block text-sm font-medium text-gray-700">Do You Have Empty Gas Cylinder?</label>
+            <div class="mt-2 space-x-4">
+              <label class="inline-flex items-center">
+                <input type="radio" formControlName="hasEmptyCylinder" [value]="true"
+                       class="form-radio text-blue-600">
+                <span class="ml-2">Yes</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input type="radio" formControlName="hasEmptyCylinder" [value]="false"
+                       class="form-radio text-blue-600">
+                <span class="ml-2">No</span>
+              </label>
+            </div>
+          </div>
+        </form>
       </div>
 
       <!-- Location Step -->
-      <div id="step3" class="step-content hidden">
+      <div [hidden]="currentStep !== 3">
         <h2 class="text-2xl font-bold text-gray-900 mb-6">Delivery Location</h2>
-        <div class="space-y-4">
+        <form [formGroup]="locationForm" class="space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-700">Address Line 1</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" formControlName="addressLine1"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Address Line 2</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" formControlName="addressLine2"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700">City</label>
-              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+              <input type="text" formControlName="city"
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700">Postal Code</label>
-              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+              <input type="text" formControlName="postalCode"
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Payment Step -->
-      <div id="step4" class="step-content hidden">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment Details</h2>
-        <div class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Card Number</label>
-            <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700">Expiry Date</label>
-              <input type="text" placeholder="MM/YY" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+              <label class="block text-sm font-medium text-gray-700">Delivery Date</label>
+              <input type="date" formControlName="deliveryDate"
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700">CVV</label>
-              <input type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+              <label class="block text-sm font-medium text-gray-700">Preferred Time</label>
+              <select formControlName="deliveryTime" title="Preferred Time"
+                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                <option value="">Select time slot</option>
+                <option value="morning">Morning (9 AM - 12 PM)</option>
+                <option value="afternoon">Afternoon (12 PM - 3 PM)</option>
+                <option value="evening">Evening (3 PM - 6 PM)</option>
+              </select>
             </div>
           </div>
-        </div>
+        </form>
+      </div>
+
+      <!-- Payment Step -->
+      <div [hidden]="currentStep !== 4">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment Details</h2>
+        <form [formGroup]="paymentForm" class="space-y-4">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Payment Method</label>
+            <div class="mt-2 space-x-4">
+              <label class="inline-flex items-center">
+                <input type="radio" formControlName="paymentMethod" value="card"
+                       class="form-radio text-blue-600">
+                <span class="ml-2">Credit/Debit Card</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input type="radio" formControlName="paymentMethod" value="cash"
+                       class="form-radio text-blue-600">
+                <span class="ml-2">Cash on Delivery</span>
+              </label>
+            </div>
+          </div>
+
+          <div *ngIf="paymentForm.get('paymentMethod')?.value === 'card'">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Name on Card</label>
+              <input type="text" formControlName="nameOnCard"
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Card Number</label>
+              <input type="text" formControlName="cardNumber"
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Expiry Date</label>
+                <input type="text" formControlName="expiryDate" placeholder="MM/YY"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700">CVV</label>
+                <input type="password" formControlName="cvv"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
 
       <!-- Navigation Buttons -->
       <div class="mt-8 flex justify-between">
-        <button id="prevBtn" class="bg-gray-100 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors hidden prev-step">
-          <i class="fas fa-arrow-left mr-2 text-red-500"></i> Back
+        <button *ngIf="currentStep > 1"
+                (click)="prevStep()"
+                class="bg-gray-100 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors">
+          <i class="fas fa-arrow-left mr-2"></i> Back
         </button>
-        <button id="nextBtn" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors next-step">
-          Next <i class="fas fa-arrow-right ml-2 text-green-500"></i>
+        <div class="flex-grow"></div>
+        <button *ngIf="currentStep < totalSteps"
+                (click)="nextStep()"
+                [disabled]="!validateCurrentStep()"
+                class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          Next <i class="fas fa-arrow-right ml-2"></i>
         </button>
-        <button id="completeBtn" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors hidden">
-          Complete Order <i class="fas fa-check ml-2 text-yellow-500"></i>
+        <button *ngIf="currentStep === totalSteps"
+                (click)="completeOrder()"
+                [disabled]="!validateCurrentStep()"
+                class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          Complete Order <i class="fas fa-check ml-2"></i>
         </button>
       </div>
     </div>
   </div>
 </div>
-<app-sidebar></app-sidebar>
-<script>
-let currentStep = 1;
-const totalSteps = 4;
-
-// Function to update step visibility
-function showStep(step) {
-  // Hide all steps
-  document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
-  // Show current step
-  document.getElementById(`step${step}`).classList.remove('hidden');
-
-  // Update progress indicators
-  document.querySelectorAll('.step-item').forEach((el, index) => {
-    if (index + 1 <= step) {
-      el.classList.add('text-blue-600');
-      el.querySelector('div').classList.add('bg-blue-600', 'text-white');
-      el.querySelector('div').classList.remove('bg-gray-200');
-    } else {
-      el.classList.remove('text-blue-600');
-      el.querySelector('div').classList.remove('bg-blue-600', 'text-white');
-      el.querySelector('div').classList.add('bg-gray-200');
-    }
-  });
-
-  // Update buttons
-  document.getElementById('prevBtn').classList.toggle('hidden', step === 1);
-  document.getElementById('nextBtn').classList.toggle('hidden', step === totalSteps);
-  document.getElementById('completeBtn').classList.toggle('hidden', step !== totalSteps);
-}
-
-// Gas selection
-document.querySelectorAll('#gasOptions > div').forEach(option => {
-  option.addEventListener('click', function() {
-    // Remove selection from all options
-    document.querySelectorAll('#gasOptions > div').forEach(el => {
-      el.classList.remove('border-blue-500', 'bg-blue-50');
-      el.querySelector('i').classList.remove('text-blue-600');
-    });
-    // Add selection to clicked option
-    this.classList.add('border-blue-500', 'bg-blue-50');
-    this.querySelector('i').classList.add('text-blue-600');
-  });
-});
-
-// Navigation button handlers
-document.getElementById('prevBtn').addEventListener('click', () => {
-  if (currentStep > 1) {
-    currentStep--;
-    showStep(currentStep);
-  }
-});
-
-document.getElementById('nextBtn').addEventListener('click', () => {
-  if (currentStep < totalSteps) {
-    currentStep++;
-    showStep(currentStep);
-  }
-});
-
-document.getElementById('completeBtn').addEventListener('click', () => {
-  // Add your order completion logic here
-  alert('Order completed successfully!');
-});
-
-// Initialize first step
-showStep(1);
-</script>

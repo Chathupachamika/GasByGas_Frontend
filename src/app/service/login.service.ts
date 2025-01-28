@@ -84,6 +84,42 @@ export class LoginService {
     );
   }
 
+  verifyEmail(email: string): Observable<any> {
+    return this.http.get(`${this.userEndpoint}/verify-email/${email}`).pipe(
+      catchError((error) => {
+        if (error.status === 404) {
+          return throwError(() => new Error('Email not found'));
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+
+  requestPasswordReset(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/password/request-reset`, { email }, 
+    { responseType: 'text' }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  verifyOTP(email: string, otp: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/password/verify-otp`, 
+      { email, otp }, 
+      { responseType: 'text' }
+    ).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  resetPassword(email: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/password/reset`, 
+      { email, newPassword }, 
+      { responseType: 'text' }
+    ).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: any): Observable<never> {
     let errorMessage = 'An error occurred';
     if (error.error instanceof ErrorEvent) {
