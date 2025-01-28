@@ -63,9 +63,10 @@ export class LoginService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.put(`${this.userEndpoint}/${userData.id}`, userData, { headers }).pipe(
       tap((response: any) => {
-        if (response) {
+        if (response?.token) {
+          this.saveToken(response.token);
           localStorage.setItem('userDetails', JSON.stringify(response));
-          console.log('User details updated:', response);
+          console.log('User details updated and token saved:', response);
         }
       }),
       catchError(this.handleError)
@@ -96,15 +97,15 @@ export class LoginService {
   }
 
   requestPasswordReset(email: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/password/request-reset`, { email }, 
+    return this.http.post(`${this.baseUrl}/password/request-reset`, { email },
     { responseType: 'text' }).pipe(
       catchError(this.handleError)
     );
   }
 
   verifyOTP(email: string, otp: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/password/verify-otp`, 
-      { email, otp }, 
+    return this.http.post(`${this.baseUrl}/password/verify-otp`,
+      { email, otp },
       { responseType: 'text' }
     ).pipe(
       catchError(this.handleError)
@@ -112,8 +113,8 @@ export class LoginService {
   }
 
   resetPassword(email: string, newPassword: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/password/reset`, 
-      { email, newPassword }, 
+    return this.http.post(`${this.baseUrl}/password/reset`,
+      { email, newPassword },
       { responseType: 'text' }
     ).pipe(
       catchError(this.handleError)
