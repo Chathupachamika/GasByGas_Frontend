@@ -2,6 +2,11 @@
   <div class="hero-section">
     <h1>Premium Gas Solutions</h1>
     <p>High-quality gas cylinders for residential and commercial use</p>
+    <!-- Add this button after the hero section content -->
+    <button class="add-product-btn" (click)="addNewProduct()">
+      <i class="fas fa-plus"></i>
+      Add New Product
+    </button>
   </div>
 
   <div class="products-grid">
@@ -40,6 +45,57 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Add Product Modal -->
+<div *ngIf="showAddProductModal" class="modal-backdrop" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Add New Product</h2>
+      <button class="close-btn" (click)="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="submitProduct()" class="product-form">
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" formControlName="name" placeholder="Enter product name">
+        <div class="error-message" *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid">
+          Product name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Capacity (KG)</label>
+        <input type="number" formControlName="capacity" placeholder="Enter capacity">
+        <div class="error-message" *ngIf="productForm.get('capacity')?.touched && productForm.get('capacity')?.invalid">
+          Valid capacity is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input type="number" formControlName="price" placeholder="Enter price">
+        <div class="error-message" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid">
+          Valid price is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Stock</label>
+        <input type="number" formControlName="stock" placeholder="Enter stock quantity">
+        <div class="error-message" *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid">
+          Valid stock quantity is required
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="productForm.invalid">Add Product</button>
+      </div>
+    </form>
   </div>
 </div>
 

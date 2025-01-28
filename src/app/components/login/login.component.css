@@ -206,7 +206,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -315,6 +316,421 @@
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
 }
 
+.forgot-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    color: #4f46e5;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.forgot-link:hover {
+    background: rgba(79, 70, 229, 0.08);
+    transform: translateX(2px);
+}
+
+.forgot-link i {
+    font-size: 0.875rem;
+}
+
+.forgot-modal {
+    width: 90%;
+    max-width: 440px;
+    margin: 2rem;
+    position: relative;
+    animation: slideUp 0.4s ease-out;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: #f1f5f9;
+    border: none;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    text-align: center;
+    position: relative;
+}
+
+.modal-icon {
+    width: 72px;
+    height: 72px;
+    background: #4f46e5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 1.75rem;
+    animation: iconPop 0.5s ease-out;
+}
+
+.modal-body h3 {
+    color: #1e293b;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.modal-body p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.input-wrapper {
+    margin-bottom: 2rem;
+}
+
+.input-hint {
+    display: block;
+    text-align: left;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.cancel-btn, .reset-btn {
+    flex: 1;
+    padding: 0.875rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn {
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.cancel-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.reset-btn {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    box-shadow: 0 1px 3px rgba(79, 70, 229, 0.2);
+}
+
+.reset-btn:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+    padding: 1rem;
+}
+
+.password-reset-modal {
+    width: 100%;
+    max-width: 440px;
+    animation: slideUp 0.4s ease;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+}
+
+.modal-close button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close button:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: rotate(90deg);
+}
+
+.modal-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    padding: 8px;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(79, 70, 229, 0.05));
+    border-radius: 50%;
+}
+
+.modal-icon {
+    width: 100%;
+    height: 100%;
+    background: #4f46e5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.75rem;
+    animation: iconPop 0.5s ease-out;
+}
+
+.modal-body {
+    text-align: center;
+}
+
+.modal-body h2 {
+    color: #1e293b;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.modal-description {
+    color: #64748b;
+    font-size: 0.938rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.form-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    transition: color 0.2s ease;
+}
+
+.reset-input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.938rem;
+    transition: all 0.2s ease;
+    background: #f8fafc;
+}
+
+.reset-input:focus {
+    border-color: #4f46e5;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    outline: none;
+}
+
+.reset-input:focus + .input-icon {
+    color: #4f46e5;
+}
+
+.input-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #94a3b8;
+    font-size: 0.813rem;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-primary, .btn-secondary {
+    flex: 1;
+    padding: 0.875rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary {
+    background: #f8fafc;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-secondary:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.btn-primary {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    box-shadow: 0 1px 3px rgba(79, 70, 229, 0.2);
+}
+
+.btn-primary:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.otp-modal {
+    width: 100%;
+    max-width: 440px;
+    animation: slideUp 0.4s ease;
+}
+
+.otp-container {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.otp-input {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s ease;
+    background: #f8fafc;
+}
+
+.otp-input:focus {
+    border-color: #4f46e5;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    outline: none;
+}
+
+.timer-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.timer i {
+    color: #f59e0b;
+}
+
+.resend-btn {
+    background: none;
+    border: none;
+    color: #4f46e5;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem auto;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.resend-btn:hover:not(:disabled) {
+    background: rgba(79, 70, 229, 0.1);
+}
+
+.resend-btn:disabled {
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.success .modal-icon {
+    background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.modal-transition {
+    transition: all 0.3s ease-in-out;
+}
+
 @keyframes cardFloat {
     0% {
         opacity: 0;
@@ -340,17 +756,23 @@
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(20px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
+}
+
+@keyframes iconPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 @media (max-width: 480px) {

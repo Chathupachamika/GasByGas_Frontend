@@ -37,7 +37,10 @@
           <span class="checkmark"></span>
           Remember me
         </label>
-        <a href="#" class="forgot-password" (click)="$event.preventDefault(); showForgotPasswordModal = true">Forgot password?</a>
+        <button type="button" class="forgot-link" (click)="showForgotPasswordModal = true">
+          <i class="fas fa-key"></i>
+          Reset Password
+        </button>
       </div>
 
       <button type="submit" class="login-button" [disabled]="loginForm.invalid">
@@ -89,35 +92,186 @@
   </div>
 </div>
 
-<div *ngIf="showForgotPasswordModal" class="modal-overlay">
-    <div class="forgot-password-modal" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-            <i class="fas fa-key header-icon"></i>
-            <h3>Reset Password</h3>
-            <p>Enter your email address to receive password reset instructions</p>
-        </div>
-
-        <form (ngSubmit)="onForgotPasswordSubmit()" class="modal-form">
-            <div class="input-group">
-                <i class="fas fa-envelope"></i>
-                <input 
-                    type="email" 
-                    [(ngModel)]="resetEmail" 
-                    name="resetEmail"
-                    placeholder="Enter your email address"
-                    required>
-            </div>
-
-            <div class="modal-actions">
-                <button type="button" class="cancel-btn" (click)="showForgotPasswordModal = false">
+<div *ngIf="showForgotPasswordModal" class="modal-backdrop" (click)="showForgotPasswordModal = false">
+    <div class="password-reset-modal" (click)="$event.stopPropagation()">
+        <div class="modal-content">
+            <div class="modal-close">
+                <button (click)="showForgotPasswordModal = false">
                     <i class="fas fa-times"></i>
-                    Cancel
-                </button>
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i>
-                    Send Reset Link
                 </button>
             </div>
-        </form>
+            
+            <div class="modal-body">
+                <div class="modal-icon-wrapper">
+                    <div class="modal-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+                <h2>Password Reset</h2>
+                <p class="modal-description">Enter your email address below and we'll send you instructions to reset your password.</p>
+
+                <form (ngSubmit)="onForgotPasswordSubmit()" class="reset-form">
+                    <div class="form-wrapper">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <input 
+                                type="email" 
+                                [(ngModel)]="resetEmail" 
+                                name="resetEmail"
+                                placeholder="your@email.com"
+                                required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                class="reset-input"
+                                #emailInput="ngModel">
+                        </div>
+                        <span class="input-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Make sure to enter the email associated with your account
+                        </span>
+                        <div class="error-message" *ngIf="emailInput.invalid && emailInput.touched">
+                            Please enter a valid email address
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" (click)="showForgotPasswordModal = false">
+                            <i class="fas fa-arrow-left"></i>
+                            Back
+                        </button>
+                        <button type="submit" class="btn-primary" [disabled]="!resetEmail || emailInput.invalid">
+                            <i class="fas fa-paper-plane"></i>
+                            Send \ Link
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this after the forgot password modal -->
+<div *ngIf="showOtpModal" class="modal-backdrop" (click)="showOtpModal = false">
+    <div class="otp-modal" (click)="$event.stopPropagation()">
+        <div class="modal-content">
+            <div class="modal-close">
+                <button (click)="showOtpModal = false">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-icon-wrapper success">
+                    <div class="modal-icon">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                </div>
+                <h2>Check Your Email</h2>
+                <p class="modal-description">We've sent a verification code to <strong>{{resetEmail}}</strong></p>
+
+                <form (ngSubmit)="verifyOtp()" class="otp-form">
+                    <div class="otp-container">
+                        <input 
+                            type="text" 
+                            *ngFor="let control of otpControls; let i = index"
+                            [formControl]="control"
+                            maxlength="1"
+                            class="otp-input"
+                            (keyup)="onOtpInput($event, i)"
+                            (paste)="onOtpPaste($event)">
+                    </div>
+                    
+                    <div class="timer-section">
+                        <span class="timer" *ngIf="remainingTime > 0">
+                            <i class="fas fa-clock"></i>
+                            Code expires in {{remainingTime}} seconds
+                        </span>
+                        <button 
+                            type="button" 
+                            class="resend-btn" 
+                            [disabled]="remainingTime > 0"
+                            (click)="resendOtp()">
+                            <i class="fas fa-redo-alt"></i>
+                            Resend Code
+                        </button>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" (click)="backToEmailForm()">
+                            <i class="fas fa-arrow-left"></i>
+                            Change Email
+                        </button>
+                        <button type="submit" class="btn-primary" [disabled]="!isOtpValid()">
+                            <i class="fas fa-check"></i>
+                            Verify Code
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this after the OTP modal -->
+<div *ngIf="showPasswordResetModal" class="modal-backdrop" (click)="showPasswordResetModal = false">
+    <div class="password-reset-modal" (click)="$event.stopPropagation()">
+        <div class="modal-content">
+            <div class="modal-close">
+                <button (click)="showPasswordResetModal = false">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-icon-wrapper">
+                    <div class="modal-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                </div>
+                <h2>Reset Your Password</h2>
+                <p class="modal-description">Please enter your new password below.</p>
+
+                <form (ngSubmit)="resetPassword()" class="reset-form">
+                    <div class="form-wrapper">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <input 
+                                type="password" 
+                                [(ngModel)]="newPassword" 
+                                name="newPassword"
+                                placeholder="New Password"
+                                required
+                                class="reset-input">
+                        </div>
+                        <div class="input-group mt-4">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <input 
+                                type="password" 
+                                [(ngModel)]="confirmPassword" 
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                                required
+                                class="reset-input">
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" (click)="showPasswordResetModal = false">
+                            <i class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i>
+                            Save Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
