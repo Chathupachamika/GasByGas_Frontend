@@ -1,34 +1,46 @@
-<div class="container">
-    <h1>Add Gas Collector</h1>
-    <div class="icon-container">
-      <button (click)="openDialog()">Add Gas Collector</button>
+<div class="products-container">
+  <div class="hero-section">
+    <h1>Premium Gas Solutions</h1>
+    <p>High-quality gas cylinders for residential and commercial use</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let product of products">
+      <div class="product-image">
+        <div class="stock-badge" [class.low-stock]="product.stock < 10">
+          <i class="fas" [class.fa-check-circle]="product.stock > 10"
+            [class.fa-exclamation-circle]="product.stock < 10"></i>
+          {{product.stock > 0 ? 'In Stock' : 'Out of Stock'}}
+        </div>
+      </div>
+
+      <div class="product-details">
+        <h3>{{product.name}}</h3>
+
+        <div class="product-info">
+          <div class="info-item">
+            <i class="fas fa-weight-hanging"></i>
+            <span>{{product.capacity}} kg</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-cubes"></i>
+            <span>{{product.stock}} available</span>
+          </div>
+        </div>
+
+        <div class="price-section">
+          <div class="price">
+            <span class="currency">$</span>
+            <span class="amount">{{product.price}}</span>
+          </div>
+          <button class="order-button" [disabled]="product.stock === 0">
+            <i class="fas fa-shopping-cart"></i>
+            {{product.stock === 0 ? 'Unavailable' : 'Add to Cart'}}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  
-  <!-- Modal -->
-  <div class="modal" *ngIf="isDialogOpen">
-    <div class="modal-content">
-      <span class="close" (click)="closeDialog()">&times;</span>
-      <h2>Add Gas Collector</h2>
-      <form (ngSubmit)="addCollector()" #collectorForm="ngForm">
-        <div>
-          <label for="id">ID:</label>
-          <input type="text" id="id" name="id" required [(ngModel)]="collector.id" placeholder="Enter product ID" />
-        </div>
-        <div>
-          <label for="capacity">Capacity:</label>
-          <input type="text" id="capacity" name="capacity" required [(ngModel)]="collector.capacity" placeholder="Enter capacity" />
-        </div>
-        <div>
-          <label for="price">Price:</label>
-          <input type="text" id="price" name="price" required [(ngModel)]="collector.price" placeholder="Enter price" />
-        </div>
-        <div>
-          <label for="stock">Stock:</label>
-          <input type="text" id="stock" name="stock" required [(ngModel)]="collector.stock" placeholder="Enter stock quantity" />
-        </div>
-        <button type="submit" [disabled]="!collectorForm.form.valid">Add Gas Collector</button>
-        <button type="button" (click)="closeDialog()">Cancel</button>
-      </form>
-    </div>
-  </div>
+</div>
+
+<app-sidebar></app-sidebar>

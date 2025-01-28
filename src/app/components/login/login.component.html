@@ -1,107 +1,123 @@
-<div class="flex min-h-full flex-col justify-center px-6 py-3 sm:mx-auto sm:w-full sm:max-w-md shadow-lg border-t border-b border-gray-200 p-6 rounded-lg my-4">
-  <div class="sm:mx-auto sm:w-full sm:max-w-md">
-    <h2 class="mt-4 text-center text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
-    <p class="mt-2 text-center text-sm text-gray-600">
-      Welcome back! Please enter your details
-    </p>
-  </div>
-
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
-        <div class="mt-2">
-          <input
-            type="email"
-            id="email"
-            formControlName="email"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-            placeholder="Enter your email"
-          >
-          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-500 text-sm">
-
-          </div>
-        </div>
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo-container">
+        <i class="fas fa-fire-flame-curved animated-icon"></i>
+        <h1>GasService</h1>
       </div>
-
-      <div>
-        <div class="flex items-center justify-between">
-          <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
-          <div class="text-sm">
-            <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-          </div>
-        </div>
-        <div class="mt-2">
-          <input
-            type="password"
-            id="password"
-            formControlName="password"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-2 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm"
-            placeholder="Enter your password"
-          >
-          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-sm">
-
-          </div>
-        </div>
-      </div>
-
-      <div class="flex items-center">
-        <input
-          type="checkbox"
-          id="remember"
-          formControlName="remember"
-          class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-        >
-        <label for="remember" class="ml-2 block text-sm text-gray-900">Remember me</label>
-      </div>
-
-      <div>
-        <button
-          type="submit"
-          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Sign In
-        </button>
-      </div>
-    </form>
-
-    <div class="mt-6 text-center">
-      <p class="text-sm text-gray-500">
-        Don't have an account?
-        <a href="/register" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign up</a>
-      </p>
+      <h2>Welcome Back!</h2>
+      <p>Please sign in to continue</p>
     </div>
 
-    <div class="mt-6">
-      <div class="relative">
-        <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-gray-300"></div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <div class="input-container">
+          <i class="fas fa-envelope"></i>
+          <input type="email" formControlName="email" placeholder="Email address"
+            [class.input-error]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
         </div>
-        <div class="relative flex justify-center text-sm">
-          <span class="bg-white px-2 text-gray-500">Or continue with</span>
+        <div class="error-message" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+          Please enter a valid email
         </div>
       </div>
+
+      <div class="form-group">
+        <div class="input-container">
+          <i class="fas fa-lock"></i>
+          <input type="password"
+                 formControlName="password" 
+                 placeholder="Password"
+                 [class.input-error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        </div>
+      </div>
+
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox" formControlName="remember">
+          <span class="checkmark"></span>
+          Remember me
+        </label>
+        <a href="#" class="forgot-password" (click)="$event.preventDefault(); showForgotPasswordModal = true">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="login-button" [disabled]="loginForm.invalid">
+        <span>Sign In</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+
+      
 
       <div class="mt-6 grid grid-cols-2 gap-3">
-        <button
-          class="inline-flex w-full justify-end rounded-md bg-white px-2 py-1 text-gray-500"
-        >
+        <button class="inline-flex w-full justify-end rounded-md bg-white px-2 py-1 text-gray-500">
           <span class="sr-only">Sign in with Google</span>
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
-            <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+            <path fill="#FFC107"
+              d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z">
+            </path>
+            <path fill="#FF3D00"
+              d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z">
+            </path>
+            <path fill="#4CAF50"
+              d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z">
+            </path>
+            <path fill="#1976D2"
+              d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z">
+            </path>
           </svg>
         </button>
-        <button
-          class="inline-flex w-full justify-left rounded-md bg-white px-2 py-1 text-gray-500"
-        >
+        <button class="inline-flex w-full justify-left rounded-md bg-white px-2 py-1 text-gray-500">
           <span class="sr-only">Sign in with Facebook</span>
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35" height="35" viewBox="0 0 48 48">
-            <linearGradient id="Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1" x1="9.993" x2="40.615" y1="9.993" y2="40.615" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2aa4f4"></stop><stop offset="1" stop-color="#007ad9"></stop></linearGradient><path fill="url(#Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1)" d="M24,4C12.954,4,4,12.954,4,24s8.954,20,20,20s20-8.954,20-20S35.046,4,24,4z"></path><path fill="#fff" d="M26.707,29.301h5.176l0.813-5.258h-5.989v-2.874c0-2.184,0.714-4.121,2.757-4.121h3.283V12.46 c-0.577-0.078-1.797-0.248-4.102-0.248c-4.814,0-7.636,2.542-7.636,8.334v3.498H16.06v5.258h4.948v14.452 C21.988,43.9,22.981,44,24,44c0.921,0,1.82-0.084,2.707-0.204V29.301z"></path>
+            <linearGradient id="Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1" x1="9.993" x2="40.615" y1="9.993" y2="40.615"
+              gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#2aa4f4"></stop>
+              <stop offset="1" stop-color="#007ad9"></stop>
+            </linearGradient>
+            <path fill="url(#Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1)"
+              d="M24,4C12.954,4,4,12.954,4,24s8.954,20,20,20s20-8.954,20-20S35.046,4,24,4z"></path>
+            <path fill="#fff"
+              d="M26.707,29.301h5.176l0.813-5.258h-5.989v-2.874c0-2.184,0.714-4.121,2.757-4.121h3.283V12.46 c-0.577-0.078-1.797-0.248-4.102-0.248c-4.814,0-7.636,2.542-7.636,8.334v3.498H16.06v5.258h4.948v14.452 C21.988,43.9,22.981,44,24,44c0.921,0,1.82-0.084,2.707-0.204V29.301z">
+            </path>
           </svg>
         </button>
       </div>
-    </div>
+
+      <p class="signup-link">
+        Don't have an account? <a href="/register">Sign up</a>
+      </p>
+    </form>
   </div>
+</div>
+
+<div *ngIf="showForgotPasswordModal" class="modal-overlay">
+    <div class="forgot-password-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <i class="fas fa-key header-icon"></i>
+            <h3>Reset Password</h3>
+            <p>Enter your email address to receive password reset instructions</p>
+        </div>
+
+        <form (ngSubmit)="onForgotPasswordSubmit()" class="modal-form">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input 
+                    type="email" 
+                    [(ngModel)]="resetEmail" 
+                    name="resetEmail"
+                    placeholder="Enter your email address"
+                    required>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="cancel-btn" (click)="showForgotPasswordModal = false">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Send Reset Link
+                </button>
+            </div>
+        </form>
+    </div>
 </div>

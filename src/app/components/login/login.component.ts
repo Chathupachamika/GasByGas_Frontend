@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loginError: string = '';
+  showForgotPasswordModal = false;
+  resetEmail: string = '';
 
   constructor(
     private router: Router,
@@ -65,6 +67,16 @@ export class LoginComponent implements OnInit {
     } else {
       this.loginError = 'Please fill in all required fields correctly.';
       alert(this.loginError);
+    }
+  }
+
+  onForgotPasswordSubmit(): void {
+    if (this.resetEmail) {
+      // Here you would call your password reset service
+      console.log('Password reset requested for:', this.resetEmail);
+      alert('If an account exists with this email, you will receive password reset instructions.');
+      this.showForgotPasswordModal = false;
+      this.resetEmail = '';
     }
   }
 }

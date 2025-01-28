@@ -38,8 +38,8 @@
               <ul class="nav-links">
                   <li><a href="/admin-dashboard">Home</a></li>
                   <li><a href="/product">Products</a></li>
+                  <li><a href="/order">Order</a></li>
                   <li><a href="/services">Services</a></li>
-                  <li><a href="/support">Support</a></li>
                   <li><a href="/about">About Us</a></li>
               </ul>
 
@@ -47,9 +47,9 @@
                   <button class="icon-btn" title="User Profile" (click)="toggleProfilePopup()">
                       <i class="fas fa-user"></i>
                   </button>
-                  <button class="icon-btn" title="Shopping Cart">
+                  <button class="icon-btn" title="Shopping Cart" (click)="toggleCartPopup()">
                       <i class="fas fa-shopping-cart"></i>
-                      <span class="cart-count">0</span>
+                      <span class="cart-count">{{ cartItems.length }}</span>
                   </button>
                   <button class="icon-btn" title="Help Center">
                       <i class="fas fa-question-circle"></i>
@@ -63,49 +63,170 @@
       </div>
   </div>
 
-  <!-- Profile Update Popup -->
+  <!-- Profile View/Edit Popup -->
   <div *ngIf="showProfilePopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-lg shadow-xl p-6 w-96 relative">
           <button (click)="closePopup()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" title="Close">
               <i class="fas fa-times"></i>
           </button>
 
-          <h2 class="text-2xl font-bold mb-4">Update Profile</h2>
-
-          <div class="space-y-4">
-              <div>
-                  <label class="block text-sm font-medium text-gray-700">Name</label>
-                  <input type="text" [(ngModel)]="editedUserDetails.name" placeholder="Enter your name"
-                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          <!-- View Mode -->
+          <div *ngIf="!isEditMode" class="user-details-view">
+              <div class="modal-header">
+                  <h2 class="text-2xl font-bold">Profile Details</h2>
+                  <hr class="header-divider">
               </div>
 
-              <div>
-                  <label class="block text-sm font-medium text-gray-700">Email</label>
-                  <input type="email" [(ngModel)]="editedUserDetails.email" placeholder="Enter your email"
-                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+              <div class="user-info">
+                  <div class="info-item">
+                      <span class="label">Name:</span>
+                      <span class="value">{{userDetails.name}}</span>
+                  </div>
+                  <div class="info-item">
+                      <span class="label">Email:</span>
+                      <span class="value">{{userDetails.email}}</span>
+                  </div>
+                  <div class="info-item">
+                      <span class="label">Contact:</span>
+                      <span class="value">{{userDetails.contactNo}}</span>
+                  </div>
+                  <div class="info-item">
+                      <span class="label">Role:</span>
+                      <span class="value">{{getUserRole()}}</span>
+                  </div>
               </div>
 
-              <div>
-                  <label class="block text-sm font-medium text-gray-700">Contact Number</label>
-                  <input type="tel" [(ngModel)]="editedUserDetails.contactNo" title="Contact Number" placeholder="Enter your contact number"
-                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-              </div>
-
-              <div>
-                  <label class="block text-sm font-medium text-gray-700">Role</label>
-                  <input type="text" [value]="getUserRole()" readonly title="User Role" placeholder="User Role"
-                         class="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 shadow-sm">
+              <div class="action-buttons-footer">
+                  <button class="edit-btn" (click)="enableEditMode()">
+                      <i class="fas fa-edit"></i>
+                      <span>Edit Profile</span>
+                  </button>
+                  <button class="delete-btn" (click)="confirmDeleteAccount()">
+                      <i class="fas fa-trash-alt"></i>
+                      <span>Delete Account</span>
+                  </button>
               </div>
           </div>
 
-          <div class="mt-6 flex justify-end space-x-3">
-              <button (click)="closePopup()"
-                      class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-                  Cancel
+          <!-- Edit Mode -->
+          <div *ngIf="isEditMode" class="user-details-edit">
+              <div class="modal-header">
+                  <h2 class="text-2xl font-bold mb-2">Update Profile</h2>
+                  <p class="text-gray-600 text-sm">Edit your personal information</p>
+                  <hr class="header-divider">
+              </div>
+
+              <div class="form-container">
+                  <div class="form-group">
+                      <label class="form-label">
+                          <i class="fas fa-user"></i>
+                          <span>Full Name</span>
+                      </label>
+                      <input type="text" [(ngModel)]="editedUserDetails.name" 
+                             class="form-input"
+                             placeholder="Enter your full name">
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label">
+                          <i class="fas fa-envelope"></i>
+                          <span>Email Address</span>
+                      </label>
+                      <input type="email" [(ngModel)]="editedUserDetails.email" 
+                             class="form-input"
+                             placeholder="Enter your email">
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label">
+                          <i class="fas fa-phone"></i>
+                          <span>Contact Number</span>
+                      </label>
+                      <input type="tel" [(ngModel)]="editedUserDetails.contactNo" 
+                             class="form-input"
+                             placeholder="Enter your contact number">
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label">
+                          <i class="fas fa-user-tag"></i>
+                          <span>Role</span>
+                      </label>
+                      <input type="text" [value]="getUserRole()" readonly 
+                             class="form-input readonly"
+                             placeholder="User Role">
+                  </div>
+              </div>
+
+              <div class="action-buttons">
+                  <button (click)="cancelEdit()" class="cancel-btn">
+                      <i class="fas fa-times"></i>
+                      <span>Cancel</span>
+                  </button>
+                  <button (click)="updateProfile()" class="save-btn">
+                      <i class="fas fa-save"></i>
+                      <span>Save Changes</span>
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Cart Popup -->
+  <div *ngIf="showCartPopup" class="cart-popup-overlay" (click)="toggleCartPopup()">
+      <div class="cart-popup" (click)="$event.stopPropagation()">
+          <div class="cart-header">
+              <h3>
+                  <i class="fas fa-shopping-cart"></i>
+                  Shopping Cart
+              </h3>
+              <button class="close-btn" (click)="toggleCartPopup()">
+                  <i class="fas fa-times"></i>
               </button>
-              <button (click)="updateProfile()"
-                      class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">
-                  Save Changes
+          </div>
+
+          <div class="cart-body">
+              <div *ngIf="cartItems.length === 0" class="empty-cart">
+                  <i class="fas fa-shopping-basket"></i>
+                  <p>Your cart is empty</p>
+                  <button class="shop-now-btn" (click)="navigateToProducts()">
+                      Shop Now
+                  </button>
+              </div>
+
+              <div *ngIf="cartItems.length > 0" class="cart-items">
+                  <div *ngFor="let item of cartItems" class="cart-item">
+                      <div class="item-image">
+                          <!-- Remove the img tag since we're using CSS backgrounds -->
+                      </div>
+                      <div class="item-details">
+                          <h4>{{item.name}}</h4>
+                          <p class="item-price">${{item.price}}</p>
+                      </div>
+                      <div class="item-quantity">
+                          <button (click)="decrementQuantity(item)">
+                              <i class="fas fa-minus"></i>
+                          </button>
+                          <span>{{item.quantity}}</span>
+                          <button (click)="incrementQuantity(item)">
+                              <i class="fas fa-plus"></i>
+                          </button>
+                      </div>
+                      <button class="remove-btn" (click)="removeItem(item)">
+                          <i class="fas fa-trash-alt"></i>
+                      </button>
+                  </div>
+              </div>
+          </div>
+
+          <div *ngIf="cartItems.length > 0" class="cart-footer">
+              <div class="cart-total">
+                  <span>Total:</span>
+                  <span class="total-amount">${{getTotal()}}</span>
+              </div>
+              <button class="checkout-btn" (click)="checkout()">
+                  Proceed to Checkout
+                  <i class="fas fa-arrow-right"></i>
               </button>
           </div>
       </div>

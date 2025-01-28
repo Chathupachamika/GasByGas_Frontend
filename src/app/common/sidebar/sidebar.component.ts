@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../../service/login.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +14,7 @@ import { LoginService } from '../../service/login.service';
 export class SidebarComponent implements OnInit {
   userDetails: any = null;
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
     // Get the stored user details from localStorage
@@ -35,5 +37,23 @@ export class SidebarComponent implements OnInit {
       return this.userDetails.roles[0].replace('ROLE_', '');
     }
     return '';
+  }
+
+  confirmLogout(): void {
+    if (confirm('Are you sure you want to logout?')) {
+      this.logout();
+    }
+  }
+
+  private logout(): void {
+    // Clear user data
+    localStorage.removeItem('userDetails');
+    localStorage.removeItem('token');
+
+    // Use the login service to handle any additional logout logic
+    this.loginService.logout();
+
+    // Navigate to login page
+    this.router.navigate(['/login']);
   }
 }
