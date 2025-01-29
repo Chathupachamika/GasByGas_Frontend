@@ -41,8 +41,8 @@ body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1001; /* Ensure sidebar is above overlay */
   background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-right: 1px solid rgba(229, 231, 235, 0.2);
   animation: sidebarPulse 3s infinite;
 }

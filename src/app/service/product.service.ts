@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-
-export interface GasDTO {
-  id?: number;
-  name: string;
-  capacity: number;
-  price: number;
-  stock: number;
-}
+import { GasDTO } from '../model/gas.model';
 
 @Injectable({
   providedIn: 'root'
