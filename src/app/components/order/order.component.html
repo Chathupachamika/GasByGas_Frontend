@@ -52,229 +52,377 @@
     <div class="bg-white rounded-lg shadow-lg p-6">
       <!-- Customer Details Step -->
       <div [hidden]="currentStep !== 1">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Customer Details</h2>
-        <form [formGroup]="customerForm" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">First Name</label>
-            <input type="text" formControlName="firstName"
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            <div *ngIf="customerForm.get('firstName')?.touched && customerForm.get('firstName')?.invalid"
-                 class="text-red-500 text-sm mt-1">
-              First name is required
+        <div class="customer-details-container">
+          <div class="form-header">
+            <h2 class="text-2xl font-bold text-gray-900">Customer Details</h2>
+            <p class="text-gray-600 mt-2">Please fill in your personal information</p>
+          </div>
+          
+          <form [formGroup]="customerForm" class="form-grid">
+            <div class="form-field">
+              <label class="field-label">
+                <i class="fas fa-user"></i>
+                <span>Full Name</span>
+              </label>
+              <div class="input-container">
+                <input type="text" 
+                       formControlName="name"
+                       class="custom-input"
+                       placeholder="Enter your full name">
+                <div *ngIf="customerForm.get('name')?.touched && customerForm.get('name')?.invalid"
+                     class="error-message">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>Full name is required</span>
+                </div>
+              </div>
+            </div>
+      
+            <div class="form-field">
+              <label class="field-label">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Mobile Number</span>
+              </label>
+              <div class="input-container">
+                <input type="tel" 
+                       formControlName="mobileNumber"
+                       class="custom-input"
+                       placeholder="Enter your mobile number">
+                <div *ngIf="customerForm.get('mobileNumber')?.touched && customerForm.get('mobileNumber')?.invalid"
+                     class="error-message">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>Please enter a valid 10-digit mobile number</span>
+                </div>
+              </div>
+            </div>
+      
+            <div class="form-field">
+              <label class="field-label">
+                <i class="fas fa-envelope"></i>
+                <span>Email Address</span>
+              </label>
+              <div class="input-container">
+                <input type="email" 
+                       formControlName="email"
+                       class="custom-input"
+                       placeholder="Enter your email address">
+                <div *ngIf="customerForm.get('email')?.touched && customerForm.get('email')?.invalid"
+                     class="error-message">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>Please enter a valid email address</span>
+                </div>
+              </div>
+            </div>
+          </form>
+      
+          <div class="form-footer">
+            <div class="privacy-notice">
+              <i class="fas fa-shield-alt"></i>
+              <p class="text-sm text-gray-600">
+                Your personal information is secure and will only be used for order processing and delivery purposes.
+              </p>
             </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Last Name</label>
-            <input type="text" formControlName="lastName"
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            <div *ngIf="customerForm.get('lastName')?.touched && customerForm.get('lastName')?.invalid"
-                 class="text-red-500 text-sm mt-1">
-              Last name is required
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
-            <input type="tel" formControlName="mobileNumber"
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            <div *ngIf="customerForm.get('mobileNumber')?.touched && customerForm.get('mobileNumber')?.invalid"
-                 class="text-red-500 text-sm mt-1">
-              Please enter a valid 10-digit mobile number
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" formControlName="email"
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            <div *ngIf="customerForm.get('email')?.touched && customerForm.get('email')?.invalid"
-                 class="text-red-500 text-sm mt-1">
-              Please enter a valid email address
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
 
       <!-- Gas Selection Step -->
       <div [hidden]="currentStep !== 2">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Select Gas</h2>
-        <form [formGroup]="gasSelectionForm" class="space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Select Outlet</label>
-            <select formControlName="outletId" title="Select Outlet"
-                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-              <option value="">Select an outlet</option>
-              <option *ngFor="let outlet of outlets" [value]="outlet.id">
-                {{outlet.name}} - {{outlet.location}}
-              </option>
-            </select>
+        <div class="gas-selection-container">
+          <div class="section-header">
+            <h2 class="text-2xl font-bold text-gray-900">Select Gas</h2>
+            <p class="text-gray-600 mt-2">Choose your preferred gas type and quantity</p>
           </div>
 
-          <div class="grid grid-cols-3 gap-6">
-            <div *ngFor="let gas of availableGases"
-                 class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors"
-                 [class.border-blue-500]="gasSelectionForm.get('selectedGasId')?.value === gas.id"
-                 (click)="gasSelectionForm.patchValue({selectedGasId: gas.id})">
-              <i class="fas fa-flask text-4xl mb-3"></i>
-              <div class="font-bold">{{gas.capacity}} KG</div>
-              <div class="text-gray-600">Rs {{gas.price}}</div>
-              <div class="text-sm text-gray-500">Stock: {{gas.stock}}</div>
+          <form [formGroup]="gasSelectionForm" class="gas-selection-form">
+            <div class="outlet-selector">
+              <label class="field-label">
+                <i class="fas fa-store"></i>
+                <span>Select Outlet</span>
+              </label>
+              <select formControlName="outletId" class="outlet-select" title="Select Outlet">
+                <option value="">Select an outlet</option>
+                <option *ngFor="let outlet of outlets" [value]="outlet.id">
+                  {{outlet.name}} - {{outlet.location}}
+                </option>
+              </select>
             </div>
-          </div>
 
-          <div class="grid grid-cols-2 gap-4 mt-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Quantity</label>
-              <input type="number" 
-                     formControlName="quantity" 
-                     min="1"
-                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Location</label>
-              <input type="text" 
-                     formControlName="location" 
-                     placeholder="Enter delivery location"
-                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            </div>
-          </div>
-          <div class="mt-4">
-            <button type="button" 
-                    (click)="addGasToOrder()"
-                    class="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-              Add to Order
-            </button>
-          </div>
-
-          <div class="mt-6">
-            <h3 class="font-medium text-gray-900">Selected Items</h3>
-            <div class="mt-2 space-y-2">
-              <div *ngFor="let item of selectedGases; let i = index"
-                   class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
-                <div class="flex flex-col">
-                  <span class="font-medium">
-                    {{availableGases[item.gasId].capacity}} KG x {{item.quantity}}
-                  </span>
-                  <span class="text-sm text-gray-500" *ngIf="item.location">
-                    Location: {{item.location}}
-                  </span>
+            <div class="gas-options-grid">
+              <div *ngFor="let gas of availableGases"
+                   class="gas-option-card"
+                   [class.selected]="gasSelectionForm.get('gasId')?.value === gas.id"
+                   (click)="gasSelectionForm.patchValue({gasId: gas.id})">
+                <div class="card-content">
+                  <div class="icon-container">
+                    <i class="fas fa-flask"></i>
+                  </div>
+                  <div class="gas-details">
+                    <div class="capacity">{{gas.capacity}} KG</div>
+                    <div class="price">Rs {{gas.price}}</div>
+                    <div class="stock-indicator" [class.low-stock]="gas.stock < 10">
+                      <i class="fas" [class.fa-check-circle]="gas.stock >= 10" [class.fa-exclamation-circle]="gas.stock < 10"></i>
+                      <span>Stock: {{gas.stock}}</span>
+                    </div>
+                  </div>
                 </div>
-                <button type="button" 
-                        (click)="removeGasFromOrder(i)"
-                        class="text-red-600 hover:text-red-800">
-                  <i class="fas fa-times"></i>
+              </div>
+            </div>
+
+            <div class="quantity-section">
+              <label class="field-label">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Quantity</span>
+              </label>
+              <div class="quantity-controls">
+                <button type="button" class="qty-btn" (click)="decrementQuantity()">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="number" formControlName="quantity" min="1" class="quantity-input">
+                <button type="button" class="qty-btn" (click)="incrementQuantity()">
+                  <i class="fas fa-plus"></i>
                 </button>
               </div>
             </div>
-          </div>
 
-          <div class="mt-6">
-            <label class="block text-sm font-medium text-gray-700">Do You Have Empty Gas Cylinder?</label>
-            <div class="mt-2 space-x-4">
-              <label class="inline-flex items-center">
-                <input type="radio" formControlName="hasEmptyCylinder" [value]="true"
-                       class="form-radio text-blue-600">
-                <span class="ml-2">Yes</span>
-              </label>
-              <label class="inline-flex items-center">
-                <input type="radio" formControlName="hasEmptyCylinder" [value]="false"
-                       class="form-radio text-blue-600">
-                <span class="ml-2">No</span>
-              </label>
+            <div class="selected-items-container" *ngIf="selectedGases.length > 0">
+              <h3 class="items-header">Selected Items</h3>
+              <div class="selected-items-list">
+                <div *ngFor="let item of selectedGases; let i = index" class="selected-item">
+                  <div class="item-info">
+                    <div class="icon-container-small">
+                      <i class="fas fa-flask"></i>
+                    </div>
+                    <div>
+                      <span class="font-medium">{{availableGases[item.gasId].capacity}} KG x {{item.quantity}}</span>
+                      <span class="text-sm text-gray-500 block" *ngIf="item.location">
+                        Location: {{item.location}}
+                      </span>
+                    </div>
+                  </div>
+                  <button type="button" (click)="removeGasFromOrder(i)" class="remove-item-btn">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
 
       <!-- Location Step -->
       <div [hidden]="currentStep !== 3">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Delivery Location</h2>
-        <form [formGroup]="locationForm" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Address Line 1</label>
-            <input type="text" formControlName="addressLine1"
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        <div class="delivery-location-container">
+          <div class="delivery-header">
+            <h2 class="text-2xl font-bold text-gray-900">Delivery Location</h2>
+            <p class="text-gray-600 mt-2">Please provide your delivery details</p>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Address Line 2</label>
-            <input type="text" formControlName="addressLine2"
-                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">City</label>
-              <input type="text" formControlName="city"
-                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+
+          <form [formGroup]="locationForm" class="delivery-form">
+            <div class="address-grid">
+              <div class="input-group">
+                <label class="input-label">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Address Line 1</span>
+                </label>
+                <input type="text" 
+                       formControlName="addressLine1"
+                       class="delivery-input"
+                       placeholder="Enter your street address">
+              </div>
+
+              <div class="input-group">
+                <label class="input-label">
+                  <i class="fas fa-building"></i>
+                  <span>Address Line 2</span>
+                </label>
+                <input type="text" 
+                       formControlName="addressLine2"
+                       class="delivery-input"
+                       placeholder="Apartment, suite, unit, etc.">
+              </div>
+
+              <div class="city-postal-grid">
+                <div class="input-group">
+                  <label class="input-label">
+                    <i class="fas fa-city"></i>
+                    <span>City</span>
+                  </label>
+                  <input type="text" 
+                         formControlName="city"
+                         class="delivery-input"
+                         placeholder="Enter city">
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label">
+                    <i class="fas fa-mail-bulk"></i>
+                    <span>Postal Code</span>
+                  </label>
+                  <input type="text" 
+                         formControlName="postalCode"
+                         class="delivery-input"
+                         placeholder="Enter postal code">
+                </div>
+              </div>
             </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Postal Code</label>
-              <input type="text" formControlName="postalCode"
-                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+
+            <div class="delivery-schedule">
+              <h3 class="schedule-title">
+                <i class="fas fa-clock"></i>
+                Delivery Schedule
+              </h3>
+
+              <div class="schedule-grid">
+                <div class="date-picker">
+                  <label class="input-label">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Delivery Date</span>
+                  </label>
+                  <input type="date" 
+                         formControlName="deliveryDate"
+                         class="delivery-input date-input">
+                </div>
+
+                <div class="time-slots">
+                  <label class="input-label">
+                    <i class="fas fa-clock"></i>
+                    <span>Preferred Time Slot</span>
+                  </label>
+                  <div class="time-slot-cards">
+                    <div class="time-slot" 
+                         [class.selected]="locationForm.get('deliveryTime')?.value === 'morning'"
+                         (click)="locationForm.patchValue({deliveryTime: 'morning'})">
+                      <i class="fas fa-sun"></i>
+                      <span>Morning</span>
+                      <small>9 AM - 12 PM</small>
+                    </div>
+                    <div class="time-slot"
+                         [class.selected]="locationForm.get('deliveryTime')?.value === 'afternoon'"
+                         (click)="locationForm.patchValue({deliveryTime: 'afternoon'})">
+                      <i class="fas fa-cloud-sun"></i>
+                      <span>Afternoon</span>
+                      <small>12 PM - 3 PM</small>
+                    </div>
+                    <div class="time-slot"
+                         [class.selected]="locationForm.get('deliveryTime')?.value === 'evening'"
+                         (click)="locationForm.patchValue({deliveryTime: 'evening'})">
+                      <i class="fas fa-sunset"></i>
+                      <span>Evening</span>
+                      <small>3 PM - 6 PM</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Delivery Date</label>
-              <input type="date" formControlName="deliveryDate"
-                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+
+            <!-- Preserve existing generate token button -->
+            <div class="flex justify-end space-x-4">
+              <button
+                type="button"
+                (click)="generateToken()"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+                Generate Token
+              </button>
+              
             </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Preferred Time</label>
-              <select formControlName="deliveryTime" title="Preferred Time"
-                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                <option value="">Select time slot</option>
-                <option value="morning">Morning (9 AM - 12 PM)</option>
-                <option value="afternoon">Afternoon (12 PM - 3 PM)</option>
-                <option value="evening">Evening (3 PM - 6 PM)</option>
-              </select>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
 
       <!-- Payment Step -->
       <div [hidden]="currentStep !== 4">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment Details</h2>
-        <form [formGroup]="paymentForm" class="space-y-4">
-          <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700">Payment Method</label>
-            <div class="mt-2 space-x-4">
-              <label class="inline-flex items-center">
-                <input type="radio" formControlName="paymentMethod" value="card"
-                       class="form-radio text-blue-600">
-                <span class="ml-2">Credit/Debit Card</span>
-              </label>
-              <label class="inline-flex items-center">
-                <input type="radio" formControlName="paymentMethod" value="cash"
-                       class="form-radio text-blue-600">
-                <span class="ml-2">Cash on Delivery</span>
-              </label>
-            </div>
+        <div class="payment-container">
+          <div class="payment-header">
+            <h2 class="text-2xl font-bold text-gray-900">Payment Details</h2>
+            <p class="text-gray-600 mt-2">Complete your purchase securely</p>
           </div>
 
-          <div *ngIf="paymentForm.get('paymentMethod')?.value === 'card'">
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Name on Card</label>
-              <input type="text" formControlName="nameOnCard"
-                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700">Card Number</label>
-              <input type="text" formControlName="cardNumber"
-                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Expiry Date</label>
-                <input type="text" formControlName="expiryDate" placeholder="MM/YY"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          <form [formGroup]="paymentForm" class="payment-content">
+            <!-- Payment Method Selection -->
+            <div class="payment-methods">
+              <h3 class="method-title">
+                <i class="fas fa-credit-card"></i>
+                Select Payment Method
+              </h3>
+              
+              <div class="payment-options">
+                <div class="payment-option" 
+                     [class.selected]="paymentForm.get('paymentMethod')?.value === 'card'"
+                     (click)="selectPaymentMethod('card')">
+                  <div class="option-icon">
+                    <i class="fas fa-credit-card"></i>
+                  </div>
+                  <div class="option-details">
+                    <span class="option-title">Credit/Debit Card</span>
+                    <span class="option-subtitle">Pay securely with your card</span>
+                  </div>
+                </div>
+
+                <div class="payment-option"
+                     [class.selected]="paymentForm.get('paymentMethod')?.value === 'cash'"
+                     (click)="selectPaymentMethod('cash')">
+                  <div class="option-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                  </div>
+                  <div class="option-details">
+                    <span class="option-title">Cash on Delivery</span>
+                    <span class="option-subtitle">Pay when you receive</span>
+                  </div>
+                </div>
               </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700">CVV</label>
-                <input type="password" formControlName="cvv"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="payment-actions">
+              <button type="button" 
+                      class="token-button"
+                      (click)="fetchTokenNumber(orderId)">
+                <i class="fas fa-ticket-alt"></i>
+                Get Token
+              </button>
+
+              <button type="button" 
+                      class="pay-button"
+                      [disabled]="!paymentForm.valid || processingPayment"
+                      (click)="onPurchase()">
+                <span *ngIf="!processingPayment">
+                  <i class="fab fa-paypal"></i>
+                  Pay with PayPal
+                </span>
+                <span *ngIf="processingPayment" class="processing">
+                  <i class="fas fa-circle-notch fa-spin"></i>
+                  Processing...
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Token Popup -->
+        <div *ngIf="showTokenPopup" class="token-popup-overlay">
+          <div class="token-popup">
+            <div class="popup-header">
+              <h3>Your Token</h3>
+              <button class="close-button" (click)="closeTokenPopup()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            
+            <div class="token-content">
+              <div class="token-display">
+                <input type="text" [value]="generatedToken" readonly class="token-input">
+                <button class="copy-button" (click)="copyToken()">
+                  <i class="fas fa-copy"></i>
+                </button>
               </div>
+              
+              <button class="download-button" (click)="onDownloadClick()">
+                <i class="fas fa-download"></i>
+                Download PDF
+              </button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
 
       <!-- Navigation Buttons -->

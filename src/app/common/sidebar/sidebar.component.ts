@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
   userDetails: any = null;
+  sidebarExpanded = false;
 
   constructor(private loginService: LoginService, private router: Router) { }
 
@@ -55,5 +56,13 @@ export class SidebarComponent implements OnInit {
 
     // Navigate to login page
     this.router.navigate(['/login']);
+  }
+
+  expandSidebar() {
+    this.sidebarExpanded = true;
+  }
+
+  collapseSidebar() {
+    this.sidebarExpanded = false;
   }
 }

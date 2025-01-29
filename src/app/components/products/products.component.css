@@ -366,3 +366,59 @@
         font-size: 0.875rem;
     }
 }
+
+/* ...existing code... */
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+}
+
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  transform: scale(1.1);
+}
+
+.delete-btn i {
+  font-size: 1rem;
+}
+
+/* ...existing code... */
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+}
+
+.edit-btn:hover {
+  background: rgba(59, 130, 246, 0.1);
+  transform: scale(1.1);
+}
+
+.edit-btn i {
+  font-size: 1rem;
+}
+
+/* ...existing code... */

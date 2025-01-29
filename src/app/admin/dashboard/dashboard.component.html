@@ -1,23 +1,68 @@
 <div class="dashboard-container">
-    <!-- Add sidebar -->
     <app-sidebar></app-sidebar>
 
-    <!-- Main Content -->
     <main class="main-content">
         <div class="header">
-            <h1>Dashboard</h1>
+            <div class="header-content">
+                <h1>Dashboard Overview</h1>
+                <p class="subtitle">Welcome back, Admin</p>
+            </div>
             <div class="contact-info" *ngIf="userDetails">
                 <i class="ri-phone-line" style="margin-right: 10px; font-size: 24px;"></i>
                 <a href="tel:{{userDetails.contactNo}}">{{userDetails.contactNo}}</a>
             </div>
         </div>
 
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="ri-user-line"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Total Customers</h3>
+                    <div class="stat-value">2,451</div>
+                    <span class="trend positive">+12.5%</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="ri-shopping-cart-line"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Total Orders</h3>
+                    <div class="stat-value">1,234</div>
+                    <span class="trend positive">+8.3%</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="ri-truck-line"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Pending Deliveries</h3>
+                    <div class="stat-value">45</div>
+                    <span class="trend positive">Active</span>
+                </div>
+            </div>
+        </div>
+
         <div class="banner-image">
-            <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80"
-                alt="Gas delivery trucks">
         </div>
 
         <div class="customer-table">
+            <div class="table-header">
+                <h2>Recent Orders</h2>
+                <div class="table-actions">
+                    <button class="filter-btn">
+                        <i class="ri-filter-3-line"></i>
+                        Filter
+                    </button>
+                    <button class="export-btn">
+                        <i class="ri-download-2-line"></i>
+                        Export
+                    </button>
+                </div>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -55,4 +100,3 @@
         </div>
     </main>
 </div>
-<app-sidebar></app-sidebar>
