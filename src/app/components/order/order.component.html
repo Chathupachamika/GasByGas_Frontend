@@ -93,6 +93,25 @@
                   <span>Please enter a valid 10-digit mobile number</span>
                 </div>
               </div>
+       <h2 class="text-2xl font-bold text-gray-900 mb-6">Customer Details</h2>
+        <form [formGroup]="customerForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" formControlName="name"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <div *ngIf="customerForm.get('name')?.touched && customerForm.get('name')?.invalid"
+                 class="text-red-500 text-sm mt-1">
+              First name is required
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Mobile Number</label>
+            <input type="tel" formControlName="mobileNumber"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <div *ngIf="customerForm.get('mobileNumber')?.touched && customerForm.get('mobileNumber')?.invalid"
+                 class="text-red-500 text-sm mt-1">
+              Please enter a valid 10-digit mobile number
+
             </div>
       
             <div class="form-field">
@@ -133,6 +152,7 @@
             <p class="text-gray-600 mt-2">Choose your preferred gas type and quantity</p>
           </div>
 
+
           <form [formGroup]="gasSelectionForm" class="gas-selection-form">
             <div class="outlet-selector">
               <label class="field-label">
@@ -145,7 +165,19 @@
                   {{outlet.name}} - {{outlet.location}}
                 </option>
               </select>
+
+          <div class="grid grid-cols-3 gap-6">
+            <div *ngFor="let gas of availableGases"
+                 class="border rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition-colors"
+                 [class.border-blue-500]="gasSelectionForm.get('gasId')?.value === gas.id"
+                 (click)="gasSelectionForm.patchValue({gasId: gas.id})">
+              <i class="fas fa-flask text-4xl mb-3"></i>
+              <div class="font-bold">{{gas.capacity}} KG</div>
+              <div class="text-gray-600">Rs {{gas.price}}</div>
+              <div class="text-sm text-gray-500">Stock: {{gas.stock}}</div>
+
             </div>
+
 
             <div class="gas-options-grid">
               <div *ngFor="let gas of availableGases"
@@ -180,9 +212,40 @@
                 <input type="number" formControlName="quantity" min="1" class="quantity-input">
                 <button type="button" class="qty-btn" (click)="incrementQuantity()">
                   <i class="fas fa-plus"></i>
+
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Quantity</label>
+              <input type="number"
+                     formControlName="quantity"
+                     min="1"
+                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+
+          </div>
+
+          <div class="mt-6">
+            <h3 class="font-medium text-gray-900"></h3>
+            <div class="mt-2 space-y-2">
+              <div *ngFor="let item of selectedGases; let i = index"
+                   class="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                <div class="flex flex-col">
+                  <span class="font-medium">
+                    {{availableGases[item.gasId].capacity}} KG x {{item.quantity}}
+                  </span>
+                  <span class="text-sm text-gray-500" *ngIf="item.location">
+                    Location: {{item.location}}
+                  </span>
+                </div>
+                <button type="button"
+                        (click)="removeGasFromOrder(i)"
+                        class="text-red-600 hover:text-red-800">
+                  <i class="fas fa-times"></i>
+
                 </button>
               </div>
             </div>
+
 
             <div class="selected-items-container" *ngIf="selectedGases.length > 0">
               <h3 class="items-header">Selected Items</h3>
@@ -207,6 +270,10 @@
             </div>
           </form>
         </div>
+
+
+        </form>
+
       </div>
 
       <!-- Location Step -->
@@ -325,12 +392,32 @@
               </button>
               
             </div>
+
           </form>
         </div>
+
+          </div>
+          <div class="flex justify-end space-x-4">
+            <!-- Generate Token Button -->
+            <button
+              type="button"
+              (click)="generateToken()"
+              class="px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
+
+            >
+              Generate Token
+            </button>
+
+            <!-- Pay with PayPal Button -->
+
+          </div>
+        </form>
+
       </div>
 
       <!-- Payment Step -->
       <div [hidden]="currentStep !== 4">
+
         <div class="payment-container">
           <div class="payment-header">
             <h2 class="text-2xl font-bold text-gray-900">Payment Details</h2>
@@ -423,6 +510,70 @@
             </div>
           </div>
         </div>
+
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment Details</h2>
+        <form [formGroup]="paymentForm" class="space-y-4">
+          <!-- Payment Method Dropdown -->
+          <div class="mb-4">
+            <label for="paymentMethod" class="block text-sm font-medium text-gray-700">
+              Payment Method
+            </label>
+            <select
+              id="paymentMethod"
+              formControlName="paymentMethod"
+              class="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+            >
+              <option value="" disabled selected>Select a payment method</option>
+              <option value="card">Pay Now with Card</option>
+              <option value="cash">Cash on Delivery</option>
+            </select>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-end space-x-4">
+            <!-- Generate Token Button -->
+            <button
+              type="button"
+              (click)="fetchTokenNumber(orderId)"
+              class="px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
+
+            >
+              Get Token
+            </button>
+
+            <!-- Pay with PayPal Button -->
+            <button
+              type="button"
+              (click)="onPurchase()"
+              class="px-4 py-2 bg-green-600 text-white rounded-md shadow-sm hover:bg-green-700 focus:ring-2 focus:ring-green-500"
+            >
+              <span *ngIf="!processingPayment">Pay with PayPal</span>
+              <span *ngIf="processingPayment">Processing...</span>
+            </button>
+          </div>
+
+          <!-- Popup Window -->
+          <div *ngIf="showTokenPopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Your Token</h3>
+              <div class="flex items-center mb-4">
+                <input type="text" [value]="generatedToken" readonly class="flex-grow p-2 border border-gray-300 rounded-md">
+                <button type="button" (click)="copyToken()" class="ml-2 p-2 bg-gray-200 rounded-md hover:bg-gray-300">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+              <button type="button" (click)="onDownloadClick()" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                Download PDF
+              </button>
+              <button type="button" (click)="closeTokenPopup()" class="mt-4 w-full py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+                Close
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+
       </div>
 
       <!-- Navigation Buttons -->

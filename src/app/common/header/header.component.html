@@ -45,7 +45,7 @@
 
               <div class="nav-icons">
                   <button class="icon-btn" title="User Profile" (click)="toggleProfilePopup()">
-                      <i class="fas fa-user"></i>
+                    <img width="48" height="48" src="https://img.icons8.com/color/48/user-male-circle.png" alt="user-male-circle"/>
                   </button>
                   <button class="icon-btn" title="Shopping Cart" (click)="toggleCartPopup()">
                       <i class="fas fa-shopping-cart"></i>
@@ -122,7 +122,7 @@
                           <i class="fas fa-user"></i>
                           <span>Full Name</span>
                       </label>
-                      <input type="text" [(ngModel)]="editedUserDetails.name" 
+                      <input type="text" [(ngModel)]="editedUserDetails.name"
                              class="form-input"
                              placeholder="Enter your full name">
                   </div>
@@ -132,7 +132,7 @@
                           <i class="fas fa-envelope"></i>
                           <span>Email Address</span>
                       </label>
-                      <input type="email" [(ngModel)]="editedUserDetails.email" 
+                      <input type="email" [(ngModel)]="editedUserDetails.email"
                              class="form-input"
                              placeholder="Enter your email">
                   </div>
@@ -142,7 +142,7 @@
                           <i class="fas fa-phone"></i>
                           <span>Contact Number</span>
                       </label>
-                      <input type="tel" [(ngModel)]="editedUserDetails.contactNo" 
+                      <input type="tel" [(ngModel)]="editedUserDetails.contactNo"
                              class="form-input"
                              placeholder="Enter your contact number">
                   </div>
@@ -152,7 +152,7 @@
                           <i class="fas fa-user-tag"></i>
                           <span>Role</span>
                       </label>
-                      <input type="text" [value]="getUserRole()" readonly 
+                      <input type="text" [value]="getUserRole()" readonly
                              class="form-input readonly"
                              placeholder="User Role">
                   </div>

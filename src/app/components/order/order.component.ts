@@ -6,6 +6,8 @@ import { LoginService } from '../../service/login.service';
 import { PaypalService } from '../../service/paypal.service';
 import jsPDF from 'jspdf';
 import { Router } from '@angular/router';
+
+import html2canvas from 'html2canvas';
 import { OrderService } from '../../service/order.service';
 
 
@@ -107,6 +109,7 @@ export class OrderComponent implements OnInit {
       this.gasSelectionForm.patchValue({ quantity: currentValue - 1 });
     }
   }
+
 
   onPurchase(): void {
     const selectedGas = this.availableGases.find(gas => gas.id === this.gasSelectionForm.get('gasId')?.value);
@@ -355,26 +358,48 @@ seeToken(orderId: number): void {
 }
 
 generateToken(): void {
+
   // Simple alert when token is generated
   alert('Token Generated Successfully!');
   
   // Keep the existing token generation logic
+
+  // Creating the token object according to the API structure
+
   const tokenObject = {
     userId: this.customerForm.get('userId')?.value,
     outletId: this.gasSelectionForm.get('outletId')?.value,
     orderGasList: this.selectedGases.map(gas => ({
       gasId: gas.gasId,
       quantity: gas.quantity
+
     }))
   };
+
+
+      // Removed location since it's not in your API structure
+    }))
+  };
+
+  // Log the request object for debugging
+  console.log('Token Object:', tokenObject);
+
 
   this.orderService.createScheduleOrder(tokenObject).subscribe({
     next: (response) => {
       const orderId = response.orderId;
       console.log('Order created successfully:', orderId);
+
     },
     error: (err) => {
       console.error('Error generating token:', err);
+
+      // Pass the orderId to seeToken method
+    },
+    error: (err) => {
+      console.error('Error generating token:', err);
+      // Handle error here
+
     }
   });
 }
@@ -459,6 +484,7 @@ closeTokenPopup(): void {
   async downloadCoursePDF(order: Order): Promise<void> {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.width;
+
     const pageHeight = doc.internal.pageSize.height;
     const margin = 20;
   
@@ -553,6 +579,19 @@ closeTokenPopup(): void {
   }
   
 
+    doc.setFontSize(18);
+    doc.text('Order Token Key', pageWidth / 2, 20, { align: 'center' });
+    let currentY = 40;
+    const lineHeight = 10;
+    doc.setFontSize(12);
+    doc.text(`Token Key: ${this.tokenKey}`, 20, currentY);
+    doc.setFontSize(10);
+    const today = new Date().toLocaleDateString();
+    doc.text(`Generated on: ${today}`, 20, doc.internal.pageSize.height - 20);
+    doc.save(`Order_Token_Key.pdf`);
+  }
+
+
   // Method to be called when the button is clicked
   onDownloadClick(): void {
     this.downloadCoursePDF(this.order);
@@ -596,4 +635,5 @@ closeTokenPopup(): void {
   selectPaymentMethod(method: string): void {
     this.paymentForm.patchValue({ paymentMethod: method });
   }
+
 }
