@@ -86,7 +86,6 @@ export class HeaderComponent implements OnInit {
   }
 
   updateProfile(): void {
-    // Here you would typically call your API to update the user details
     this.loginService.updateUser(this.editedUserDetails).subscribe({
       next: (response) => {
         this.userDetails = response;
