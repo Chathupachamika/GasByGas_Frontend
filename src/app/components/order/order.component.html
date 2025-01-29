@@ -233,7 +233,7 @@
             <!-- Generate Token Button -->
             <button
               type="button"
-              (click)="getToken()"
+              (click)="fetchTokenNumber(orderId)"
               class="px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
 
             >
@@ -261,7 +261,7 @@
                   <i class="fas fa-copy"></i>
                 </button>
               </div>
-              <button type="button" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+              <button type="button" (click)="onDownloadClick()" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                 Download PDF
               </button>
               <button type="button" (click)="closeTokenPopup()" class="mt-4 w-full py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">

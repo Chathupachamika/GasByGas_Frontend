@@ -58,6 +58,9 @@ export class OrderService { // changed from GasCollectService to OrderService
     return this.http.get(`${this.baseUrl}/orders/${id}`);
   }
 
+  getToken(orderId: number): Observable<any> {
+    return this.getOrderById(orderId);
+  }
   getAllOrders(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/orders`);
   }

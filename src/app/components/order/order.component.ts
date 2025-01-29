@@ -6,6 +6,7 @@ import { LoginService } from '../../service/login.service';
 import { PaypalService } from '../../service/paypal.service';
 import jsPDF from 'jspdf';
 import { Router } from '@angular/router';
+import html2canvas from 'html2canvas';
 import { OrderService } from '../../service/order.service';
 
 
@@ -27,7 +28,7 @@ interface Order {
   status: string;
   tokenNumber: string;
   userId: number;
-  deliveryScheduleId: number;
+  deliveryScheduleId: number | null;
   outletId: number;
   orderGasList: OrderGas[];
   total: number;
@@ -55,10 +56,20 @@ export class OrderComponent implements OnInit {
   availableGases: Gas[] = [];
   selectedGases: OrderGas[] = [];
   outlets: any[] = [];
-  showTokenPopup = false;
-  generatedToken = '';
+  showTokenPopup: boolean = false;
+  generatedToken: string = '';
+  tokenKey: string = '';
   orderId: number = 2;
-
+  order: Order = {
+    id: 0,
+    status: '',
+    tokenNumber: '',
+    userId: 0,
+    deliveryScheduleId: null,
+    outletId: 0,
+    orderGasList: [],
+    total: 0
+  };
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -76,6 +87,7 @@ export class OrderComponent implements OnInit {
     this.loadGases();
     this.showStep(this.currentStep);
     this.loadUserDetails();
+    this.loadOrderDetails();
   }
 
   loadOutlets(): void {
@@ -359,30 +371,33 @@ generateToken(): void {
   });
 }
 
-  getToken(): void {
-    this.orderService.getOrderById(this.orderId).subscribe({
-      next: (response) => {
-        this.generatedToken = response.token; // Ensure this is the correct property
-        console.log('Generated Token:', this.generatedToken); // Add console log for token
-        this.showTokenPopup = true;
-      },
-      error: (err) => {
-        console.error('Error fetching token:', err);
-      }
-    });
-  }
+fetchTokenNumber(orderId: number): void {
+  this.orderService.getToken(orderId).subscribe(
+    (order: { tokenNumber: string; }) => {
+      this.generatedToken = order.tokenNumber; // Assuming the response contains tokenNumber
+      this.tokenKey = `New Token Key: ${this.generatedToken}`; // Set your custom token key
+      this.showTokenPopup = true; // Show the popup
+    },
+    (error: any) => {
+      console.error('Error fetching order:', error);
+    }
+  );
+}
 
-  copyToken() {
-    navigator.clipboard.writeText(this.generatedToken).then(() => {
-      alert('Token copied to clipboard');
-    });
-  }
+copyToken(): void {
+  console.log(`Token Key: ${this.tokenKey}`);
+  const inputElement = document.createElement('input');
+  inputElement.value = this.generatedToken;
+  document.body.appendChild(inputElement);
+  inputElement.select();
+  document.execCommand('copy');
+  document.body.removeChild(inputElement);
+  alert('Token copied to clipboard!');
+}
 
-
-
-  closeTokenPopup() {
-    this.showTokenPopup = false;
-  }
+closeTokenPopup(): void {
+  this.showTokenPopup = false;
+}
 
   addGasToOrder() {
     const gasForm = this.gasSelectionForm.value;
@@ -433,39 +448,42 @@ generateToken(): void {
     return step <= this.currentStep;
   }
 
-  async downloadTokenPDF(order: Order): Promise<void> {
+  async downloadCoursePDF(order: Order): Promise<void> {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.width;
     doc.setFontSize(18);
-    doc.text('Order Details', pageWidth / 2, 20, { align: 'center' });
+    doc.text('Order Token Key', pageWidth / 2, 20, { align: 'center' });
     let currentY = 40;
     const lineHeight = 10;
-
     doc.setFontSize(12);
-    doc.text(`Order ID: ${order.id}`, 40, currentY);
-    currentY += lineHeight;
-
-    doc.text(`Status: ${order.status}`, 40, currentY);
-    currentY += lineHeight;
-
-    doc.text(`Token Number: ${order.tokenNumber}`, 40, currentY);
-    currentY += lineHeight;
-
-    doc.text(`User ID: ${order.userId}`, 40, currentY);
-    currentY += lineHeight;
-
-    doc.text(`Delivery Schedule ID: ${order.deliveryScheduleId}`, 40, currentY);
-    currentY += lineHeight;
-
-    doc.text(`Outlet ID: ${order.outletId}`, 40, currentY);
-    currentY += lineHeight;
-
-    doc.text(`Total: ${order.total}`, 40, currentY);
-    currentY += lineHeight;
-
+    doc.text(`Token Key: ${this.tokenKey}`, 20, currentY);
     doc.setFontSize(10);
     const today = new Date().toLocaleDateString();
     doc.text(`Generated on: ${today}`, 20, doc.internal.pageSize.height - 20);
-    doc.save(`${order.id.toString().replace(/\s+/g, '_')}_details.pdf`);
+    doc.save(`Order_Token_Key.pdf`);
+  }
+
+  // Method to be called when the button is clicked
+  onDownloadClick(): void {
+    this.downloadCoursePDF(this.order);
+  }
+
+  // Method to load order details after completion
+  loadOrderDetails(): void {
+    this.orderService.getAllOrders().subscribe((orders: any[]) => {
+      if (orders.length > 0) {
+        const latestOrder = orders[0]; // Assuming the latest order is the first one
+        this.order = {
+          id: latestOrder.id,
+          status: latestOrder.status,
+          tokenNumber: latestOrder.tokenNumber,
+          userId: latestOrder.userId,
+          deliveryScheduleId: latestOrder.deliveryScheduleId,
+          outletId: latestOrder.outletId,
+          orderGasList: latestOrder.orderGasList,
+          total: latestOrder.total
+        };
+      }
+    });
   }
 }
