@@ -321,7 +321,7 @@
   padding: 2.5rem;
   background: linear-gradient(145deg, #ffffff, #f8fafc);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06),
     inset 0 2px 4px rgba(255, 255, 255, 0.7);
@@ -395,7 +395,7 @@
 
 .custom-input:focus {
   border-color: #3b82f6;
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(59, 130, 246, 0.1),
     0 2px 4px rgba(0, 0, 0, 0.05);
   transform: translateY(-1px);
@@ -519,7 +519,7 @@
   .form-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .form-field:last-child {
     grid-column: span 2;
   }
@@ -529,11 +529,11 @@
   .customer-details-container {
     padding: 1.5rem;
   }
-  
+
   .custom-input {
     padding: 0.875rem 1rem 0.875rem 2.5rem;
   }
-  
+
   .privacy-notice {
     flex-direction: column;
     text-align: center;
@@ -666,7 +666,7 @@
   .form-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .form-field:last-child {
     grid-column: span 2;
   }
@@ -918,7 +918,7 @@
   padding: 2.5rem;
   background: linear-gradient(145deg, #ffffff, #f8fafc);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   animation: fadeInScale 0.6s ease-out;
@@ -1123,11 +1123,11 @@
   .gas-options-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .gas-selection-container {
     padding: 1.5rem;
   }
-  
+
   .quantity-controls {
     flex-direction: row;
     align-items: center;
@@ -1139,7 +1139,7 @@
   padding: 2.5rem;
   background: linear-gradient(145deg, #ffffff, #f8fafc);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06),
     inset 0 2px 4px rgba(255, 255, 255, 0.7);
@@ -1205,7 +1205,7 @@
 
 .location-input:focus {
   border-color: #3b82f6;
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(59, 130, 246, 0.1),
     0 2px 4px rgba(0, 0, 0, 0.05);
   transform: translateY(-1px);
@@ -1263,7 +1263,7 @@
   .location-form-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .time-slot-grid {
     grid-template-columns: 1fr;
   }
@@ -1274,7 +1274,7 @@
   padding: 2.5rem;
   background: linear-gradient(145deg, #ffffff, #f8fafc);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   animation: fadeInScale 0.6s ease-out;
@@ -1389,7 +1389,7 @@
   background: linear-gradient(145deg, #ffffff, #f8fafc);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 
+  box-shadow:
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
@@ -1477,7 +1477,7 @@
   .payment-buttons {
     flex-direction: column;
   }
-  
+
   .payment-container {
     padding: 1.5rem;
   }
@@ -1488,7 +1488,7 @@
   padding: 2.5rem;
   background: linear-gradient(145deg, #ffffff, #f8fafc);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   animation: fadeInScale 0.6s ease-out;
@@ -1704,7 +1704,7 @@
   background: linear-gradient(145deg, #ffffff, #f8fafc);
   border-radius: 20px;
   padding: 2.5rem;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   animation: fadeInScale 0.6s ease-out;

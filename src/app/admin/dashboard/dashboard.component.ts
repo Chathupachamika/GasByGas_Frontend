@@ -1,20 +1,25 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { HeaderComponent } from "../../common/header/header.component";
+// dashboard.component.ts
+import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from "../../common/sidebar/sidebar.component";
 import { LoginService } from '../../service/login.service';
 import { CommonModule } from '@angular/common';
+import { OrderService } from '../../service/order.service';  // Adjust the import path accordingly
+import { OrderSummaryDTO } from '../../model/order-summary.model';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [SidebarComponent,CommonModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] // added to recognize custom elements
+  imports: [CommonModule, SidebarComponent],
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   userDetails: any = null;
+  orders: OrderSummaryDTO[] = [];
 
-  constructor(private loginService: LoginService) {}
+  constructor(
+    private loginService: LoginService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
     // Get the stored user details from localStorage
@@ -23,19 +28,40 @@ export class DashboardComponent implements OnInit {
       this.userDetails = JSON.parse(storedDetails);
       console.log('Loaded user details:', this.userDetails);
     }
+
+    // Load all order summaries
+    this.loadAllOrderSummaries();
   }
 
-  // Helper method to check if user is logged in
   isLoggedIn(): boolean {
     return this.loginService.isLoggedIn();
   }
 
-  // Method to get user role
   getUserRole(): string {
     if (this.userDetails && this.userDetails.roles && this.userDetails.roles.length > 0) {
-      // Remove 'ROLE_' prefix if present
       return this.userDetails.roles[0].replace('ROLE_', '');
     }
     return '';
+  }
+
+  loadAllOrderSummaries(): void {
+    this.orderService.getAllOrderSummary().subscribe(
+      (orders) => {
+        this.orders = orders;
+        console.log('Loaded all order summaries:', orders);
+      },
+      (error) => console.error('Error loading order summaries', error)
+    );
+  }
+
+  deleteOrder(id: number): void {
+    this.orderService.deleteOrderSummary(id).subscribe(
+      () => {
+        // Remove the deleted order from the list
+        this.orders = this.orders.filter(order => order.id !== id);
+        console.log(`Order with ID ${id} deleted successfully.`);
+      },
+      (error) => console.error(`Error deleting order with ID ${id}`, error)
+    );
   }
 }

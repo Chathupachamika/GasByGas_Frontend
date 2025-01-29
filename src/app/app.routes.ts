@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './admin/components/login/login.component';
+import { OrderComponent } from './admin/components/order/order.component';
+import { RegisterComponent } from './admin/components/register/register.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
-import { OrderComponent } from './components/order/order.component';
-import { AboutComponent } from './components/about/about.component';
-import { ProductsComponent } from './components/products/products.component';
+import { ProductsComponent } from './admin/components/products/products.component';
+import { AboutComponent } from './admin/components/about/about.component';
 
 export const routes: Routes = [
   {

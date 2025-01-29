@@ -1,102 +1,46 @@
+<!-- dashboard.component.html -->
 <div class="dashboard-container">
-    <app-sidebar></app-sidebar>
+  <!-- Add sidebar -->
 
-    <main class="main-content">
-        <div class="header">
-            <div class="header-content">
-                <h1>Dashboard Overview</h1>
-                <p class="subtitle">Welcome back, Admin</p>
-            </div>
-            <div class="contact-info" *ngIf="userDetails">
-                <i class="ri-phone-line" style="margin-right: 10px; font-size: 24px;"></i>
-                <a href="tel:{{userDetails.contactNo}}">{{userDetails.contactNo}}</a>
-            </div>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="ri-user-line"></i>
-                </div>
-                <div class="stat-details">
-                    <h3>Total Customers</h3>
-                    <div class="stat-value">2,451</div>
-                    <span class="trend positive">+12.5%</span>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="ri-shopping-cart-line"></i>
-                </div>
-                <div class="stat-details">
-                    <h3>Total Orders</h3>
-                    <div class="stat-value">1,234</div>
-                    <span class="trend positive">+8.3%</span>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="ri-truck-line"></i>
-                </div>
-                <div class="stat-details">
-                    <h3>Pending Deliveries</h3>
-                    <div class="stat-value">45</div>
-                    <span class="trend positive">Active</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="banner-image">
-        </div>
-
-        <div class="customer-table">
-            <div class="table-header">
-                <h2>Recent Orders</h2>
-                <div class="table-actions">
-                    <button class="filter-btn">
-                        <i class="ri-filter-3-line"></i>
-                        Filter
-                    </button>
-                    <button class="export-btn">
-                        <i class="ri-download-2-line"></i>
-                        Export
-                    </button>
-                </div>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Contact No</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>110700</td>
-                        <td>Harsha John</td>
-                        <td>No 36, Gate Road, Colombo 06</td>
-                        <td>076 - 1107694</td>
-                        <td><button class="action-button">Cancel</button></td>
-                    </tr>
-                    <tr>
-                        <td>110600</td>
-                        <td>M.R.P Karunathilaka</td>
-                        <td>No 36, Gate Road, Panadura</td>
-                        <td>075 - 1123748</td>
-                        <td><button class="action-button">Cancel</button></td>
-                    </tr>
-                    <tr>
-                        <td>110550</td>
-                        <td>D.P Jayasena</td>
-                        <td>No 154, Gate Road, Moratuwa</td>
-                        <td>070 - 4321344</td>
-                        <td><button class="action-button">Cancel</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </main>
+  <!-- Main Content -->
+  <main class="main-content">
+      <div class="header">
+          <h1>Dashboard</h1>
+          <div class="contact-info" *ngIf="userDetails">
+              <i class="ri-phone-line" style="margin-right: 10px; font-size: 24px;"></i>
+              <a href="tel:{{userDetails.contactNo}}">{{userDetails.contactNo}}</a>
+          </div>
+      </div>
+      <div class="banner-image">
+          <img src="https://cdn-bfgmm.nitrocdn.com/SZnNrJtCHNQoEVazTVryKEZBGmHzgakX/assets/images/optimized/rev-fa18e7c/ideausher.com/wp-content/uploads/2021/03/Artboard-2.png"
+              alt="Gas delivery trucks">
+      </div>
+      <div class="customer-table">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Address</th>
+                      <th>Delivery Date</th>
+                      <th>Delivery Time</th>
+                      <th>Payment Method</th>
+                      <th>Contact No</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let order of orders">
+                      <td>{{ order.customerName }}</td>
+                      <td>{{ order.addressLine1 }} {{ order.addressLine2 }}, {{ order.city }}</td>
+                      <td>{{ order.deliveryDate }}</td>
+                      <td>{{ order.deliveryTime }}</td>
+                      <td>{{ order.paymentMethod }}</td>
+                      <td>{{ order.mobileNumber }}</td>
+                      <td><button class="action-button" (click)="order.id !== undefined && deleteOrder(order.id)">Cancel</button></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </main>
 </div>
+<app-sidebar></app-sidebar>

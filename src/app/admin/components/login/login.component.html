@@ -25,7 +25,7 @@
         <div class="input-container">
           <i class="fas fa-lock"></i>
           <input [type]="showPassword ? 'text' : 'password'"
-                 formControlName="password" 
+                 formControlName="password"
                  placeholder="Password"
                  [class.input-error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
           <button type="button" class="password-toggle" (click)="togglePassword()">
@@ -51,7 +51,7 @@
         <i class="fas fa-arrow-right"></i>
       </button>
 
-      
+
 
       <div class="mt-6 grid grid-cols-2 gap-3">
         <button class="inline-flex w-full justify-end rounded-md bg-white px-2 py-1 text-gray-500">
@@ -103,7 +103,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="modal-body">
                 <div class="modal-icon-wrapper">
                     <div class="modal-icon">
@@ -119,9 +119,9 @@
                             <div class="input-icon">
                                 <i class="fas fa-envelope"></i>
                             </div>
-                            <input 
-                                type="email" 
-                                [(ngModel)]="resetEmail" 
+                            <input
+                                type="email"
+                                [(ngModel)]="resetEmail"
                                 name="resetEmail"
                                 placeholder="your@email.com"
                                 required
@@ -163,7 +163,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="modal-body">
                 <div class="modal-icon-wrapper success">
                     <div class="modal-icon">
@@ -175,8 +175,8 @@
 
                 <form (ngSubmit)="verifyOtp()" class="otp-form">
                     <div class="otp-container">
-                        <input 
-                            type="text" 
+                        <input
+                            type="text"
                             *ngFor="let control of otpControls; let i = index"
                             [formControl]="control"
                             maxlength="1"
@@ -184,15 +184,15 @@
                             (keyup)="onOtpInput($event, i)"
                             (paste)="onOtpPaste($event)">
                     </div>
-                    
+
                     <div class="timer-section">
                         <span class="timer" *ngIf="remainingTime > 0">
                             <i class="fas fa-clock"></i>
                             Code expires in {{remainingTime}} seconds
                         </span>
-                        <button 
-                            type="button" 
-                            class="resend-btn" 
+                        <button
+                            type="button"
+                            class="resend-btn"
                             [disabled]="remainingTime > 0"
                             (click)="resendOtp()">
                             <i class="fas fa-redo-alt"></i>
@@ -225,7 +225,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="modal-body">
                 <div class="modal-icon-wrapper">
                     <div class="modal-icon">
@@ -241,9 +241,9 @@
                             <div class="input-icon">
                                 <i class="fas fa-lock"></i>
                             </div>
-                            <input 
-                                type="password" 
-                                [(ngModel)]="newPassword" 
+                            <input
+                                type="password"
+                                [(ngModel)]="newPassword"
                                 name="newPassword"
                                 placeholder="New Password"
                                 required
@@ -253,9 +253,9 @@
                             <div class="input-icon">
                                 <i class="fas fa-lock"></i>
                             </div>
-                            <input 
-                                type="password" 
-                                [(ngModel)]="confirmPassword" 
+                            <input
+                                type="password"
+                                [(ngModel)]="confirmPassword"
                                 name="confirmPassword"
                                 placeholder="Confirm Password"
                                 required
