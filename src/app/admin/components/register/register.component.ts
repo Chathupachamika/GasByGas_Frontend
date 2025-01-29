@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginService } from '../../service/login.service';
-import { RegisterModel } from '../../model/register.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RegisterModel } from '../../../model/register.model';
+import { LoginService } from '../../../service/login.service';
 
 interface BackendUserModel {
   name: string;

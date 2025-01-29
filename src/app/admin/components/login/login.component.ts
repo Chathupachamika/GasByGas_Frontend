@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginService } from '../../service/login.service';
-import { LoginModel } from '../../model/login.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { LoginService } from '../../../service/login.service';
+import { LoginModel } from '../../../model/login.model';
 
 @Component({
   selector: 'app-login',

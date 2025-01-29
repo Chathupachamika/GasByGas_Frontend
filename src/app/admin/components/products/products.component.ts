@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from '../../common/sidebar/sidebar.component';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ProductService, GasDTO } from '../../services/product.service';
+
 import { HttpClientModule } from '@angular/common/http';
+import { SidebarComponent } from '../../../common/sidebar/sidebar.component';
+import { GasDTO, ProductService } from '../../../service/product.service';
 
 interface Product {
   id: number;
@@ -24,7 +25,7 @@ interface Product {
 
 export class ProductsComponent implements OnInit {
 
-  
+
   products: Product[] = [
     {
       id: 1,
@@ -97,7 +98,7 @@ export class ProductsComponent implements OnInit {
   submitProduct() {
     if (this.productForm.valid) {
       console.log('Form is valid, preparing to submit:', this.productForm.value);
-      
+
       const formValue = this.productForm.value;
       const newProduct: GasDTO = {
         name: `Gas Cylinder ${formValue.capacity}kg`,
