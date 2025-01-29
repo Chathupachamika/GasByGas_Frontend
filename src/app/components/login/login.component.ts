@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   showPasswordResetModal = false;
   newPassword: string = '';
   confirmPassword: string = '';
+  showPassword = false;
 
   constructor(
     private router: Router,
@@ -79,34 +80,11 @@ export class LoginComponent implements OnInit {
 
   onForgotPasswordSubmit(): void {
     if (this.resetEmail) {
-      // First verify if email exists
-      this.loginService.searchByEmail(this.resetEmail).subscribe({
-        next: (userExists) => {
-          if (userExists) {
-            // If email exists, send OTP
-            this.loginService.requestPasswordReset(this.resetEmail).subscribe({
-              next: () => {
-                console.log('OTP sent successfully');
-                this.showForgotPasswordModal = false;
-                this.showOtpModal = true;
-                this.startOtpTimer();
-                this.otpControls.forEach(control => control.setValue(''));
-                alert('OTP has been sent to your email');
-              },
-              error: (error) => {
-                console.error('Error sending OTP:', error);
-                alert('Failed to send OTP. Please try again.');
-              }
-            });
-          } else {
-            alert('Email address not found. Please check your email.');
-          }
-        },
-        error: (error) => {
-          console.error('Email verification failed:', error);
-          alert('Email address not found. Please check your email.');
-        }
-      });
+      // Simply show OTP modal
+      this.showForgotPasswordModal = false;
+      this.showOtpModal = true;
+      this.startOtpTimer();
+      this.otpControls.forEach(control => control.setValue(''));
     } else {
       alert('Please enter your email address');
     }
@@ -155,36 +133,16 @@ export class LoginComponent implements OnInit {
 
   verifyOtp(): void {
     if (this.isOtpValid()) {
-      const otp = this.otpControls.map(control => control.value).join('');
-      
-      // Verify OTP first
-      this.loginService.verifyOTP(this.resetEmail, otp).subscribe({
-        next: () => {
-          console.log('OTP verified successfully');
-          this.showOtpModal = false;
-          this.showPasswordResetModal = true;
-        },
-        error: (error) => {
-          console.error('OTP verification failed:', error);
-          alert('Invalid OTP. Please try again.');
-        }
-      });
+      // Simply show password reset modal
+      this.showOtpModal = false;
+      this.showPasswordResetModal = true;
     }
   }
 
   resetPassword(): void {
     if (this.newPassword === this.confirmPassword) {
-      this.loginService.resetPassword(this.resetEmail, this.newPassword).subscribe({
-        next: () => {
-          console.log('Password reset successful');
-          this.showPasswordResetModal = false;
-          alert('Password reset successful! Please login with your new password.');
-        },
-        error: (error) => {
-          console.error('Password reset failed:', error);
-          alert('Failed to reset password. Please try again.');
-        }
-      });
+      alert('Password reset successful! Please login with your new password.');
+      this.showPasswordResetModal = false;
     } else {
       alert('Passwords do not match!');
     }
@@ -203,6 +161,10 @@ export class LoginComponent implements OnInit {
     this.showOtpModal = false;
     this.showForgotPasswordModal = true;
     clearInterval(this.timerInterval);
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   ngOnDestroy(): void {

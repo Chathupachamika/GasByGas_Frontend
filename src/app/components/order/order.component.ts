@@ -6,6 +6,7 @@ import { LoginService } from '../../service/login.service';
 import { PaypalService } from '../../service/paypal.service';
 import jsPDF from 'jspdf';
 import { Router } from '@angular/router';
+
 import html2canvas from 'html2canvas';
 import { OrderService } from '../../service/order.service';
 
@@ -94,6 +95,19 @@ export class OrderComponent implements OnInit {
     this.orderService.getAllOutlets().subscribe((data: any[]) => {
       this.outlets = data;
     });
+  }
+
+
+  incrementQuantity() {
+    const currentValue = this.gasSelectionForm.get('quantity')?.value || 0;
+    this.gasSelectionForm.patchValue({ quantity: currentValue + 1 });
+  }
+  
+  decrementQuantity() {
+    const currentValue = this.gasSelectionForm.get('quantity')?.value || 0;
+    if (currentValue > 1) {
+      this.gasSelectionForm.patchValue({ quantity: currentValue - 1 });
+    }
   }
 
 
@@ -344,13 +358,25 @@ seeToken(orderId: number): void {
 }
 
 generateToken(): void {
+
+  // Simple alert when token is generated
+  alert('Token Generated Successfully!');
+  
+  // Keep the existing token generation logic
+
   // Creating the token object according to the API structure
+
   const tokenObject = {
     userId: this.customerForm.get('userId')?.value,
     outletId: this.gasSelectionForm.get('outletId')?.value,
     orderGasList: this.selectedGases.map(gas => ({
       gasId: gas.gasId,
       quantity: gas.quantity
+
+    }))
+  };
+
+
       // Removed location since it's not in your API structure
     }))
   };
@@ -358,15 +384,22 @@ generateToken(): void {
   // Log the request object for debugging
   console.log('Token Object:', tokenObject);
 
+
   this.orderService.createScheduleOrder(tokenObject).subscribe({
     next: (response) => {
       const orderId = response.orderId;
       console.log('Order created successfully:', orderId);
+
+    },
+    error: (err) => {
+      console.error('Error generating token:', err);
+
       // Pass the orderId to seeToken method
     },
     error: (err) => {
       console.error('Error generating token:', err);
       // Handle error here
+
     }
   });
 }
@@ -451,6 +484,101 @@ closeTokenPopup(): void {
   async downloadCoursePDF(order: Order): Promise<void> {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.width;
+
+    const pageHeight = doc.internal.pageSize.height;
+    const margin = 20;
+  
+    // Background with gradient effect
+    doc.setFillColor(247, 250, 252);
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+    
+    // Add decorative header band
+    doc.setFillColor(59, 130, 246);
+    doc.rect(0, 0, pageWidth, 50, 'F');
+    
+    // Company Logo/Name
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(28);
+    doc.setFont('helvetica', 'bold');
+    doc.text('GAS BY GAS', pageWidth / 2, 30, { align: 'center' });
+    doc.setFontSize(12);
+    doc.text('Your Trusted Gas Provider', pageWidth / 2, 42, { align: 'center' });
+  
+    // Decorative line
+    doc.setDrawColor(59, 130, 246);
+    doc.setLineWidth(0.5);
+    doc.line(margin, 70, pageWidth - margin, 70);
+  
+    // Token Section
+    doc.setTextColor(30, 41, 59);
+    doc.setFontSize(20);  // Reduced from 24
+    doc.setFont('helvetica', 'bold');
+    doc.text('COLLECTION TOKEN', pageWidth / 2, 90, { align: 'center' });
+  
+    // Token Box with shadow effect
+    const tokenBoxY = 110;
+    // Shadow effect
+    doc.setFillColor(230, 236, 241);
+    doc.rect(margin + 2, tokenBoxY - 8, pageWidth - (2 * margin), 50, 'F');  // Increased height to 50
+    // Main box
+    doc.setFillColor(255, 255, 255);
+    doc.setDrawColor(59, 130, 246);
+    doc.setLineWidth(1);
+    doc.rect(margin, tokenBoxY - 10, pageWidth - (2 * margin), 50, 'FD');  // Increased height to 50
+  
+    // Token Number (smaller size)
+    doc.setFontSize(24);  // Reduced from 32
+    doc.setTextColor(59, 130, 246);
+    doc.text(this.generatedToken, pageWidth / 2, tokenBoxY + 10, { align: 'center' });  // Adjusted Y position
+  
+    // Additional Information (moved down)
+    doc.setFontSize(12);
+    doc.setTextColor(107, 114, 128);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Please present this token at the collection counter', pageWidth / 2, tokenBoxY + 35, { align: 'center' });  // Increased spacing
+  
+    // Adjusted validity section starting position
+    const validityY = tokenBoxY + 70;  // Moved down to accommodate larger box
+  
+    // Validity Section
+    doc.setFontSize(11);
+    doc.setTextColor(30, 41, 59);
+    const today = new Date();
+    const validUntil = new Date(today);
+    validUntil.setDate(validUntil.getDate() + 7);
+  
+    doc.text('Generated on:', margin, validityY);
+    doc.text(today.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }), margin + 70, validityY);
+  
+    doc.text('Valid until:', margin, validityY + 15);
+    doc.text(validUntil.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }), margin + 70, validityY + 15);
+  
+    // Footer
+    doc.setDrawColor(59, 130, 246);
+    doc.setLineWidth(0.5);
+    doc.line(margin, pageHeight - 30, pageWidth - margin, pageHeight - 30);
+  
+    doc.setFontSize(10);
+    doc.setTextColor(107, 114, 128);
+    doc.text('Gas By Gas Pvt Ltd', margin, pageHeight - 20);
+    doc.text('Contact: +94 11 234 5678', pageWidth - margin, pageHeight - 20, { align: 'right' });
+  
+    // Save with formatted name
+    const formattedDate = new Date().toISOString().split('T')[0];
+    doc.save(`GasByGas_Token_${this.generatedToken}_${formattedDate}.pdf`);
+  }
+  
+
     doc.setFontSize(18);
     doc.text('Order Token Key', pageWidth / 2, 20, { align: 'center' });
     let currentY = 40;
@@ -462,6 +590,7 @@ closeTokenPopup(): void {
     doc.text(`Generated on: ${today}`, 20, doc.internal.pageSize.height - 20);
     doc.save(`Order_Token_Key.pdf`);
   }
+
 
   // Method to be called when the button is clicked
   onDownloadClick(): void {
@@ -486,4 +615,25 @@ closeTokenPopup(): void {
       }
     });
   }
+
+  // Add these new methods
+  calculateSubtotal(): number {
+    return this.selectedGases.reduce((total, gas) => {
+      const gasItem = this.availableGases.find(g => g.id === gas.gasId);
+      return total + (gasItem ? gasItem.price * gas.quantity : 0);
+    }, 0);
+  }
+
+  get deliveryFee(): number {
+    return 50; // Fixed delivery fee
+  }
+
+  calculateTotal(): number {
+    return this.calculateSubtotal() + this.deliveryFee;
+  }
+
+  selectPaymentMethod(method: string): void {
+    this.paymentForm.patchValue({ paymentMethod: method });
+  }
+
 }

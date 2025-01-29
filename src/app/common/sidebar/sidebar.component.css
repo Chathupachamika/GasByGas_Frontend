@@ -15,6 +15,23 @@ body {
     min-height: 100vh;
 }
 
+.dashboard-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    transition: background 0.3s ease;
+    z-index: 999;
+}
+
+.dashboard-overlay.active {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -22,12 +39,12 @@ body {
     height: 100%;
     width: 280px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
-    background-color: #ffffff;
-    color: #333333;
-    border-right: 1px solid rgba(229, 231, 235, 0.5);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    z-index: 1001; /* Ensure sidebar is above overlay */
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(229, 231, 235, 0.2);
+    animation: sidebarPulse 3s infinite;
 }
 
 .sidebar:hover,
@@ -49,9 +66,10 @@ body {
 .profile-section {
     text-align: center;
     padding: 1.5rem 1.5rem; /* reduced from 2.5rem to 1.5rem */
-    background: linear-gradient(to bottom, #f8fafc, #ffffff);
-    border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+    background: linear-gradient(to bottom, rgba(248, 250, 252, 0.5), rgba(255, 255, 255, 0.3));
+    border-bottom: 1px solid rgba(229, 231, 235, 0.2);
     margin-bottom: 0.5rem; /* reduced from 1.5rem to 0.5rem */
+    animation: gradientShift 8s infinite;
 }
 
 .profile-image {
@@ -67,6 +85,8 @@ body {
     border: 3px solid #ffffff;
     box-shadow: 0 0 0 2px #e2e8f0;
     transition: transform 0.2s ease;
+    animation: profilePulse 4s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
 }
 
 .profile-image:hover {
@@ -84,7 +104,8 @@ body {
 .profile-info {
     margin-top: 0.75rem;
     padding: 0.5rem;
-    background: rgba(243, 244, 246, 0.3);
+    background: rgba(243, 244, 246, 0.2);
+    backdrop-filter: blur(8px);
     border-radius: 8px;
 }
 
@@ -103,7 +124,7 @@ body {
     color: #64748b;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    background: rgba(203, 213, 225, 0.2);
+    background: rgba(203, 213, 225, 0.15);
     padding: 0.25rem 0.75rem;
     border-radius: 12px;
     display: inline-block;
@@ -131,28 +152,34 @@ body {
     color: #475569;
     text-decoration: none;
     border-radius: 8px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     font-weight: 500;
     position: relative;
     overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
 }
 
 .nav-link i {
     margin-right: 0.875rem;
     font-size: 1.25rem;
     transition: transform 0.2s ease;
+    animation: iconFloat 3s ease-in-out infinite;
 }
 
 .nav-link:hover {
-    background-color: #f8fafc;
+    background: rgba(248, 250, 252, 0.4);
     color: #2563eb;
-    transform: translateX(4px);
+    transform: translateX(8px);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
 }
 
 .nav-link.active {
-    background-color: #eff6ff;
+    background: rgba(239, 246, 255, 0.45);
     color: #2563eb;
     font-weight: 600;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1);
+    animation: activeItemPulse 2s infinite;
 }
 
 .nav-link:hover i,
@@ -265,7 +292,8 @@ nav {
 .logout-section {
     position: relative;
     padding: 0.75rem 1.25rem; /* Reduced top/bottom padding */
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
     border-top: 1px solid rgba(229, 231, 235, 0.5);
 }
 
@@ -275,7 +303,8 @@ nav {
     align-items: center;
     padding: 0.875rem 1.25rem;
     color: #dc2626;
-    background: rgba(254, 242, 242, 0.8);
+    background: rgba(254, 242, 242, 0.4);
+    backdrop-filter: blur(8px);
     border: 1px solid rgba(220, 38, 38, 0.1);
     border-radius: 12px;
     font-weight: 500;
@@ -290,7 +319,7 @@ nav {
 }
 
 .logout-button:hover {
-    background: rgba(254, 242, 242, 0.95);
+    background: rgba(254, 242, 242, 0.6);
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(220, 38, 38, 0.1);
 }
@@ -299,11 +328,42 @@ nav {
     transform: scale(1.1);
 }
 
+@keyframes sidebarPulse {
+    0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.1); }
+    50% { box-shadow: 0 0 20px 0 rgba(37, 99, 235, 0.2); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.1); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes activeItemPulse {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes iconFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes profilePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 @media (max-width: 1024px) {
     .sidebar {
         width: 80px;
         padding: 1rem 0.5rem;
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(18px);
     }
 
     .profile-name,

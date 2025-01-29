@@ -67,7 +67,8 @@
 
 .input-container input {
     width: 100%;
-    padding: 1rem 3rem 1rem 3rem;  /* Added right padding for the eye icon */
+    padding: 1rem 2.75rem;  /* Left padding for lock icon */
+    padding-right: 3rem;    /* Right padding for eye icon */
     border: 2px solid #e2e8f0;
     border-radius: 12px;
     font-size: 0.95rem;
@@ -90,6 +91,35 @@
 
 .input-container input:focus + i {
     color: #2563eb;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 2.50rem;        /* Increased right spacing */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 2;            /* Ensure icon stays above input */
+}
+
+.password-toggle:hover {
+    color: #0F3B7A;
+}
+
+.password-toggle:focus {
+    outline: none;
+}
+
+.password-toggle i {
+    font-size: 1.1rem;
 }
 
 .form-options {
@@ -731,6 +761,26 @@
     transition: all 0.3s ease-in-out;
 }
 
+.error-message {
+    display: flex;
+    align-items: center;
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: rgba(220, 38, 38, 0.1);
+    border-radius: 6px;
+    animation: fadeInError 0.3s ease-in;
+}
+
+.error-message::before {
+    content: '\f071';  /* Font Awesome exclamation triangle */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 0.5rem;
+    font-size: 0.875rem;
+}
+
 @keyframes cardFloat {
     0% {
         opacity: 0;
@@ -773,6 +823,17 @@
     0% { transform: scale(0.5); opacity: 0; }
     50% { transform: scale(1.2); }
     100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (max-width: 480px) {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../common/sidebar/sidebar.component';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ProductService, GasDTO } from '../../services/product.service';
+import { HttpClientModule } from '@angular/common/http';
 
 interface Product {
   id: number;
@@ -16,9 +18,13 @@ interface Product {
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
   standalone: true,
-  imports: [CommonModule, SidebarComponent, ReactiveFormsModule]
+  imports: [CommonModule, SidebarComponent, ReactiveFormsModule, HttpClientModule]
 })
+
+
 export class ProductsComponent implements OnInit {
+
+  
   products: Product[] = [
     {
       id: 1,
@@ -52,17 +58,37 @@ export class ProductsComponent implements OnInit {
 
   showAddProductModal = false;
   productForm: FormGroup;
+  showEditProductModal = false;
+  selectedProduct: Product | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private productService: ProductService) {
     this.productForm = this.fb.group({
-      name: ['', Validators.required],
       capacity: ['', [Validators.required, Validators.min(1)]],
       price: ['', [Validators.required, Validators.min(0)]],
       stock: ['', [Validators.required, Validators.min(0)]]
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productService.getAllProducts().subscribe(
+      (products) => {
+        this.products = products.map(product => ({
+          id: product.id ?? 0, // Ensure id is a number
+          name: product.name,
+          capacity: product.capacity,
+          price: product.price,
+          stock: product.stock
+        }));
+      },
+      (error) => {
+        console.error('Error loading products:', error);
+      }
+    );
+  }
 
   addNewProduct() {
     this.showAddProductModal = true;
@@ -70,18 +96,109 @@ export class ProductsComponent implements OnInit {
 
   submitProduct() {
     if (this.productForm.valid) {
-      const newProduct = {
-        id: this.products.length + 1,
-        ...this.productForm.value
+      console.log('Form is valid, preparing to submit:', this.productForm.value);
+      
+      const formValue = this.productForm.value;
+      const newProduct: GasDTO = {
+        name: `Gas Cylinder ${formValue.capacity}kg`,
+        capacity: Number(formValue.capacity),
+        price: Number(formValue.price),
+        stock: Number(formValue.stock)
       };
-      this.products.push(newProduct);
-      this.showAddProductModal = false;
-      this.productForm.reset();
+
+      console.log('Sending product to backend:', newProduct);
+
+      this.productService.createProduct(newProduct)
+        .subscribe({
+          next: (createdProduct) => {
+            console.log('Product created successfully:', createdProduct);
+            this.products.push({
+              id: createdProduct.id ?? this.products.length + 1,
+              name: createdProduct.name,
+              capacity: createdProduct.capacity,
+              price: createdProduct.price,
+              stock: createdProduct.stock
+            });
+            this.showAddProductModal = false;
+            this.productForm.reset();
+            // Add success alert
+            alert('Product added successfully!');
+          },
+          error: (error) => {
+            console.error('Error creating product:', error);
+            alert('Failed to create product. Please try again.');
+          }
+        });
+    } else {
+      console.log('Form is invalid:', this.productForm.errors);
     }
   }
 
   closeModal() {
     this.showAddProductModal = false;
+    this.productForm.reset();
+  }
+
+  deleteProduct(id: number) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService.deleteProduct(id).subscribe({
+        next: () => {
+          this.products = this.products.filter(product => product.id !== id);
+          alert('Product deleted successfully!');
+        },
+        error: (error) => {
+          console.error('Error deleting product:', error);
+          alert('Failed to delete product. Please try again.');
+        }
+      });
+    }
+  }
+
+  editProduct(product: Product) {
+    this.selectedProduct = product;
+    this.productForm.patchValue({
+      capacity: product.capacity,
+      price: product.price,
+      stock: product.stock
+    });
+    this.showEditProductModal = true;
+  }
+
+  updateProduct() {
+    if (this.productForm.valid && this.selectedProduct) {
+      const formValue = this.productForm.value;
+      const updatedProduct: GasDTO = {
+        id: this.selectedProduct.id,
+        name: this.selectedProduct.name,
+        capacity: Number(formValue.capacity),
+        price: Number(formValue.price),
+        stock: Number(formValue.stock)
+      };
+
+      this.productService.updateProduct(this.selectedProduct.id, updatedProduct)
+        .subscribe({
+          next: (updated) => {
+            const index = this.products.findIndex(p => p.id === updated.id);
+            if (index !== -1) {
+              this.products[index] = {
+                ...this.products[index],
+                ...updated
+              };
+            }
+            this.closeEditModal();
+            alert('Product updated successfully!');
+          },
+          error: (error) => {
+            console.error('Error updating product:', error);
+            alert('Failed to update product. Please try again.');
+          }
+        });
+    }
+  }
+
+  closeEditModal() {
+    this.showEditProductModal = false;
+    this.selectedProduct = null;
     this.productForm.reset();
   }
 }

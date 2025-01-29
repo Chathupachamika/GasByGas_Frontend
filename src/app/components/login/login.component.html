@@ -24,10 +24,13 @@
       <div class="form-group">
         <div class="input-container">
           <i class="fas fa-lock"></i>
-          <input type="password"
+          <input [type]="showPassword ? 'text' : 'password'"
                  formControlName="password" 
                  placeholder="Password"
                  [class.input-error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          <button type="button" class="password-toggle" (click)="togglePassword()">
+            <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+          </button>
         </div>
       </div>
 

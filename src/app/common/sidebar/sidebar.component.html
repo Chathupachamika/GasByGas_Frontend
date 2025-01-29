@@ -1,5 +1,6 @@
 <div class="sidebar-trigger">
-    <aside class="sidebar">
+    <div class="dashboard-overlay" [class.active]="sidebarExpanded"></div>
+    <aside class="sidebar" [class.sidebar-expanded]="sidebarExpanded" (mouseenter)="expandSidebar()" (mouseleave)="collapseSidebar()">
         <div class="sidebar-content">
             <div class="top-section">
                 <div class="profile-section">
