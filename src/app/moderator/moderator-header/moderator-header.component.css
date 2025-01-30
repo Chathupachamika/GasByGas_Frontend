@@ -1035,7 +1035,7 @@
   max-width: 400px;
   background: white;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 1102; /* Increased z-index to ensure visibility */
+  z-index: 2000; /* Increased z-index to ensure visibility */
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
 }
@@ -1046,7 +1046,7 @@
   height: 100%;
   background: white;
   position: relative;
-  z-index: 1103; /* Ensure popup content is above overlay */
+  z-index: 2001; /* Ensure popup content is above overlay */
 }
 
 .notifications-header {
