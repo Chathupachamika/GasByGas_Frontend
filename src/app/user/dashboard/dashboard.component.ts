@@ -56,6 +56,9 @@ export class DashboardComponent implements OnInit {
         },
         (error) => {
           console.error('Error loading user orders:', error);
+          if (error.status === 0) {
+            console.error('CORS error or network issue');
+          }
         }
       );
     } else {
