@@ -1,4 +1,4 @@
-# 🚀 GasByGas Frontend 🛢️
+ù# 🚀 GasByGas Frontend 🛢️
 
 ## 📝 Project Overview
 GasByGas is an innovative LP gas distribution platform in Sri Lanka, revolutionizing gas cylinder requests and delivery management. 🇱🇰
@@ -31,6 +31,7 @@ cd gasByGas-frontend
 
 # Install dependencies
 npm install
+npm install jspdf html2canvas
 
 # Start development server
 npm start
