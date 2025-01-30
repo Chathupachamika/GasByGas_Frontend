@@ -4,6 +4,7 @@ import { OrderComponent } from './admin/components/order/order.component';
 import { RegisterComponent } from './admin/components/register/register.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ProductsComponent } from './admin/components/products/products.component';
+import { ContactComponent } from './admin/components/contact/contact.component';
 import { AboutComponent } from './admin/components/about/about.component';
 
 export const routes: Routes = [
@@ -28,12 +29,16 @@ export const routes: Routes = [
     component: DashboardComponent
   },
   {
-    path:'product',
+    path: 'product',
     component: ProductsComponent
   },
 
-{
-  path: 'about',
-  component: AboutComponent
-}
+  {
+    path:'about',
+    component: AboutComponent
+  },
+  {
+    path:'contact',
+    component:ContactComponent
+  }
 ];

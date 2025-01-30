@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 import jsPDF from 'jspdf';
 import { Router } from '@angular/router';
@@ -9,6 +10,8 @@ import { OrderSummaryDTO } from '../../../model/order-summary.model';
 import { LoginService } from '../../../service/login.service';
 import { PaypalService } from '../../../service/paypal.service';
 import { OrderService } from '../../../service/order.service';
+import Swal from 'sweetalert2';
+import { SidebarComponent } from '../../../common/sidebar/sidebar.component';
 
 interface Gas {
   id: number;
@@ -39,7 +42,7 @@ interface Order {
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule]
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule,SidebarComponent]
 })
 export class OrderComponent implements OnInit {
   paymentSuccess: boolean = false; // To show success popup
@@ -103,10 +106,21 @@ export class OrderComponent implements OnInit {
     private loginService: LoginService,
     private paypalService: PaypalService,
     private router: Router,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // Check for step parameter in URL
+    this.route.queryParams.subscribe(params => {
+      if (params['step']) {
+        const step = parseInt(params['step']);
+        if (step >= 1 && step <= this.totalSteps) {
+          this.currentStep = step;
+        }
+      }
+    });
+
     this.initializeForms();
     this.loadOutlets();
     this.loadGases();
@@ -391,11 +405,25 @@ export class OrderComponent implements OnInit {
       next: (response) => {
         const orderId = response.orderId;
         console.log('Order created successfully:', orderId);
-        this.displayAlert('Order created successfully!', 'success');
+        
+        // Show SweetAlert
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Token generated successfully!',
+          confirmButtonColor: '#3b82f6'
+        });
       },
       error: (err) => {
         console.error('Error generating token:', err);
-        this.displayAlert('Error generating token!', 'error');
+        
+        // Show error SweetAlert
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error generating token!',
+          confirmButtonColor: '#3b82f6'
+        });
       }
     });
   }

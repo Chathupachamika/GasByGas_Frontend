@@ -166,6 +166,8 @@
   margin-top: 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid #f1f5f9;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .price {
@@ -419,6 +421,135 @@ transform: scale(1.1);
 
 .edit-btn i {
 font-size: 1rem;
+}
+
+/* ...existing code... */
+
+.empty-stock-btn {
+  background: none;
+  border: none;
+  color: #f59e0b;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+}
+
+.empty-stock-btn:hover {
+  background: rgba(245, 158, 11, 0.1);
+  transform: scale(1.1);
+}
+
+.empty-stock-btn i {
+  font-size: 1rem;
+}
+
+/* ...existing code... */
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.order-now-button {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(34, 197, 94, 0.2);
+}
+
+.order-now-button:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+}
+
+.order-now-button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.order-now-button i {
+  font-size: 0.75rem;
+}
+
+/* ...existing code... */
+
+.request-button {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to bottom, #f59e0b, #d97706);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.2);
+  width: 100%;
+  justify-content: center;
+}
+
+.request-button:hover {
+  background: #d97706;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+}
+
+.request-button i {
+  font-size: 0.75rem;
+}
+
+/* ...existing code... */
+
+.request-modal {
+  max-width: 450px;
+}
+
+.request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.request-form .form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.request-form .form-group input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+.request-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.request-form .error-message {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
 }
 
 /* ...existing code... */

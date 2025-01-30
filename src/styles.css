@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    padding-top: 150px; /* Adjust the value as needed for more space */
+    padding-top: 110px; /* Adjust the value as needed for more space */
 }
 
 .header {
