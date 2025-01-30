@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -9,25 +8,23 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean {
-    const userDetails = this.authService.getCurrentUser();
-
-    if (!userDetails) {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
       return false;
     }
 
-    // Check if route requires specific roles
-    if (route.data['roles'] && route.data['roles'].length) {
-      const userRoles = userDetails.roles.map(role => role.replace('ROLE_', ''));
-      if (!route.data['roles'].some((role: string) => userRoles.includes(role))) {
-        // Role not authorized, redirect to home page
-        this.router.navigate(['/unauthorized']);
-        return false;
+    const userRole = this.authService.getUserRole();
+    const allowedRoles = route.data['roles'] as Array<string>;
+
+    if (!userRole || !allowedRoles || !allowedRoles.includes(userRole)) {
+      // Redirect to appropriate dashboard based on role
+      if (userRole) {
+        this.router.navigate([this.authService.getRedirectUrl(userRole)]);
+      } else {
+        this.router.navigate(['/login']);
       }
+      return false;
     }
 
     return true;

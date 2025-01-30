@@ -1,18 +1,17 @@
-// dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
-import { SidebarComponent } from "../../common/sidebar/sidebar.component";
-import { LoginService } from '../../service/login.service';
-import { CommonModule } from '@angular/common';
-import { OrderService } from '../../service/order.service';  // Adjust the import path accordingly
+import { AdminDheaderComponent } from "../admin-dheader/admin-dheader.component";
 import { OrderSummaryDTO } from '../../model/order-summary.model';
+import { LoginService } from '../../service/login.service';
+import { OrderService } from '../../service/order.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  imports: [CommonModule, SidebarComponent],
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-admin-dashboard',
+  imports: [AdminDheaderComponent,CommonModule],
+  templateUrl: './admin-dashboard.component.html',
+  styleUrl: './admin-dashboard.component.css'
 })
-export class DashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit {
   userDetails: any = null;
   orders: OrderSummaryDTO[] = [];
 

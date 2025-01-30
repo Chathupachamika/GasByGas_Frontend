@@ -1,39 +1,108 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './admin/components/login/login.component';
-import { OrderComponent } from './admin/components/order/order.component';
-import { RegisterComponent } from './admin/components/register/register.component';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
-import { ProductsComponent } from './admin/components/products/products.component';
-import { AboutComponent } from './admin/components/about/about.component';
+import { LoginComponent } from './common/login/login.component';
+import { RegisterComponent } from './common/register/register.component';
+import { OrderComponent } from './user/components/order/order.component';
+import { DashboardComponent } from './user/dashboard/dashboard.component';
+import { ProductsComponent } from './user/components/products/products.component';
+import { AboutComponent } from './user/components/about/about.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { AdminDheaderComponent } from './admin/admin-dheader/admin-dheader.component';
+import { AdminOrderComponent } from './admin/components/admin-order/admin-order.component';
+import { AdminProductsComponent } from './admin/components/admin-products/admin-products.component';
+import { ModeratorDashboardComponent } from './moderator/moderator-dashboard/moderator-dashboard.component';
+import { ModeratorHeaderComponent } from './moderator/moderator-header/moderator-header.component';
+import { ModeratorOrderComponent } from './moderator/components/moderator-order/moderator-order.component';
+import { ModeratorOproductsComponent } from './moderator/components/moderator-oproducts/moderator-oproducts.component';
+import { AuthGuard } from './authGuard/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
-  },
-  {
-    path: 'order',
-    component: OrderComponent
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
     path: 'login',
     component: LoginComponent
   },
+
   {
     path: 'register',
     component: RegisterComponent
   },
+  // Admin routes
   {
     path: 'admin-dashboard',
-    component: DashboardComponent
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
   },
   {
-    path:'product',
-    component: ProductsComponent
+    path: 'admin-header',
+    component: AdminDheaderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
   },
-
-{
-  path: 'about',
-  component: AboutComponent
-}
+  {
+    path: 'admin-order',
+    component: AdminOrderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'admin-products',
+    component: AdminProductsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  // Moderator routes
+  {
+    path: 'moderator-dashboard',
+    component: ModeratorDashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['MODERATOR'] }
+  },
+  {
+    path: 'moderator-header',
+    component: ModeratorHeaderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['MODERATOR'] }
+  },
+  {
+    path: 'moderator-order',
+    component: ModeratorOrderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['MODERATOR'] }
+  },
+  {
+    path: 'moderator-products',
+    component: ModeratorOproductsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['MODERATOR'] }
+  },
+  // User routes
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['USER'] }
+  },
+  {
+    path: 'order',
+    component: OrderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['USER'] }
+  },
+  {
+    path: 'product',
+    component: ProductsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['USER'] }
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['USER', 'ADMIN', 'MODERATOR'] }
+  }
 ];

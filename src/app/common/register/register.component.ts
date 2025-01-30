@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { RegisterModel } from '../../../model/register.model';
-import { LoginService } from '../../../service/login.service';
+import { RegisterModel } from '../../model/register.model';
+import { LoginService } from '../../service/login.service';
 
 interface BackendUserModel {
   name: string;

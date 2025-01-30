@@ -1,0 +1,236 @@
+
+<header class="header">
+  <div class="top-bar">
+      <div class="top-bar-content">
+          <div class="top-contact">
+              <a href="tel:+94112100000">
+                  <i class="fas fa-phone"></i>
+                  +94 112 100 000
+              </a>
+              <a href="mailto:info@gasservice.com">
+                  <i class="fas fa-envelope"></i>
+                  infogasservice.com
+              </a>
+          </div>
+          <div class="top-contact">
+              <a href="#">
+                  <i class="fas fa-clock"></i>
+                  24/7 Support Available
+              </a>
+          </div>
+      </div>
+  </div>
+
+  <div class="header-main">
+    <div class="header-container">
+        <a href="/" class="logo">
+            <i class="fas fa-fire-flame-curved"></i>
+            GasService
+        </a>
+
+        <nav class="nav-menu">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." class="search-input">
+                <button class="search-btn" title="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="/admin-dashboard">Home</a></li>
+                <li><a href="/admin-products">Products</a></li>
+                <li><a href="/admin-order">Order</a></li>
+                <li><a href="/service">Services</a></li>
+                <li><a href="/about">About Us</a></li>
+            </ul>
+
+            <div class="nav-icons">
+                <button class="icon-btn" title="User Profile" (click)="toggleProfilePopup()">
+                  <img width="48" height="48" src="https://img.icons8.com/color/48/user-male-circle.png" alt="user-male-circle"/>
+                </button>
+                <button class="icon-btn" title="Shopping Cart" (click)="toggleCartPopup()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">{{ cartItems.length }}</span>
+                </button>
+                <button class="icon-btn" title="Help Center">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+
+            <button class="mobile-menu-btn" title="Mobile Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<!-- Profile View/Edit Popup -->
+<div *ngIf="showProfilePopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-96 relative">
+        <button (click)="closePopup()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" title="Close">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- View Mode -->
+        <div *ngIf="!isEditMode" class="user-details-view">
+            <div class="modal-header">
+                <h2 class="text-2xl font-bold">Profile Details</h2>
+                <hr class="header-divider">
+            </div>
+
+            <div class="user-info">
+                <div class="info-item">
+                    <span class="label">Name:</span>
+                    <span class="value">{{userDetails.name}}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Email:</span>
+                    <span class="value">{{userDetails.email}}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Contact:</span>
+                    <span class="value">{{userDetails.contactNo}}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Role:</span>
+                    <span class="value">{{getUserRole()}}</span>
+                </div>
+            </div>
+
+            <div class="action-buttons-footer">
+                <button class="edit-btn" (click)="enableEditMode()">
+                    <i class="fas fa-edit"></i>
+                    <span>Edit Profile</span>
+                </button>
+                <button class="delete-btn" (click)="confirmDeleteAccount()">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Delete Account</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Edit Mode -->
+        <div *ngIf="isEditMode" class="user-details-edit">
+            <div class="modal-header">
+                <h2 class="text-2xl font-bold mb-2">Update Profile</h2>
+                <p class="text-gray-600 text-sm">Edit your personal information</p>
+                <hr class="header-divider">
+            </div>
+
+            <div class="form-container">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user"></i>
+                        <span>Full Name</span>
+                    </label>
+                    <input type="text" [(ngModel)]="editedUserDetails.name"
+                           class="form-input"
+                           placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Address</span>
+                    </label>
+                    <input type="email" [(ngModel)]="editedUserDetails.email"
+                           class="form-input"
+                           placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-phone"></i>
+                        <span>Contact Number</span>
+                    </label>
+                    <input type="tel" [(ngModel)]="editedUserDetails.contactNo"
+                           class="form-input"
+                           placeholder="Enter your contact number">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-user-tag"></i>
+                        <span>Role</span>
+                    </label>
+                    <input type="text" [value]="getUserRole()" readonly
+                           class="form-input readonly"
+                           placeholder="User Role">
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button (click)="cancelEdit()" class="cancel-btn">
+                    <i class="fas fa-times"></i>
+                    <span>Cancel</span>
+                </button>
+                <button (click)="updateProfile()" class="save-btn">
+                    <i class="fas fa-save"></i>
+                    <span>Save Changes</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Popup -->
+<div *ngIf="showCartPopup" class="cart-popup-overlay" (click)="toggleCartPopup()">
+    <div class="cart-popup" (click)="$event.stopPropagation()">
+        <div class="cart-header">
+            <h3>
+                <i class="fas fa-shopping-cart"></i>
+                Shopping Cart
+            </h3>
+            <button class="close-btn" (click)="toggleCartPopup()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="cart-body">
+            <div *ngIf="cartItems.length === 0" class="empty-cart">
+                <i class="fas fa-shopping-basket"></i>
+                <p>Your cart is empty</p>
+                <button class="shop-now-btn" (click)="navigateToProducts()">
+                    Shop Now
+                </button>
+            </div>
+
+            <div *ngIf="cartItems.length > 0" class="cart-items">
+                <div *ngFor="let item of cartItems" class="cart-item">
+                    <div class="item-image">
+                        <!-- Remove the img tag since we're using CSS backgrounds -->
+                    </div>
+                    <div class="item-details">
+                        <h4>{{item.name}}</h4>
+                        <p class="item-price">${{item.price}}</p>
+                    </div>
+                    <div class="item-quantity">
+                        <button (click)="decrementQuantity(item)">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <span>{{item.quantity}}</span>
+                        <button (click)="incrementQuantity(item)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <button class="remove-btn" (click)="removeItem(item)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="cartItems.length > 0" class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount">${{getTotal()}}</span>
+            </div>
+            <button class="checkout-btn" (click)="checkout()">
+                Proceed to Checkout
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+</header>
+

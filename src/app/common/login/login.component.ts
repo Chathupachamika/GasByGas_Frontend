@@ -3,9 +3,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, F
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { LoginService } from '../../../service/login.service';
-import { LoginModel } from '../../../model/login.model';
-
+import { LoginService } from '../../service/login.service';
+import { LoginModel } from '../../model/login.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

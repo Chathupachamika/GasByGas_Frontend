@@ -1,0 +1,155 @@
+<app-moderator-header></app-moderator-header>
+<div class="products-container">
+  <div class="hero-section">
+    <h1>Premium Gas Solutions</h1>
+    <p>High-quality gas cylinders for residential and commercial use</p>
+    <!-- Add this button after the hero section content -->
+    <button class="add-product-btn" (click)="addNewProduct()">
+      <i class="fas fa-plus"></i>
+      Add New Product
+    </button>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let product of products">
+      <div class="product-image">
+        <div class="stock-badge" [class.low-stock]="product.stock < 10">
+          <i class="fas" [class.fa-check-circle]="product.stock > 10"
+            [class.fa-exclamation-circle]="product.stock < 10"></i>
+          {{product.stock > 0 ? 'In Stock' : 'Out of Stock'}}
+        </div>
+      </div>
+
+      <div class="product-details">
+        <div class="product-header">
+          <h3>{{product.name}}</h3>
+          <div class="action-buttons">
+            <button class="edit-btn" (click)="editProduct(product)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="delete-btn" (click)="deleteProduct(product.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="product-info">
+          <div class="info-item">
+            <i class="fas fa-weight-hanging"></i>
+            <span>{{product.capacity}} kg</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-cubes"></i>
+            <span>{{product.stock}} available</span>
+          </div>
+        </div>
+
+        <div class="price-section">
+          <div class="price">
+            <span class="currency">Rs.</span>
+            <span class="amount">{{product.price}}</span>
+          </div>
+          <button class="order-button" [disabled]="product.stock === 0">
+            <i class="fas fa-shopping-cart"></i>
+            {{product.stock === 0 ? 'Unavailable' : 'Add to Cart'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Product Modal -->
+<div *ngIf="showAddProductModal" class="modal-backdrop" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Add New Product</h2>
+      <button class="close-btn" (click)="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="submitProduct()" class="product-form">
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" formControlName="name" placeholder="Enter product name">
+        <div class="error-message" *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid">
+          Product name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Capacity (KG)</label>
+        <input type="number" formControlName="capacity" placeholder="Enter capacity">
+        <div class="error-message" *ngIf="productForm.get('capacity')?.touched && productForm.get('capacity')?.invalid">
+          Valid capacity is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input type="number" formControlName="price" placeholder="Enter price">
+        <div class="error-message" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid">
+          Valid price is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Stock</label>
+        <input type="number" formControlName="stock" placeholder="Enter stock quantity">
+        <div class="error-message" *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid">
+          Valid stock quantity is required
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="productForm.invalid">Add Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Product Modal -->
+<div *ngIf="showEditProductModal" class="modal-backdrop" (click)="closeEditModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Edit Product</h2>
+      <button class="close-btn" (click)="closeEditModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="updateProduct()" class="product-form">
+      <div class="form-group">
+        <label>Capacity (KG)</label>
+        <input type="number" formControlName="capacity" placeholder="Enter capacity">
+        <div class="error-message" *ngIf="productForm.get('capacity')?.touched && productForm.get('capacity')?.invalid">
+          Valid capacity is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Price (Rs.)</label>
+        <input type="number" formControlName="price" placeholder="Enter price">
+        <div class="error-message" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid">
+          Valid price is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Stock</label>
+        <input type="number" formControlName="stock" placeholder="Enter stock quantity">
+        <div class="error-message" *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid">
+          Valid stock quantity is required
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="closeEditModal()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="productForm.invalid">Update Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+

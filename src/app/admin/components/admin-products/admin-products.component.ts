@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-
 import { HttpClientModule } from '@angular/common/http';
-import { SidebarComponent } from '../../../common/sidebar/sidebar.component';
-import { GasDTO, ProductService } from '../../../service/product.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { GasDTO } from '../../../model/gas.model';
+import { ProductService } from '../../../service/product.service';
+import { AdminDheaderComponent } from "../../admin-dheader/admin-dheader.component";
+
 
 interface Product {
   id: number;
@@ -13,17 +14,14 @@ interface Product {
   price: number;
   stock: number;
 }
-
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css'],
-  standalone: true,
-  imports: [CommonModule, SidebarComponent, ReactiveFormsModule, HttpClientModule]
+  selector: 'app-admin-products',
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, AdminDheaderComponent],
+  templateUrl: './admin-products.component.html',
+  styleUrl: './admin-products.component.css'
 })
-
-
-export class ProductsComponent implements OnInit {
+export class AdminProductsComponent
+implements OnInit {
 
 
   products: Product[] = [

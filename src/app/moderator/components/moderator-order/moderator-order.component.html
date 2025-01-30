@@ -1,0 +1,454 @@
+<app-moderator-header></app-moderator-header>
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto">
+    <!-- Progress Steps -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(1)">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full"
+               [class.bg-blue-600]="isStepActive(1)"
+               [class.bg-gray-200]="!isStepActive(1)"
+               [class.text-white]="isStepActive(1)">
+            <i class="fas fa-user"></i>
+          </div>
+          <span class="ml-2 font-medium">Customer Details</span>
+        </div>
+        <div class="flex-1 h-px mx-4 bg-gray-300"></div>
+
+        <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(2)">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full"
+               [class.bg-blue-600]="isStepActive(2)"
+               [class.bg-gray-200]="!isStepActive(2)"
+               [class.text-white]="isStepActive(2)">
+            <i class="fas fa-gas-pump"></i>
+          </div>
+          <span class="ml-2 font-medium">Gas Selection</span>
+        </div>
+        <div class="flex-1 h-px mx-4 bg-gray-300"></div>
+
+        <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(3)">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full"
+               [class.bg-blue-600]="isStepActive(3)"
+               [class.bg-gray-200]="!isStepActive(3)"
+               [class.text-white]="isStepActive(3)">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <span class="ml-2 font-medium">Location</span>
+        </div>
+        <div class="flex-1 h-px mx-4 bg-gray-300"></div>
+
+        <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(4)">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full"
+               [class.bg-blue-600]="isStepActive(4)"
+               [class.bg-gray-200]="!isStepActive(4)"
+               [class.text-white]="isStepActive(4)">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <span class="ml-2 font-medium">Payment</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Content -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <!-- Customer Details Step -->
+      <div [hidden]="currentStep !== 1">
+        <div class="customer-details-container">
+          <div class="form-header">
+            <h2 class="text-2xl font-bold text-gray-900">Customer Details</h2>
+            <p class="text-gray-600 mt-2">Please fill in your personal information</p>
+          </div>
+
+          <form [formGroup]="customerForm" class="form-grid">
+            <div class="form-field">
+              <label class="field-label">
+                <i class="fas fa-user"></i>
+                <span>Full Name</span>
+              </label>
+              <div class="input-container">
+                <input type="text"
+                       formControlName="name"
+                       class="custom-input"
+                       placeholder="Enter your full name">
+                <div *ngIf="customerForm.get('name')?.touched && customerForm.get('name')?.invalid"
+                     class="error-message">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>Full name is required</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="field-label">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Mobile Number</span>
+              </label>
+              <div class="input-container">
+                <input type="tel"
+                       formControlName="mobileNumber"
+                       class="custom-input"
+                       placeholder="Enter your mobile number">
+                <div *ngIf="customerForm.get('mobileNumber')?.touched && customerForm.get('mobileNumber')?.invalid"
+                     class="error-message">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>Please enter a valid 10-digit mobile number</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="field-label">
+                <i class="fas fa-envelope"></i>
+                <span>Email Address</span>
+              </label>
+              <div class="input-container">
+                <input type="email"
+                       formControlName="email"
+                       class="custom-input"
+                       placeholder="Enter your email address">
+                <div *ngIf="customerForm.get('email')?.touched && customerForm.get('email')?.invalid"
+                     class="error-message">
+                  <i class="fas fa-exclamation-circle"></i>
+                  <span>Please enter a valid email address</span>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="form-footer">
+            <div class="privacy-notice">
+              <i class="fas fa-shield-alt"></i>
+              <p class="text-sm text-gray-600">
+                Your personal information is secure and will only be used for order processing and delivery purposes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gas Selection Step -->
+      <div [hidden]="currentStep !== 2">
+        <div class="gas-selection-container">
+          <div class="section-header">
+            <h2 class="text-2xl font-bold text-gray-900">Select Gas</h2>
+            <p class="text-gray-600 mt-2">Choose your preferred gas type and quantity</p>
+          </div>
+
+          <form [formGroup]="gasSelectionForm" class="gas-selection-form">
+            <div class="outlet-selector">
+              <label class="field-label">
+                <i class="fas fa-store"></i>
+                <span>Select Outlet</span>
+              </label>
+              <select formControlName="outletId" class="outlet-select" title="Select Outlet">
+                <option value="">Select an outlet</option>
+                <option *ngFor="let outlet of outlets" [value]="outlet.id">
+                  {{outlet.name}} - {{outlet.location}}
+                </option>
+              </select>
+            </div>
+
+            <div class="gas-options-grid">
+              <div *ngFor="let gas of availableGases"
+                   class="gas-option-card"
+                   [class.selected]="gasSelectionForm.get('gasId')?.value === gas.id"
+                   (click)="gasSelectionForm.patchValue({gasId: gas.id})">
+                <div class="card-content">
+                  <div class="icon-container">
+                    <i class="fas fa-flask"></i>
+                  </div>
+                  <div class="gas-details">
+                    <div class="capacity">{{gas.capacity}} KG</div>
+                    <div class="price">Rs {{gas.price}}</div>
+                    <div class="stock-indicator" [class.low-stock]="gas.stock < 10">
+                      <i class="fas" [class.fa-check-circle]="gas.stock >= 10" [class.fa-exclamation-circle]="gas.stock < 10"></i>
+                      <span>Stock: {{gas.stock}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="quantity-section">
+              <label class="field-label">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Quantity</span>
+              </label>
+              <div class="quantity-controls">
+                <button type="button" class="qty-btn" (click)="decrementQuantity()">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="number" formControlName="quantity" min="1" class="quantity-input">
+                <button type="button" class="qty-btn" (click)="incrementQuantity()">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="selected-items-container" *ngIf="selectedGases.length > 0">
+              <h3 class="items-header">Selected Items</h3>
+              <div class="selected-items-list">
+                <div *ngFor="let item of selectedGases; let i = index" class="selected-item">
+                  <div class="item-info">
+                    <div class="icon-container-small">
+                      <i class="fas fa-flask"></i>
+                    </div>
+                    <div>
+                      <span class="font-medium">{{availableGases[item.gasId].capacity}} KG x {{item.quantity}}</span>
+                      <span class="text-sm text-gray-500 block" *ngIf="item.location">
+                        Location: {{item.location}}
+                      </span>
+                    </div>
+                  </div>
+                  <button type="button" (click)="removeGasFromOrder(i)" class="remove-item-btn">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Location Step -->
+      <div [hidden]="currentStep !== 3">
+        <div class="delivery-location-container">
+          <div class="delivery-header">
+            <h2 class="text-2xl font-bold text-gray-900">Delivery Location</h2>
+            <p class="text-gray-600 mt-2">Please provide your delivery details</p>
+          </div>
+
+          <form [formGroup]="locationForm" class="delivery-form">
+            <div class="address-grid">
+              <div class="input-group">
+                <label class="input-label">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Address Line 1</span>
+                </label>
+                <input type="text"
+                       formControlName="addressLine1"
+                       class="delivery-input"
+                       placeholder="Enter your street address">
+              </div>
+
+              <div class="input-group">
+                <label class="input-label">
+                  <i class="fas fa-building"></i>
+                  <span>Address Line 2</span>
+                </label>
+                <input type="text"
+                       formControlName="addressLine2"
+                       class="delivery-input"
+                       placeholder="Apartment, suite, unit, etc.">
+              </div>
+
+              <div class="city-postal-grid">
+                <div class="input-group">
+                  <label class="input-label">
+                    <i class="fas fa-city"></i>
+                    <span>City</span>
+                  </label>
+                  <input type="text"
+                         formControlName="city"
+                         class="delivery-input"
+                         placeholder="Enter city">
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label">
+                    <i class="fas fa-mail-bulk"></i>
+                    <span>Postal Code</span>
+                  </label>
+                  <input type="text"
+                         formControlName="postalCode"
+                         class="delivery-input"
+                         placeholder="Enter postal code">
+                </div>
+              </div>
+            </div>
+
+            <div class="delivery-schedule">
+              <h3 class="schedule-title">
+                <i class="fas fa-clock"></i>
+                Delivery Schedule
+              </h3>
+
+              <div class="schedule-grid">
+                <div class="date-picker">
+                  <label class="input-label">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Delivery Date</span>
+                  </label>
+                  <input type="date"
+                         formControlName="deliveryDate"
+                         class="delivery-input date-input">
+                </div>
+
+                <div class="time-slots">
+                  <label class="input-label">
+                    <i class="fas fa-clock"></i>
+                    <span>Preferred Time Slot</span>
+                  </label>
+                  <div class="time-slot-cards">
+                    <div class="time-slot"
+                         [class.selected]="locationForm.get('deliveryTime')?.value === 'morning'"
+                         (click)="locationForm.patchValue({deliveryTime: 'morning'})">
+                      <i class="fas fa-sun"></i>
+                      <span>Morning</span>
+                      <small>9 AM - 12 PM</small>
+                    </div>
+                    <div class="time-slot"
+                         [class.selected]="locationForm.get('deliveryTime')?.value === 'afternoon'"
+                         (click)="locationForm.patchValue({deliveryTime: 'afternoon'})">
+                      <i class="fas fa-cloud-sun"></i>
+                      <span>Afternoon</span>
+                      <small>12 PM - 3 PM</small>
+                    </div>
+                    <div class="time-slot"
+                         [class.selected]="locationForm.get('deliveryTime')?.value === 'evening'"
+                         (click)="locationForm.patchValue({deliveryTime: 'evening'})">
+                      <i class="fas fa-sunset"></i>
+                      <span>Evening</span>
+                      <small>3 PM - 6 PM</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end space-x-4">
+              <button
+                type="button"
+                (click)="generateToken()"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+                Generate Token
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Payment Step -->
+      <div [hidden]="currentStep !== 4">
+        <div class="payment-container">
+          <div class="payment-header">
+            <h2 class="text-2xl font-bold text-gray-900">Payment Details</h2>
+            <p class="text-gray-600 mt-2">Complete your purchase securely</p>
+          </div>
+
+          <form [formGroup]="paymentForm" class="payment-content">
+            <!-- Payment Method Selection -->
+            <div class="payment-methods">
+              <h3 class="method-title">
+                <i class="fas fa-credit-card"></i>
+                Select Payment Method
+              </h3>
+
+              <div class="payment-options">
+                <div class="payment-option"
+                     [class.selected]="paymentForm.get('paymentMethod')?.value === 'card'"
+                     (click)="selectPaymentMethod('card')">
+                  <div class="option-icon">
+                    <i class="fas fa-credit-card"></i>
+                  </div>
+                  <div class="option-details">
+                    <span class="option-title">Credit/Debit Card</span>
+                    <span class="option-subtitle">Pay securely with your card</span>
+                  </div>
+                </div>
+
+                <div class="payment-option"
+                     [class.selected]="paymentForm.get('paymentMethod')?.value === 'cash'"
+                     (click)="selectPaymentMethod('cash')">
+                  <div class="option-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                  </div>
+                  <div class="option-details">
+                    <span class="option-title">Cash on Delivery</span>
+                    <span class="option-subtitle">Pay when you receive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="payment-actions">
+              <button type="button"
+                      class="token-button"
+                      (click)="fetchTokenNumber(orderId)">
+                <i class="fas fa-ticket-alt"></i>
+                Get Token
+              </button>
+
+              <button type="button"
+                      class="pay-button"
+                      [disabled]="!paymentForm.valid || processingPayment"
+                      (click)="onPurchase(); createOrder()">
+                <span *ngIf="!processingPayment">
+                  <i class="fab fa-paypal"></i>
+                  Pay with PayPal
+                </span>
+                <span *ngIf="processingPayment" class="processing">
+                  <i class="fas fa-circle-notch fa-spin"></i>
+                  Processing...
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Token Popup -->
+        <div *ngIf="showTokenPopup" class="token-popup-overlay">
+          <div class="token-popup">
+            <div class="popup-header">
+              <h3>Your Token</h3>
+              <button class="close-button" (click)="closeTokenPopup()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div class="token-content">
+              <div class="token-display">
+                <input type="text" [value]="generatedToken" readonly class="token-input">
+                <button class="copy-button" (click)="copyToken()">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+
+              <button class="download-button" (click)="onDownloadClick()">
+                <i class="fas fa-download"></i>
+                Download PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="mt-8 flex justify-between">
+        <button *ngIf="currentStep > 1"
+                (click)="prevStep()"
+                class="bg-gray-100 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors">
+          <i class="fas fa-arrow-left mr-2"></i> Back
+        </button>
+        <div class="flex-grow"></div>
+        <button *ngIf="currentStep < totalSteps"
+                (click)="nextStep()"
+                [disabled]="!validateCurrentStep()"
+                class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          Next <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+        <button *ngIf="currentStep === totalSteps"
+                (click)="completeOrder(); createOrder()"
+                [disabled]="!validateCurrentStep()"
+                class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          Complete Order <i class="fas fa-check ml-2"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showAlert" class="fixed top-4 right-4 p-4 rounded shadow-lg text-white" [ngClass]="{'bg-green-500': alertType === 'success', 'bg-red-500': alertType === 'error'}">
+  {{ alertMessage }}
+</div>
