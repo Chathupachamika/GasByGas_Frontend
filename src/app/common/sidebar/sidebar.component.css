@@ -381,3 +381,26 @@ nav {
       margin-left: 80px;
   }
 }
+
+/* Add these styles at the end of your CSS file */
+.sweet-alert-center {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Optional: Customize SweetAlert appearance */
+.swal2-popup {
+  font-size: 1rem !important;
+  font-family: 'Inter', sans-serif !important;
+  border-radius: 15px !important;
+  padding: 2rem !important;
+}
+
+.swal2-title {
+  color: #1f2937 !important;
+}
+
+.swal2-content {
+  color: #4b5563 !important;
+}

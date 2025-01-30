@@ -3,14 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-}
+import Swal from 'sweetalert2';
+import { CartService, CartItem } from '../../service/cart.service';
+import { NotificationService } from '../../service/notification.service';
+import { NotificationDTO } from '../../model/notification.model';
 
 @Component({
   selector: 'app-header',
@@ -25,27 +21,15 @@ export class HeaderComponent implements OnInit {
   editedUserDetails: any = {};
   isEditMode = false;
   showCartPopup = false;
-  cartItems: CartItem[] = [
-    // Adding some sample items for testing
-    {
-      id: 1,
-      name: 'Regular Gas Cylinder',
-      price: 49.99,
-      quantity: 1,
-      imageUrl: 'assets/CADAC Sylinder.webp'
-    },
-    {
-      id: 2,
-      name: 'Premium Gas Cylinder',
-      price: 129.99,
-      quantity: 1,
-      imageUrl: 'assets/2ndGass.webp'
-    }
-  ];
+  cartItems: CartItem[] = []; // Initialize as empty array
+  showNotificationsPopup = false;
+  notifications: NotificationDTO[] = [];
 
   constructor(
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -55,11 +39,14 @@ export class HeaderComponent implements OnInit {
       this.editedUserDetails = { ...this.userDetails };
       console.log('Loaded user details:', this.userDetails);
     }
-    // Load cart items from localStorage
-    const savedCart = localStorage.getItem('cartItems');
-    if (savedCart) {
-      this.cartItems = JSON.parse(savedCart);
-    }
+    // Subscribe to cart updates from CartService
+    this.cartService.currentCartItems.subscribe(items => {
+      this.cartItems = items;
+    });
+    // Subscribe to notifications
+    this.notificationService.notifications$.subscribe(notifications => {
+      this.notifications = notifications;
+    });
   }
 
   toggleProfilePopup(): void {
@@ -91,11 +78,29 @@ export class HeaderComponent implements OnInit {
         this.userDetails = response;
         localStorage.setItem('userDetails', JSON.stringify(response));
         this.closePopup();
-        alert('Profile updated successfully!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Profile Updated!',
+          text: 'Your profile has been successfully updated.',
+          timer: 2000,
+          showConfirmButton: false,
+          position: 'center', // Changed from 'top-end' to 'center'
+          background: '#fff',
+          customClass: {
+            popup: 'animated fadeInDown'
+          }
+        });
       },
       error: (error) => {
         console.error('Update failed:', error);
-        alert('Failed to update profile. Please try again.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Update Failed',
+          text: 'Failed to update your profile. Please try again.',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#0F3B7A',
+          position: 'center' // Added position center for error alert as well
+        });
       }
     });
   }
@@ -122,37 +127,78 @@ export class HeaderComponent implements OnInit {
   }
 
   incrementQuantity(item: CartItem): void {
-    item.quantity++;
-    this.updateLocalStorage();
+    this.cartService.updateQuantity(item.id, 1);
   }
 
   decrementQuantity(item: CartItem): void {
     if (item.quantity > 1) {
-      item.quantity--;
-      this.updateLocalStorage();
+      this.cartService.updateQuantity(item.id, -1);
     }
   }
 
   removeItem(item: CartItem): void {
-    this.cartItems = this.cartItems.filter(i => i.id !== item.id);
-    this.updateLocalStorage();
+    this.cartService.removeFromCart(item.id);
   }
 
   getTotal(): number {
     return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 
-  updateLocalStorage(): void {
-    localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-  }
-
   checkout(): void {
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['/order'], { queryParams: { step: '4' } });
     this.toggleCartPopup();
   }
 
   navigateToProducts(): void {
     this.router.navigate(['/products']);
     this.toggleCartPopup();
+  }
+
+  toggleNotificationsPopup(): void {
+    console.log('Toggling notifications popup'); // Add this debug log
+    this.showNotificationsPopup = !this.showNotificationsPopup;
+    
+    // Close other popups when notifications popup is opened
+    if (this.showNotificationsPopup) {
+      this.showProfilePopup = false;
+      this.showCartPopup = false;
+    }
+  }
+
+  markAsRead(notification: NotificationDTO): void {
+    if (notification.id) {
+      this.notificationService.markAsRead(notification.id);
+    }
+  }
+
+  clearAllNotifications(): void {
+    this.notificationService.clearAll();
+  }
+
+  deleteNotification(event: Event, notification: NotificationDTO): void {
+    event.stopPropagation(); // Prevent triggering markAsRead
+    if (notification.id) {
+      this.notificationService.deleteNotification(notification.id).subscribe({
+        next: () => {
+          this.notificationService.removeNotificationFromList(notification.id!);
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'Notification has been deleted.',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        },
+        error: (error) => {
+          console.error('Error deleting notification:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to delete notification.',
+            confirmButtonText: 'OK'
+          });
+        }
+      });
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+<<<<<<< HEAD
 import { LoginComponent } from './common/login/login.component';
 import { RegisterComponent } from './common/register/register.component';
 import { OrderComponent } from './user/components/order/order.component';
@@ -14,6 +15,15 @@ import { ModeratorHeaderComponent } from './moderator/moderator-header/moderator
 import { ModeratorOrderComponent } from './moderator/components/moderator-order/moderator-order.component';
 import { ModeratorOproductsComponent } from './moderator/components/moderator-oproducts/moderator-oproducts.component';
 import { AuthGuard } from './authGuard/auth.guard';
+=======
+import { LoginComponent } from './admin/components/login/login.component';
+import { OrderComponent } from './admin/components/order/order.component';
+import { RegisterComponent } from './admin/components/register/register.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { ProductsComponent } from './admin/components/products/products.component';
+import { ContactComponent } from './admin/components/contact/contact.component';
+import { AboutComponent } from './admin/components/about/about.component';
+>>>>>>> 341ee4e50e8a00a330b2cd3314089ea695e6cef0
 
 export const routes: Routes = [
   {
@@ -38,6 +48,7 @@ export const routes: Routes = [
     data: { roles: ['ADMIN'] }
   },
   {
+<<<<<<< HEAD
     path: 'admin-header',
     component: AdminDheaderComponent,
     canActivate: [AuthGuard],
@@ -104,5 +115,18 @@ export const routes: Routes = [
     component: AboutComponent,
     canActivate: [AuthGuard],
     data: { roles: ['USER', 'ADMIN', 'MODERATOR'] }
+=======
+    path: 'product',
+    component: ProductsComponent
+  },
+
+  {
+    path:'about',
+    component: AboutComponent
+  },
+  {
+    path:'contact',
+    component:ContactComponent
+>>>>>>> 341ee4e50e8a00a330b2cd3314089ea695e6cef0
   }
 ];

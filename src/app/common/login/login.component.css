@@ -3,7 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f6f7ff 0%, #eef1ff 100%);
+  background: linear-gradient(-45deg, #001F3F, #0074D9, #7FDBFF, #39CCCC);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
   padding: 20px;
 }
 
@@ -781,6 +783,47 @@
   font-size: 0.875rem;
 }
 
+/* SweetAlert2 Custom Styles */
+.my-swal-container {
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-swal-popup {
+  padding: 2rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.my-swal-confirm-button {
+  background: #4f46e5 !important;
+  border-radius: 8px !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* Override SweetAlert2 styles for better centering */
+.swal2-popup {
+  font-size: 1rem !important;
+}
+
+.swal2-title {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+}
+
+.swal2-content {
+  font-size: 1rem !important;
+}
+
+.swal2-confirm {
+  font-size: 1rem !important;
+}
+
 @keyframes cardFloat {
   0% {
       opacity: 0;
@@ -833,6 +876,18 @@
   to {
       opacity: 1;
       transform: translateY(0);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
