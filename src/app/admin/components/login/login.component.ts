@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { LoginService } from '../../../service/login.service';
 import { LoginModel } from '../../../model/login.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -49,32 +50,56 @@ export class LoginComponent implements OnInit {
 
       this.loginService.loginUser(loginData).subscribe({
         next: (response) => {
-          console.log('Login successful:', response);
-
           // After successful login, fetch user details by email
           this.loginService.searchByEmail(loginData.email).subscribe({
             next: (userDetails) => {
               localStorage.setItem('userDetails', JSON.stringify(userDetails));
               console.log('User details saved:', userDetails);
-              alert('Login successful!');
-              this.router.navigate(['/admin-dashboard']);
+              
+              Swal.fire({
+                title: 'Success!',
+                text: 'Login successful!',
+                icon: 'success',
+                confirmButtonText: 'Continue',
+                customClass: {
+                  container: 'my-swal-container',
+                  popup: 'my-swal-popup',
+                  confirmButton: 'my-swal-confirm-button'
+                }
+              }).then(() => {
+                this.router.navigate(['/admin-dashboard']);
+              });
             },
             error: (error) => {
               console.error('Error fetching user details:', error);
-              // Still navigate even if fetching additional details fails
-              this.router.navigate(['/admin-dashboard']);
+              Swal.fire({
+                title: 'Warning',
+                text: 'Logged in but unable to fetch user details',
+                icon: 'warning',
+                confirmButtonText: 'Continue'
+              }).then(() => {
+                this.router.navigate(['/admin-dashboard']);
+              });
             }
           });
         },
         error: (error) => {
           console.error('Login error:', error);
-          this.loginError = 'Login failed. Please check your credentials.';
-          alert(this.loginError);
+          Swal.fire({
+            title: 'Error!',
+            text: 'Login failed. Please check your credentials.',
+            icon: 'error',
+            confirmButtonText: 'Try Again'
+          });
         }
       });
     } else {
-      this.loginError = 'Please fill in all required fields correctly.';
-      alert(this.loginError);
+      Swal.fire({
+        title: 'Invalid Input',
+        text: 'Please fill in all required fields correctly.',
+        icon: 'warning',
+        confirmButtonText: 'Ok'
+      });
     }
   }
 
@@ -140,11 +165,49 @@ export class LoginComponent implements OnInit {
   }
 
   resetPassword(): void {
+    if (!this.newPassword || !this.confirmPassword) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all password fields',
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        customClass: {
+          container: 'my-swal-container',
+          popup: 'my-swal-popup',
+          confirmButton: 'my-swal-confirm-button'
+        }
+      });
+      return;
+    }
+
     if (this.newPassword === this.confirmPassword) {
-      alert('Password reset successful! Please login with your new password.');
-      this.showPasswordResetModal = false;
+      Swal.fire({
+        title: 'Success!',
+        text: 'Password reset successful! Please login with your new password.',
+        icon: 'success',
+        confirmButtonText: 'Continue',
+        customClass: {
+          container: 'my-swal-container',
+          popup: 'my-swal-popup',
+          confirmButton: 'my-swal-confirm-button'
+        }
+      }).then(() => {
+        this.showPasswordResetModal = false;
+        this.newPassword = '';
+        this.confirmPassword = '';
+      });
     } else {
-      alert('Passwords do not match!');
+      Swal.fire({
+        title: 'Error!',
+        text: 'Passwords do not match!',
+        icon: 'error',
+        confirmButtonText: 'Try Again',
+        customClass: {
+          container: 'my-swal-container',
+          popup: 'my-swal-popup',
+          confirmButton: 'my-swal-confirm-button'
+        }
+      });
     }
   }
 

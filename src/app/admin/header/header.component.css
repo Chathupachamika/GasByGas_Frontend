@@ -6,7 +6,7 @@
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 1000;
+  z-index: 1000; /* Keep this lower than the overlay */
   background-color: white;
 }
 
@@ -192,7 +192,31 @@
   }
 }
 
+.icon-btn .material-icons {
+    font-size: 24px;
+    color: #2D3748;
+    transition: all 0.3s ease;
+}
+
+.icon-btn:hover .material-icons {
+    color: #0F3B7A;
+    animation: iconPop 0.3s ease-out;
+}
+
 .cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #FF6B35, #FF8C66);
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: 600;
+  animation: bounce 1s infinite;
+}
+
+.notification-count {
   position: absolute;
   top: -8px;
   right: -8px;
@@ -595,7 +619,7 @@
   max-width: 400px;
   background: linear-gradient(135deg, #ffffff, #f8fafc);
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 1100;
+  z-index: 1100; /* Keep this value */
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
 }
@@ -959,4 +983,204 @@
   0% { transform: scale(1); }
   50% { transform: scale(1.2); }
   100% { transform: scale(1); }
+}
+
+/* SweetAlert custom styles */
+.animated {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+/* Ensure SweetAlert appears above other elements */
+.swal2-popup {
+  z-index: 2000;
+}
+
+/* Add this new overlay class */
+.overlay-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1101;
+}
+
+/* Notification popup styles */
+.notifications-popup-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 1102; /* Increased z-index to ensure visibility */
+  animation: slideIn 0.3s ease-out;
+  overflow-y: auto;
+}
+
+.notifications-popup {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  position: relative;
+  z-index: 1103; /* Ensure popup content is above overlay */
+}
+
+.notifications-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notifications-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.notification-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.clear-all-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #f1f5f9;
+  color: #64748b;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-all-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.notifications-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.empty-notifications {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+}
+
+.empty-notifications i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #94a3b8;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.notification-item:hover {
+  background: #f8fafc;
+}
+
+.notification-item.unread {
+  background: #f0f9ff;
+}
+
+.notification-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notification-icon.order {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.notification-icon.delivery {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.notification-icon.offer {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-content h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.notification-content p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.notification-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3b82f6;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+@media (max-width: 480px) {
+  .notifications-popup-overlay {
+    max-width: 100%;
+  }
 }

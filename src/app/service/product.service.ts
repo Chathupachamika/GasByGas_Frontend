@@ -52,4 +52,14 @@ export class ProductService {
         })
       );
   }
+
+  updateStockToZero(id: number): Observable<GasDTO> {
+    return this.http.put<GasDTO>(`${this.apiUrl}/${id}/empty-stock`, null, this.httpOptions)
+      .pipe(
+        catchError((error) => {
+          console.error('Update Stock API Error:', error);
+          throw error;
+        })
+      );
+  }
 }

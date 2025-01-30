@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../../service/login.service';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2'; // Add this import
 
 @Component({
   selector: 'app-sidebar',
@@ -41,9 +41,27 @@ export class SidebarComponent implements OnInit {
   }
 
   confirmLogout(): void {
-    if (confirm('Are you sure you want to logout?')) {
-      this.logout();
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out of the system!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout!',
+      customClass: {
+        container: 'sweet-alert-center'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.logout();
+        Swal.fire(
+          'Logged Out!',
+          'You have been successfully logged out.',
+          'success'
+        );
+      }
+    });
   }
 
   private logout(): void {
