@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { LoginService } from '../../service/login.service';
-import { LoginModel } from '../../model/login.model';
-import Swal from 'sweetalert2';
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import Swal from "sweetalert2";
+import { LoginModel } from "../../model/login.model";
+import { LoginService } from "../../service/login.service";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

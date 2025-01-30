@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { GasDTO } from '../../../model/gas.model';
-import { HttpClientModule } from '@angular/common/http';
-import {  ProductService } from '../../../service/product.service';
-import { CartService } from '../../../service/cart.service';
-import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
-import { NotificationService } from '../../../service/notification.service';
-import { NotificationDTO } from '../../../model/notification.model';
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import Swal from "sweetalert2";
+import { GasDTO } from "../../../model/gas.model";
+import { NotificationDTO } from "../../../model/notification.model";
+import { CartService } from "../../../service/cart.service";
+import { NotificationService } from "../../../service/notification.service";
+import { ProductService } from "../../../service/product.service";
 import { HeaderComponent } from "../../header/header.component";
 import { SidebarUserComponent } from "../../sidebar-user/sidebar-user.component";
-
 interface Product {
   id: number;
   name: string;

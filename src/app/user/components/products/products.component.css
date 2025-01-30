@@ -424,7 +424,6 @@ font-size: 1rem;
 }
 
 /* ...existing code... */
-
 .empty-stock-btn {
   background: none;
   border: none;
@@ -551,5 +550,3 @@ font-size: 1rem;
   font-size: 0.75rem;
   margin-top: 0.25rem;
 }
-
-/* ...existing code... */

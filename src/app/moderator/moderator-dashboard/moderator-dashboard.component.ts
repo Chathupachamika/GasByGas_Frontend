@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { OrderSummaryDTO } from '../../model/order-summary.model';
-import { LoginService } from '../../service/login.service';
-import { OrderService } from '../../service/order.service';
-import { CommonModule } from '@angular/common';
-import { ModeratorHeaderComponent } from '../moderator-header/moderator-header.component';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { OrderSummaryDTO } from "../../model/order-summary.model";
+import { LoginService } from "../../service/login.service";
+import { OrderService } from "../../service/order.service";
+import { ModeratorHeaderComponent } from "../moderator-header/moderator-header.component";
 import { SidebarModeratorComponent } from "../sidebar-moderator/sidebar-moderator.component";
 
 @Component({

@@ -16,6 +16,8 @@ import { OrderComponent } from './user/components/order/order.component';
 import { ProductsComponent } from './user/components/products/products.component';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 
+
+
 export const routes: Routes = [
   {
     path: '',
@@ -37,8 +39,67 @@ export const routes: Routes = [
     component: AdminDashboardComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ADMIN'] }
+
   },
   {
+    path: 'admin-header',
+    component: AdminDheaderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'admin-order',
+    component: AdminOrderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'admin-products',
+    component: AdminProductsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] }
+  },
+  // Moderator routes
+  {
+    path: 'moderator-dashboard',
+    component: ModeratorDashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['MODERATOR'] }
+  },
+  {
+    path: 'moderator-header',
+    component: ModeratorHeaderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['MODERATOR'] }
+  },
+  {
+    path: 'moderator-order',
+    component: ModeratorOrderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['MODERATOR'] }
+  },
+  {
+    path: 'moderator-products',
+    component: ModeratorOproductsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['MODERATOR'] }
+  },
+  // User routes
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['USER'] }
+  },
+  {
+    path: 'order',
+    component: OrderComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['USER'] }
+
+  },
+  {
+
     path: 'admin-header',
     component: AdminDheaderComponent,
     canActivate: [AuthGuard],
@@ -105,9 +166,26 @@ export const routes: Routes = [
     component: AboutComponent,
     canActivate: [AuthGuard],
     data: { roles: ['USER', 'ADMIN', 'MODERATOR'] }
+  },{
+    path: 'product',
+    component: ProductsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['USER'] }
+  },
+  {
+
+    path: 'about',
+    component: AboutComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['USER', 'ADMIN', 'MODERATOR'] }
   },
   {
     path: 'contact',
     component: ContactComponent
+  },
+  {
+    path:'contact',
+    component:ContactComponent
+
   }
 ];

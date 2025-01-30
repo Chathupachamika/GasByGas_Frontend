@@ -1,9 +1,8 @@
-// dashboard.component.ts
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../service/login.service';
-import { CommonModule } from '@angular/common';
-import { OrderService } from '../../service/order.service';  // Adjust the import path accordingly
-import { OrderSummaryDTO } from '../../model/order-summary.model';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { OrderSummaryDTO } from "../../model/order-summary.model";
+import { LoginService } from "../../service/login.service";
+import { OrderService } from "../../service/order.service";
 import { HeaderComponent } from "../header/header.component";
 import { SidebarUserComponent } from "../sidebar-user/sidebar-user.component";
 

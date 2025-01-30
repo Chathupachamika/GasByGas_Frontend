@@ -6,7 +6,6 @@
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 1000; /* Keep this lower than the overlay */
   background-color: white;
 }
 
@@ -202,6 +201,7 @@
     color: #0F3B7A;
     animation: iconPop 0.3s ease-out;
 }
+
 
 .cart-count {
   position: absolute;
@@ -619,7 +619,6 @@
   max-width: 400px;
   background: linear-gradient(135deg, #ffffff, #f8fafc);
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 1100; /* Keep this value */
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
 }
