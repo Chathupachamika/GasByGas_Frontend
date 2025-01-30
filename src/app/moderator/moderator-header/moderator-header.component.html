@@ -24,21 +24,15 @@
     <div class="header-container">
         <a href="/" class="logo">
             <i class="fas fa-fire-flame-curved"></i>
-            GasService
+            GasByGas
         </a>
 
         <nav class="nav-menu">
-            <div class="search-container">
-                <input type="text" placeholder="Search..." class="search-input">
-                <button class="search-btn" title="Search">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
 
             <ul class="nav-links">
-                <li><a href="/moderator-dashboard">Home</a></li>
-                <li><a href="/moderator-products">Products</a></li>
-                <li><a href="/moderator-order">Order</a></li>
+                <li><a href="/admin-dashboard">Home</a></li>
+                <li><a href="/admin-products">Products</a></li>
+                <li><a href="/admin-order">Order</a></li>
                 <li><a href="/services">Services</a></li>
                 <li><a href="/about">About Us</a></li>
                 <li><a href="/contact">Contact Us</a></li>
@@ -51,6 +45,10 @@
                 <button class="icon-btn" title="Shopping Cart" (click)="toggleCartPopup()">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">{{ cartItems.length }}</span>
+                </button>
+                <button class="icon-btn" title="Notifications" (click)="toggleNotificationsPopup()">
+                    <i class="material-icons">notifications</i>
+                    <span class="notification-count">{{notifications.length}}</span>
                 </button>
                 <button class="icon-btn" title="Help Center">
                     <i class="fas fa-question-circle"></i>
@@ -202,7 +200,7 @@
                     </div>
                     <div class="item-details">
                         <h4>{{item.name}}</h4>
-                        <p class="item-price">${{item.price}}</p>
+                        <p class="item-price">Rs.{{item.price}}</p>
                     </div>
                     <div class="item-quantity">
                         <button (click)="decrementQuantity(item)">
@@ -223,7 +221,7 @@
         <div *ngIf="cartItems.length > 0" class="cart-footer">
             <div class="cart-total">
                 <span>Total:</span>
-                <span class="total-amount">${{getTotal()}}</span>
+                <span class="total-amount">Rs.{{getTotal()}}</span>
             </div>
             <button class="checkout-btn" (click)="checkout()">
                 Proceed to Checkout
@@ -232,5 +230,77 @@
         </div>
     </div>
 </div>
+
+<!-- Notifications Popup -->
+<div *ngIf="showNotificationsPopup" class="notifications-popup-overlay" (click)="toggleNotificationsPopup()">
+    <div class="notifications-popup" (click)="$event.stopPropagation()">
+        <div class="notifications-header">
+            <h3>
+                <i class="fas fa-bell"></i>
+                Notifications
+            </h3>
+            <div class="notification-actions">
+                <button class="clear-all-btn" (click)="clearAllNotifications()" *ngIf="notifications.length > 0">
+                    Clear All
+                </button>
+                <button class="close-btn" (click)="toggleNotificationsPopup()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="notifications-body">
+            <div *ngIf="notifications.length === 0" class="empty-notifications">
+                <i class="fas fa-bell-slash"></i>
+                <p>No new notifications</p>
+            </div>
+
+            <div *ngFor="let notification of notifications"
+                 class="notification-item"
+                 [class.unread]="!notification.isRead"
+                 (click)="markAsRead(notification)">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>Request from {{notification.name}}</h4>
+                    <p>Contact: {{notification.contactNumber}}</p>
+                    <p>Email: {{notification.email}}</p>
+                    <p>Preferred Date: {{notification.preferredDate}}</p>
+                    <p>Gas Capacity: {{notification.gasCapacity}} kg</p>
+                </div>
+                <button class="delete-notification-btn"
+                        (click)="deleteNotification($event, notification)"
+                        title="Delete Notification">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <div class="notification-status" *ngIf="!notification.isRead"></div>
+            </div>
+        </div>
+    </div>
+</div>
 </header>
+
+<style>
+.delete-notification-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: none;
+  border: none;
+  color: #ff4444;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s;
+}
+
+.delete-notification-btn:hover {
+  color: #cc0000;
+}
+
+.notification-item {
+  position: relative;
+  padding-right: 40px;
+}
+</style>
 

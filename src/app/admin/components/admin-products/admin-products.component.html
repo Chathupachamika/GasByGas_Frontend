@@ -1,4 +1,5 @@
 <app-admin-dheader></app-admin-dheader>
+<app-admin-sidebar></app-admin-sidebar>
 <div class="products-container">
   <div class="hero-section">
     <h1>Premium Gas Solutions</h1>
@@ -13,10 +14,10 @@
   <div class="products-grid">
     <div class="product-card" *ngFor="let product of products">
       <div class="product-image">
-        <div class="stock-badge" [class.low-stock]="product.stock < 10">
-          <i class="fas" [class.fa-check-circle]="product.stock > 10"
-            [class.fa-exclamation-circle]="product.stock < 10"></i>
-          {{product.stock > 0 ? 'In Stock' : 'Out of Stock'}}
+        <div class="stock-badge" [class.low-stock]="product.stock === 0">
+          <i class="fas" [class.fa-check-circle]="product.stock > 0"
+            [class.fa-exclamation-circle]="product.stock === 0"></i>
+          {{product.stock === 0 ? 'Out of Stock' : 'In Stock'}}
         </div>
       </div>
 
@@ -24,6 +25,9 @@
         <div class="product-header">
           <h3>{{product.name}}</h3>
           <div class="action-buttons">
+            <button class="empty-stock-btn" (click)="updateStockToZero(product)">
+              <i class="fas fa-box-open"></i>
+            </button>
             <button class="edit-btn" (click)="editProduct(product)">
               <i class="fas fa-edit"></i>
             </button>
@@ -49,10 +53,24 @@
             <span class="currency">Rs.</span>
             <span class="amount">{{product.price}}</span>
           </div>
-          <button class="order-button" [disabled]="product.stock === 0">
-            <i class="fas fa-shopping-cart"></i>
-            {{product.stock === 0 ? 'Unavailable' : 'Add to Cart'}}
-          </button>
+          <div class="button-group">
+            <ng-container *ngIf="product.stock === 0; else inStock">
+              <button class="request-button" (click)="requestProduct(product)">
+                <i class="fas fa-envelope"></i>
+                Request Now
+              </button>
+            </ng-container>
+            <ng-template #inStock>
+              <button class="order-button" (click)="addToCart(product)">
+                <i class="fas fa-shopping-cart"></i>
+                Add to Cart
+              </button>
+              <button class="order-now-button" (click)="navigateToOrder(product)">
+                <i class="fas fa-truck"></i>
+                Order Now
+              </button>
+            </ng-template>
+          </div>
         </div>
       </div>
     </div>
@@ -70,14 +88,6 @@
     </div>
 
     <form [formGroup]="productForm" (ngSubmit)="submitProduct()" class="product-form">
-      <div class="form-group">
-        <label>Product Name</label>
-        <input type="text" formControlName="name" placeholder="Enter product name">
-        <div class="error-message" *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid">
-          Product name is required
-        </div>
-      </div>
-
       <div class="form-group">
         <label>Capacity (KG)</label>
         <input type="number" formControlName="capacity" placeholder="Enter capacity">
@@ -152,3 +162,66 @@
     </form>
   </div>
 </div>
+
+<!-- Product Request Modal -->
+<div *ngIf="showRequestModal" class="modal-backdrop" (click)="closeRequestModal()">
+  <div class="modal-content request-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Request Product</h2>
+      <p class="selected-product-info">
+        Selected Product: {{selectedRequestProduct?.name}} ({{selectedRequestProduct?.capacity}}kg)
+      </p>
+      <button class="close-btn" (click)="closeRequestModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="requestForm" (ngSubmit)="submitRequest()" class="request-form">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" formControlName="userName" placeholder="Enter your name">
+        <div class="error-message" *ngIf="requestForm.get('userName')?.touched && requestForm.get('userName')?.invalid">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Contact Number</label>
+        <input type="tel" formControlName="contactNumber" placeholder="Enter your contact number">
+        <div class="error-message" *ngIf="requestForm.get('contactNumber')?.touched && requestForm.get('contactNumber')?.invalid">
+          Valid contact number is required (10 digits)
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" formControlName="email" placeholder="Enter your email">
+        <div class="error-message" *ngIf="requestForm.get('email')?.touched && requestForm.get('email')?.invalid">
+          Valid email address is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Date</label>
+        <input type="date" formControlName="requestDate" [min]="today">
+        <div class="error-message" *ngIf="requestForm.get('requestDate')?.touched && requestForm.get('requestDate')?.invalid">
+          Please select a valid date
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="closeRequestModal()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="requestForm.invalid">Submit Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+.selected-product-info {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+}
+</style>
+

@@ -206,6 +206,7 @@
     animation: iconPop 0.3s ease-out;
 }
 
+
 .cart-count {
   position: absolute;
   top: -8px;
@@ -231,6 +232,7 @@
   font-weight: 600;
   animation: bounce 1s infinite;
 }
+
 @keyframes bounce {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
@@ -621,8 +623,6 @@
   max-width: 400px;
   background: linear-gradient(135deg, #ffffff, #f8fafc);
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 1100;
-  z-index: 1100;
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
 }
