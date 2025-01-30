@@ -21,6 +21,7 @@ export class ContactComponent {
 
   onSubmit() {
     console.log('Form submitted:', this.formData);
+   
     // Add your form submission logic here
     this.formData = {
       name: '',

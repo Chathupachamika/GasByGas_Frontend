@@ -17,6 +17,9 @@ export class OrderService { // changed from GasCollectService to OrderService
     return this.http.post(`${this.baseUrl}/delieveryShedule`, deliveryCompletionDTO);
   }
 
+  getOrdersByUserId(userId: number): Observable<OrderSummaryDTO[]> {
+    return this.http.get<OrderSummaryDTO[]>(`${this.apiUrl}/user/${userId}`);
+  }
   sendNotificationToCustomer(): Observable<void> {
     return this.http.get<void>(`${this.baseUrl}/delieveryShedule`);
   }

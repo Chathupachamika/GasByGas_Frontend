@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -47,6 +47,16 @@ export class HeaderComponent implements OnInit {
     this.notificationService.notifications$.subscribe(notifications => {
       this.notifications = notifications;
     });
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const header = document.querySelector('.header') as HTMLElement;
+    if (window.pageYOffset > 0) {
+      header.classList.add('hidden');
+    } else {
+      header.classList.remove('hidden');
+    }
   }
 
   toggleProfilePopup(): void {
@@ -157,7 +167,7 @@ export class HeaderComponent implements OnInit {
   toggleNotificationsPopup(): void {
     console.log('Toggling notifications popup'); // Add this debug log
     this.showNotificationsPopup = !this.showNotificationsPopup;
-    
+
     // Close other popups when notifications popup is opened
     if (this.showNotificationsPopup) {
       this.showProfilePopup = false;

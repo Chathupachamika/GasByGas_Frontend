@@ -10,6 +10,10 @@
   background-color: white;
 }
 
+.header.hidden {
+  display: none;
+}
+
 .top-bar {
   background: linear-gradient(135deg, #0F3B7A 0%, #1565C0 100%);
   padding: 0.5rem 0;

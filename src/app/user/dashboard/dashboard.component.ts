@@ -1,3 +1,4 @@
+// dashboard.component.ts
 import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { OrderSummaryDTO } from "../../model/order-summary.model";
@@ -9,7 +10,7 @@ import { SidebarUserComponent } from "../sidebar-user/sidebar-user.component";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  imports: [CommonModule, SidebarUserComponent, HeaderComponent, SidebarUserComponent],
+  imports: [CommonModule, SidebarUserComponent, HeaderComponent],
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
@@ -27,10 +28,11 @@ export class DashboardComponent implements OnInit {
     if (storedDetails) {
       this.userDetails = JSON.parse(storedDetails);
       console.log('Loaded user details:', this.userDetails);
-    }
+      console.log('User ID:', this.userDetails.id);
 
-    // Load all order summaries
-    this.loadAllOrderSummaries();
+      // Load orders for the specific user
+      this.loadUserOrders();
+    }
   }
 
   isLoggedIn(): boolean {
@@ -44,14 +46,21 @@ export class DashboardComponent implements OnInit {
     return '';
   }
 
-  loadAllOrderSummaries(): void {
-    this.orderService.getAllOrderSummary().subscribe(
-      (orders) => {
-        this.orders = orders;
-        console.log('Loaded all order summaries:', orders);
-      },
-      (error) => console.error('Error loading order summaries', error)
-    );
+  loadUserOrders(): void {
+    if (this.userDetails && this.userDetails.id) {
+      console.log('Fetching orders for user ID:', this.userDetails.id);
+      this.orderService.getOrdersByUserId(this.userDetails.id).subscribe(
+        (orders) => {
+          this.orders = orders;
+          console.log('Loaded user orders:', orders);
+        },
+        (error) => {
+          console.error('Error loading user orders:', error);
+        }
+      );
+    } else {
+      console.log('No user ID found, cannot fetch orders');
+    }
   }
 
   deleteOrder(id: number): void {
@@ -60,6 +69,8 @@ export class DashboardComponent implements OnInit {
         // Remove the deleted order from the list
         this.orders = this.orders.filter(order => order.id !== id);
         console.log(`Order with ID ${id} deleted successfully.`);
+        // Reload the orders after deletion
+        this.loadUserOrders();
       },
       (error) => console.error(`Error deleting order with ID ${id}`, error)
     );

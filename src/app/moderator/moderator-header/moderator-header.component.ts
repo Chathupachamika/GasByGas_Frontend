@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
@@ -154,5 +154,15 @@ export class ModeratorHeaderComponent implements OnInit {
   navigateToProducts(): void {
     this.router.navigate(['/products']);
     this.toggleCartPopup();
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const header = document.querySelector('.header') as HTMLElement;
+    if (window.pageYOffset > 0) {
+      header.classList.add('hidden');
+    } else {
+      header.classList.remove('hidden');
+    }
   }
 }

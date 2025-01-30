@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../service/login.service';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ interface CartItem {
   selector: 'app-admin-dheader',
   imports: [CommonModule, FormsModule],
   templateUrl: './admin-dheader.component.html',
-  styleUrl: './admin-dheader.component.css'
+  styleUrls: ['./admin-dheader.component.css']
 })
 export class AdminDheaderComponent {
   userDetails: any = null;
@@ -153,5 +153,15 @@ export class AdminDheaderComponent {
   navigateToProducts(): void {
     this.router.navigate(['/products']);
     this.toggleCartPopup();
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const header = document.querySelector('.header') as HTMLElement;
+    if (window.pageYOffset > 0) {
+      header.classList.add('hidden');
+    } else {
+      header.classList.remove('hidden');
+    }
   }
 }
