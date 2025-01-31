@@ -10,3 +10,124 @@ body {
     margin-bottom: 100px; /* Optional: Remove if you want to keep it */
 }
 
+.select-wrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.select-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.custom-select {
+  position: relative;
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  font-size: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.outlet-select {
+  width: 100%;
+  padding: 12px 45px 12px 15px;
+  font-size: 1rem;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
+  background-color: #fff;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.outlet-select:hover {
+  border-color: #2196F3;
+}
+
+.outlet-select:focus {
+  outline: none;
+  border-color: #2196F3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.select-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.select-icon i {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.custom-select:focus + .select-icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.outlet-select:focus + .select-icon {
+  transform: translateY(-50%) rotate(180deg);
+  color: #2196F3;
+}
+
+.outlet-select option {
+  padding: 12px;
+  background-color: #fff;
+  color: #333;
+}
+
+.custom-select option {
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.custom-select option:first-child {
+  color: #666;
+  font-style: italic;
+}
+
+.outlet-select option:hover {
+  background-color: #f5f5f5;
+}
+
+/* Add this if you want to style the disabled/placeholder option differently */
+.outlet-select option[value=""] {
+  color: #999;
+}
+
+.select-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.label-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+
+.float-label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Add smooth transition for hover state */
+.select-wrapper:hover .select-icon i {
+  color: #2196F3;
+}
+

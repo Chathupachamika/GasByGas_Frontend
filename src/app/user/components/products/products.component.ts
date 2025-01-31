@@ -11,6 +11,7 @@ import { NotificationService } from "../../../service/notification.service";
 import { ProductService } from "../../../service/product.service";
 import { HeaderComponent } from "../../header/header.component";
 import { SidebarUserComponent } from "../../sidebar-user/sidebar-user.component";
+import { OrderService } from "../../../service/order.service";
 interface Product {
   id: number;
   name: string;
@@ -38,7 +39,7 @@ interface ProductRequest {
 
 
 export class ProductsComponent implements OnInit {
-
+  outlets: any[] = [];
 
   get today() {
 
@@ -89,6 +90,7 @@ export class ProductsComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductService,
     private cartService: CartService,
+     private orderService: OrderService,
     private router: Router,
     private notificationService: NotificationService
   ) {
@@ -107,6 +109,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadOutlets();
   }
 
   loadProducts() {
@@ -124,6 +127,12 @@ export class ProductsComponent implements OnInit {
         console.error('Error loading products:', error);
       }
     );
+  }
+
+  loadOutlets(): void {
+    this.orderService.getAllOutlets().subscribe((data: any[]) => {
+      this.outlets = data;
+    });
   }
 
   addNewProduct() {
@@ -401,7 +410,7 @@ export class ProductsComponent implements OnInit {
       const notification: NotificationDTO = {
         name: this.requestForm.value.userName,
         contactNumber: this.requestForm.value.contactNumber,
-        email: this.requestForm.value.email,
+        address: this.requestForm.value.address,
         preferredDate: this.requestForm.value.requestDate,
         gasCapacity: this.selectedRequestProduct.capacity  // Add the gas capacity
       };

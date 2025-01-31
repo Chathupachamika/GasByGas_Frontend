@@ -194,11 +194,13 @@
       </div>
 
       <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" formControlName="email" placeholder="Enter your email">
-        <div class="error-message" *ngIf="requestForm.get('email')?.touched && requestForm.get('email')?.invalid">
-          Valid email address is required
-        </div>
+        <label>Select Branch</label>
+        <select formControlName="outletId" class="outlet-select" title="Select Outlet">
+          <option value="">Select an outlet</option>
+          <option *ngFor="let outlet of outlets" [value]="outlet.id">
+            {{outlet.name}} - {{outlet.location}}
+          </option>
+        </select>
       </div>
 
       <div class="form-group">

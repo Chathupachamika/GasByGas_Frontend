@@ -397,7 +397,7 @@ export class ModeratorOproductsComponent implements OnInit {
       const notification: NotificationDTO = {
         name: this.requestForm.value.userName,
         contactNumber: this.requestForm.value.contactNumber,
-        email: this.requestForm.value.email,
+        address: this.requestForm.value.address,
         preferredDate: this.requestForm.value.requestDate,
         gasCapacity: this.selectedRequestProduct.capacity  // Add the gas capacity
       };

@@ -1,0 +1,16 @@
+<div class="form-group select-container">
+  <div class="label-wrapper">
+    <label class="float-label">Select Branch</label>
+  </div>
+  <div class="select-wrapper">
+    <select formControlName="outletId" class="custom-select" title="Select Branch">
+      <option value="">Choose a branch</option>
+      <option *ngFor="let outlet of outlets" [value]="outlet.id">
+        {{outlet.name}} - {{outlet.location}}
+      </option>
+    </select>
+    <div class="select-icon">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+</div>

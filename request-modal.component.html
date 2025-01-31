@@ -1,0 +1,62 @@
+<div *ngIf="showRequestModal" class="modal-backdrop" (click)="closeRequestModal()">
+  <div class="modal-content request-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Request Product</h2>
+      <p class="selected-product-info">
+        Selected Product: {{selectedRequestProduct?.name}} ({{selectedRequestProduct?.capacity}}kg)
+      </p>
+      <button class="close-btn" (click)="closeRequestModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="requestForm" (ngSubmit)="submitRequest()" class="request-form">
+      <div class="form-group">
+        <label>
+          <i class="fas fa-user"></i> Your Name
+        </label>
+        <input type="text" formControlName="userName" placeholder="Enter your name">
+        <div class="error-message" *ngIf="requestForm.get('userName')?.touched && requestForm.get('userName')?.invalid">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-phone"></i> Contact Number
+        </label>
+        <input type="tel" formControlName="contactNumber" placeholder="Enter your contact number">
+        <div class="error-message" *ngIf="requestForm.get('contactNumber')?.touched && requestForm.get('contactNumber')?.invalid">
+          Valid contact number is required (10 digits)
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-map-marker-alt"></i> Select Branch
+        </label>
+        <select formControlName="outletId" class="outlet-select" title="Select Outlet">
+          <option value="">Select an outlet</option>
+          <option *ngFor="let outlet of outlets" [value]="outlet.id">
+            {{outlet.name}} - {{outlet.location}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <i class="fas fa-calendar-alt"></i> Preferred Date
+        </label>
+        <input type="date" formControlName="requestDate" [min]="today">
+        <div class="error-message" *ngIf="requestForm.get('requestDate')?.touched && requestForm.get('requestDate')?.invalid">
+          Please select a valid date
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="closeRequestModal()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="requestForm.invalid">Submit Request</button>
+      </div>
+    </form>
+  </div>
+</div>

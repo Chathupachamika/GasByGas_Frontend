@@ -194,10 +194,10 @@
       </div>
 
       <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" formControlName="email" placeholder="Enter your email">
-        <div class="error-message" *ngIf="requestForm.get('email')?.touched && requestForm.get('email')?.invalid">
-          Valid email address is required
+        <label>Address</label>
+        <input type="address" formControlName="address" placeholder="Enter your address">
+        <div class="error-message" *ngIf="requestForm.get('address')?.touched && requestForm.get('address')?.invalid">
+          Valid address is required
         </div>
       </div>
 
