@@ -1,0 +1,39 @@
+<div class="services-container">
+  <div class="header">
+    <h1>Our Services</h1>
+    <p class="subtitle">Delivering Excellence in Gas Solutions</p>
+    <div class="header-line"></div>
+  </div>
+
+  <div class="services-grid">
+    @for (service of services; track service.title) {
+      <div class="service-card" [class.featured]="service.featured">
+        <div class="icon-container">
+          <span class="icon">{{service.icon}}</span>
+        </div>
+        <h3>{{service.title}}</h3>
+        <p>{{service.description}}</p>
+        <button class="learn-more">Learn More</button> yu  yhg
+      </div>
+    }
+  </div>
+
+  <div class="why-choose-us">
+    <h2>Why Choose Us</h2>
+    <div class="features-grid">
+      @for (feature of features; track feature.title) {
+        <div class="feature-item">
+          <span class="feature-icon">{{feature.icon}}</span>
+          <h4>{{feature.title}}</h4>
+          <p>{{feature.description}}</p>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Ready to Get Started?</h2>
+    <p>Contact us today for a free consultation</p>
+    <button class="cta-button">Contact Us</button>
+  </div>
+</div>

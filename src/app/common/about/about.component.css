@@ -80,7 +80,7 @@ nav {
 }
 
 .hero {
-    height: 60vh;
+    height: 70vh;
     background: linear-gradient(rgba(26, 77, 124, 0.8), rgba(26, 77, 124, 0.9)), url('/placeholder.svg?height=800&width=1920');
     background-size: cover;
     background-position: center;
@@ -90,22 +90,28 @@ nav {
     justify-content: center;
     text-align: center;
     position: relative;
+    padding: 2rem;
+    border-bottom: 5px solid var(--secondary-color);
 }
 
 .hero-content {
     max-width: 800px;
     padding: 2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
 }
 
 .hero h1 {
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
     line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero p {
     font-size: 1.25rem;
     margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 main {
@@ -116,6 +122,10 @@ main {
 
 .section {
     margin-bottom: 6rem;
+    padding: 2rem;
+    background: var(--light-gray);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .section-header {
@@ -127,12 +137,15 @@ main {
     font-size: 2.5rem;
     color: var(--primary-color);
     margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .section-header p {
     color: #666;
     max-width: 600px;
     margin: 0 auto;
+    font-style: italic;
 }
 
 .stats-grid {
@@ -148,6 +161,7 @@ main {
     background-color: var(--light-gray);
     border-radius: 8px;
     transition: var(--transition);
+    border: 1px solid var(--primary-color);
 }
 
 .stat-card:hover {
@@ -174,6 +188,7 @@ main {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: var(--transition);
+    border: 1px solid var(--primary-color);
 }
 
 .value-card:hover {
@@ -185,6 +200,8 @@ main {
     color: var(--primary-color);
     margin-bottom: 1rem;
     font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .team-grid {
@@ -224,6 +241,8 @@ main {
     background-color: var(--light-gray);
     padding: 4rem 2rem;
     margin: 4rem -2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .achievement-list {
@@ -241,6 +260,7 @@ main {
     display: flex;
     align-items: center;
     transition: var(--transition);
+    border: 1px solid var(--primary-color);
 }
 
 .achievement-list li:hover {
@@ -255,6 +275,53 @@ main {
     margin-right: 1rem;
 }
 
+.testimonials {
+    background-color: var(--accent-color);
+    padding: 4rem 2rem;
+    margin: 4rem -2rem;
+    text-align: center;
+}
+
+.testimonials h2 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.testimonials p {
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-card p {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-card .author {
+    font-weight: bold;
+    color: var(--primary-color);
+}
 
 @media (max-width: 768px) {
     .hero h1 {
@@ -275,6 +342,14 @@ main {
 
     .section-header h2 {
         font-size: 2rem;
+    }
+
+    .testimonials h2 {
+        font-size: 2rem;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
     }
 }
 

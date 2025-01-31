@@ -6,13 +6,14 @@ import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { LoginModel } from "../../model/login.model";
 import { LoginService } from "../../service/login.service";
+import { LoginHeaderComponent } from "../login-header/login-header.component";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule, LoginHeaderComponent]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;

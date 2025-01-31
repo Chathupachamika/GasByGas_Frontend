@@ -10,13 +10,18 @@ import { ModeratorOproductsComponent } from './moderator/components/moderator-op
 import { ModeratorOrderComponent } from './moderator/components/moderator-order/moderator-order.component';
 import { ModeratorDashboardComponent } from './moderator/moderator-dashboard/moderator-dashboard.component';
 import { ModeratorHeaderComponent } from './moderator/moderator-header/moderator-header.component';
-import { AboutComponent } from './user/components/about/about.component';
+import { AboutComponent } from './common/about/about.component';
 import { ContactComponent } from './user/components/contact/contact.component';
 import { OrderComponent } from './user/components/order/order.component';
 import { ProductsComponent } from './user/components/products/products.component';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
+import { ServiceComponent } from './common/service/service.component';
 
 export const routes: Routes = [
+  {
+    path: 'service',
+    component: ServiceComponent
+  },
   {
     path: '',
     redirectTo: 'login',

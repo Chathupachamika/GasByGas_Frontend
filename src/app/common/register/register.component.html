@@ -1,3 +1,4 @@
+<app-login-header></app-login-header>
 <div class="register-container">
   <div class="register-card">
     <div class="text-center mb-8">
@@ -15,7 +16,7 @@
           [(ngModel)]="user.email"
           placeholder="Email address"
         >
-        <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" 
+        <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
              class="error-message">
           <i class="fas fa-exclamation-circle"></i>
           {{ getErrorMessage('email') }}
@@ -30,7 +31,7 @@
           [(ngModel)]="user.mobileNumber"
           placeholder="Mobile number"
         >
-        <div *ngIf="registerForm.get('mobileNumber')?.touched && registerForm.get('mobileNumber')?.invalid" 
+        <div *ngIf="registerForm.get('mobileNumber')?.touched && registerForm.get('mobileNumber')?.invalid"
              class="error-message">
           <i class="fas fa-exclamation-circle"></i>
           {{ getErrorMessage('mobileNumber') }}
@@ -45,7 +46,7 @@
           [(ngModel)]="user.name"
           placeholder="Full name"
         >
-        <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" 
+        <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid"
              class="error-message">
           <i class="fas fa-exclamation-circle"></i>
           {{ getErrorMessage('name') }}
@@ -60,7 +61,7 @@
           [(ngModel)]="user.password"
           placeholder="Password"
         >
-        <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" 
+        <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
              class="error-message">
           <i class="fas fa-exclamation-circle"></i>
           {{ getErrorMessage('password') }}
@@ -104,7 +105,7 @@
 
       <div class="social-buttons">
         <button
-          class="inline-flex w-full justify-end rounded-md bg-white px-2 py-1 text-gray-500"
+          class="inline-flex w-full justify-end rounded-md bg-transparent px-2 py-1 text-gray-500"
         >
           <span class="sr-only">Sign in with Google</span>
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
@@ -112,7 +113,7 @@
             </svg>
         </button>
         <button
-          class="inline-flex w-full justify-left rounded-md bg-white px-2 py-1 text-gray-500"
+          class="inline-flex w-full justify-left rounded-md bg-transparent px-2 py-1 text-gray-500"
         >
           <span class="sr-only">Sign in with Facebook</span>
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35" height="35" viewBox="0 0 48 48">

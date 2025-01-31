@@ -3,14 +3,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #f6f7ff 0%, #eef1ff 100%);
+    background: linear-gradient(-45deg, #001F3F, #0074D9, #7FDBFF, #39CCCC);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
     padding: 20px;
 }
 
 .register-card {
     width: 100%;
     max-width: 480px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.75); /* Increase transparency */
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 2.5rem;
@@ -31,7 +33,7 @@
     margin-bottom: 1.5rem;
 }
 
-.input-group input, 
+.input-group input,
 .input-group select {
     width: 100%;
     padding: 1rem 1rem 1rem 3rem;
@@ -131,6 +133,18 @@
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @media (max-width: 480px) {

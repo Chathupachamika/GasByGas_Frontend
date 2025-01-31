@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RegisterModel } from '../../model/register.model';
 import { LoginService } from '../../service/login.service';
+import { LoginHeaderComponent } from "../login-header/login-header.component";
 
 interface BackendUserModel {
   name: string;
@@ -19,7 +20,7 @@ interface BackendUserModel {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, HttpClientModule, LoginHeaderComponent]
 })
 export class RegisterComponent {
   registerForm: FormGroup;

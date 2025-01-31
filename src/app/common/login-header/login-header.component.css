@@ -6,73 +6,8 @@
   position: fixed;
   width: 100%;
   top: 0;
+  z-index: 1000; /* Keep this lower than the overlay */
   background-color: white;
-  z-index: 1000; /* Base z-index for header */
-}
-
-.header.hidden {
-  display: none;
-}
-
-.delete-notification-btn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  background: none;
-  border: none;
-  color: #ff4444;
-  cursor: pointer;
-  padding: 5px;
-  transition: color 0.3s;
-}
-
-.delete-notification-btn:hover {
-  color: #cc0000;
-}
-
-.notification-item {
-  position: relative;
-  padding-right: 40px;
-  margin-bottom: 15px; /* Add space among notifications */
-  background: #f9f9f9; /* Light background for better visibility */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
-}
-
-.notification-item:hover {
-  transform: translateY(-2px); /* Slight lift on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-}
-
-.notification-icon {
-  color: #ff9800; /* Icon color */
-  font-size: 24px; /* Larger icon */
-}
-
-.notification-content {
-  padding: 10px; /* Padding for content */
-}
-
-.notification-header h4 {
-  font-size: 18px; /* Larger header text */
-  margin-bottom: 5px; /* Space below header */
-}
-
-.notification-details p {
-  margin: 2px 0; /* Space between details */
-  font-size: 14px; /* Smaller detail text */
-  color: #555; /* Subtle text color */
-}
-
-.notification-status {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 10px;
-  height: 10px;
-  background: #ff4444; /* Status indicator color */
-  border-radius: 50%;
 }
 
 .top-bar {
@@ -268,7 +203,6 @@
     animation: iconPop 0.3s ease-out;
 }
 
-
 .cart-count {
   position: absolute;
   top: -8px;
@@ -298,57 +232,6 @@
 @keyframes bounce {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  background: linear-gradient(145deg, #f8fafc, #ffffff);
-  box-shadow: inset 2px 2px 5px #d9d9d9, inset -2px -2px 5px #ffffff;
-  border-radius: 24px;
-  padding: 0.5rem 1rem;
-  margin-right: 2rem;
-  transition: all 0.3s ease;
-}
-
-.search-container:focus-within {
-  box-shadow: inset 2px 2px 5px #d9d9d9, inset -2px -2px 5px #ffffff,
-              0 0 15px rgba(15, 59, 122, 0.1);
-  transform: translateY(-1px);
-}
-
-.search-input {
-  border: none;
-  background: none;
-  padding: 0.5rem;
-  outline: none;
-  width: 200px;
-  color: #2D3748;
-
-  &::placeholder {
-      color: #A0AEC0;
-  }
-}
-
-.search-btn {
-  background: none;
-  border: none;
-  color: #0F3B7A;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.search-btn .material-icons {
-  color: #0F3B7A;
-  font-size: 20px;
-  transition: transform 0.3s ease;
-}
-
-.search-btn:hover .material-icons {
-  transform: scale(1.1);
-  background: linear-gradient(45deg, #1565C0, #1976D2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .mobile-menu-btn {
@@ -685,9 +568,9 @@
   max-width: 400px;
   background: linear-gradient(135deg, #ffffff, #f8fafc);
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 1100; /* Keep this value */
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
-  z-index: 2000; /* Above overlay */
 }
 
 .cart-popup {
@@ -696,7 +579,7 @@
   height: 100%;
   position: relative;
   background: white;
-  z-index: 2001; /* Above cart overlay */
+  z-index: 1102;
 }
 
 .cart-header {
@@ -936,10 +819,6 @@
 }
 
 @media (max-width: 1024px) {
-  .search-container {
-      display: none;
-  }
-
   .nav-links {
       gap: 1.5rem;
   }
@@ -1085,7 +964,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1500; /* Above header */
+  z-index: 1101;
 }
 
 /* Notification popup styles */
@@ -1096,34 +975,49 @@
   bottom: 0;
   width: 100%;
   max-width: 400px;
-  background: white;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 2000; /* Above overlay */
-  animation: slideIn 0.3s ease-out;
-  overflow-y: auto;
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 1102; /* Increased z-index to ensure visibility */
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
 }
 
 .notifications-popup {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: white;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+  border-left: 1px solid rgba(255,255,255,0.2);
   position: relative;
-  z-index: 2001; /* Ensure popup content is above overlay */
+  z-index: 1103; /* Ensure popup content is above overlay */
 }
 
 .notifications-header {
+  background: linear-gradient(135deg, #1a237e, #0d47a1);
   padding: 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
+  color: white;
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.notifications-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1));
+  animation: shimmer 2s infinite;
+}
+
 .notifications-header h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1e293b;
+  color: white; /* Changed from #1e293b to white */
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -1136,19 +1030,17 @@
 }
 
 .clear-all-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
   padding: 0.5rem 1rem;
-  border: none;
-  background: #f1f5f9;
-  color: #64748b;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border-radius: 20px;
+  transition: all 0.3s ease;
 }
 
 .clear-all-btn:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
 }
 
 .notifications-body {
@@ -1178,6 +1070,10 @@
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
+  background: linear-gradient(to right, rgba(255,255,255,0.7), rgba(255,255,255,0.5));
+  margin: 0.5rem;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .notification-item:hover {
@@ -1185,7 +1081,37 @@
 }
 
 .notification-item.unread {
-  background: #f0f9ff;
+  background: linear-gradient(to right, #e3f2fd, #bbdefb);
+}
+
+.notification-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.5), transparent);
+  transform: translateX(-100%);
+  animation: glow 3s infinite;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.notification-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.notification-details p {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #424242;
 }
 
 .notification-icon {
@@ -1196,6 +1122,9 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: linear-gradient(135deg, #2196f3, #1565c0);
+  color: white;
+  box-shadow: 0 2px 10px rgba(33,150,243,0.3);
 }
 
 .notification-icon.order {
@@ -1251,17 +1180,152 @@
   }
 }
 
-/* Ensure main content stays below */
-:host ::ng-deep .dashboard-container,
-:host ::ng-deep .main-content {
-  z-index: 1;
+.animated-bell {
+  animation: bellRing 2s infinite;
+  transform-origin: top;
 }
 
-/* Profile popup */
-.fixed.inset-0 {
-  z-index: 2000 !important; /* Above overlay */
+.animate-in {
+  animation: slideUp 0.3s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
-.bg-white.rounded-lg {
-  z-index: 2001;
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #90caf9 transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #90caf9, #64b5f6);
+  border-radius: 3px;
+}
+
+/* Animations */
+@keyframes bellRing {
+  0%, 100% { transform: rotate(0); }
+  20%, 60% { transform: rotate(10deg); }
+  40%, 80% { transform: rotate(-10deg); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes glow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes slideUp {
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.hover-effect:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+.pulse-effect {
+  animation: pulse 2s infinite;
+}
+
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.ripple-effect:active::after {
+  width: 200%;
+  height: 200%;
+}
+
+.delete-notification-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: none;
+  border: none;
+  color: #ff4444;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s;
+}
+
+.delete-notification-btn:hover {
+  color: #cc0000;
+}
+
+.notification-item {
+  position: relative;
+  padding-right: 40px;
+}
+/* Material Icons specific styles */
+.material-icons {
+    font-size: 24px;
+    line-height: 1;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-bar .material-icons {
+    font-size: 20px;
+    margin-right: 4px;
+}
+
+.logo .material-icons {
+    font-size: 32px;
+    background: linear-gradient(45deg, #FF6B35, #FF8C66);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-icons .material-icons {
+    font-size: 24px;
+    transition: transform 0.2s ease;
+}
+
+.nav-icons .icon-btn:hover .material-icons {
+    transform: scale(1.1);
+}
+
+.mobile-menu-btn .material-icons {
+    font-size: 28px;
+}
+
+.notification-icon .material-icons {
+    font-size: 20px;
 }
