@@ -61,14 +61,12 @@
     </div>
 </div>
 
-<!-- Profile View/Edit Popup -->
 <div *ngIf="showProfilePopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg shadow-xl p-6 w-96 relative">
         <button (click)="closePopup()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" title="Close">
             <span class="material-icons">close</span>
         </button>
 
-        <!-- View Mode -->
         <div *ngIf="!isEditMode" class="user-details-view">
             <div class="modal-header">
                 <h2 class="text-2xl font-bold">Profile Details</h2>
@@ -106,7 +104,6 @@
             </div>
         </div>
 
-        <!-- Edit Mode -->
         <div *ngIf="isEditMode" class="user-details-edit">
             <div class="modal-header">
                 <h2 class="text-2xl font-bold mb-2">Update Profile</h2>
@@ -170,7 +167,6 @@
     </div>
 </div>
 
-<!-- Cart Popup -->
 <div *ngIf="showCartPopup" class="cart-popup-overlay" (click)="toggleCartPopup()">
     <div class="cart-popup" (click)="$event.stopPropagation()">
         <div class="cart-header">
@@ -230,7 +226,6 @@
     </div>
 </div>
 
-<!-- Notifications Popup -->
 <div *ngIf="showNotificationsPopup" class="notifications-popup-overlay" (click)="toggleNotificationsPopup()">
     <div class="notifications-popup" (click)="$event.stopPropagation()">
         <div class="notifications-header">

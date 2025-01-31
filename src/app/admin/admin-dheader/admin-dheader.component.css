@@ -7,7 +7,7 @@
   width: 100%;
   top: 0;
   background-color: white;
-  z-index: 1000; /* Base z-index for header */
+  z-index: 1000;
 }
 
 .header.hidden {
@@ -33,36 +33,36 @@
 .notification-item {
   position: relative;
   padding-right: 40px;
-  margin-bottom: 15px; /* Add space among notifications */
-  background: #f9f9f9; /* Light background for better visibility */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
+  margin-bottom: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .notification-item:hover {
-  transform: translateY(-2px); /* Slight lift on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .notification-icon {
-  color: #ff9800; /* Icon color */
-  font-size: 24px; /* Larger icon */
+  color: #ff9800;
+  font-size: 24px;
 }
 
 .notification-content {
-  padding: 10px; /* Padding for content */
+  padding: 10px;
 }
 
 .notification-header h4 {
-  font-size: 18px; /* Larger header text */
-  margin-bottom: 5px; /* Space below header */
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 
 .notification-details p {
-  margin: 2px 0; /* Space between details */
-  font-size: 14px; /* Smaller detail text */
-  color: #555; /* Subtle text color */
+  margin: 2px 0;
+  font-size: 14px;
+  color: #555;
 }
 
 .notification-status {
@@ -71,7 +71,7 @@
   left: 10px;
   width: 10px;
   height: 10px;
-  background: #ff4444; /* Status indicator color */
+  background: #ff4444;
   border-radius: 50%;
 }
 
@@ -244,7 +244,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1101; /* Ensure button stays above overlay */
+  z-index: 1101;
 
   &:hover {
       background: linear-gradient(145deg, #f0f0f0, #ffffff);
@@ -661,17 +661,14 @@
   padding: 0.75rem 1.5rem;
 }
 
-/* Hover effects */
 .form-input:hover:not(.readonly) {
   border-color: #2563eb;
 }
 
-/* Error state */
 .form-input.error {
   border-color: #dc2626;
 }
 
-/* Success state */
 .form-input.success {
   border-color: #059669;
 }
@@ -687,7 +684,7 @@
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
-  z-index: 2000; /* Above overlay */
+  z-index: 2000;
 }
 
 .cart-popup {
@@ -696,7 +693,7 @@
   height: 100%;
   position: relative;
   background: white;
-  z-index: 2001; /* Above cart overlay */
+  z-index: 2001;
 }
 
 .cart-header {
@@ -791,7 +788,6 @@
   background-color: #f8fafc;
 }
 
-/* Custom backgrounds for each cart item */
 .cart-item:nth-child(1) .item-image {
   background-image: url('../../../assets/CADAC\ Sylinder.webp');
 }
@@ -808,7 +804,6 @@
   background-image: url('../../../assets/laughs.jpeg');
 }
 
-/* Remove the img styles since we're using background-image */
 .item-image img {
   display: none;
 }
@@ -984,7 +979,6 @@
   }
 }
 
-/* Loading animation for buttons */
 .loading {
   position: relative;
   pointer-events: none;
@@ -1051,7 +1045,6 @@
   100% { transform: scale(1); }
 }
 
-/* SweetAlert custom styles */
 .animated {
   animation-duration: 0.5s;
   animation-fill-mode: both;
@@ -1072,12 +1065,10 @@
   animation-name: fadeInDown;
 }
 
-/* Ensure SweetAlert appears above other elements */
 .swal2-popup {
   z-index: 2000;
 }
 
-/* Add this new overlay class */
 .overlay-background {
   position: fixed;
   top: 0;
@@ -1085,10 +1076,9 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1500; /* Above header */
+  z-index: 1500;
 }
 
-/* Notification popup styles */
 .notifications-popup-overlay {
   position: fixed;
   top: 0;
@@ -1098,7 +1088,7 @@
   max-width: 400px;
   background: white;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 2000; /* Above overlay */
+  z-index: 2000;
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
 }
@@ -1109,7 +1099,7 @@
   height: 100%;
   background: white;
   position: relative;
-  z-index: 2001; /* Ensure popup content is above overlay */
+  z-index: 2001;
 }
 
 .notifications-header {
@@ -1251,15 +1241,13 @@
   }
 }
 
-/* Ensure main content stays below */
 :host ::ng-deep .dashboard-container,
 :host ::ng-deep .main-content {
   z-index: 1;
 }
 
-/* Profile popup */
 .fixed.inset-0 {
-  z-index: 2000 !important; /* Above overlay */
+  z-index: 2000 !important;
 }
 
 .bg-white.rounded-lg {

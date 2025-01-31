@@ -28,7 +28,7 @@ export class AdminDheaderComponent implements OnInit {
   editedUserDetails: any = {};
   isEditMode = false;
   showCartPopup = false;
-  cartItems: CartItem[] = []; // Initialize as empty array
+  cartItems: CartItem[] = [];
   showNotificationsPopup = false;
   notifications: NotificationDTO[] = [];
 
@@ -46,11 +46,9 @@ export class AdminDheaderComponent implements OnInit {
       this.editedUserDetails = { ...this.userDetails };
       console.log('Loaded user details:', this.userDetails);
     }
-    // Subscribe to cart updates from CartService
     this.cartService.currentCartItems.subscribe(items => {
       this.cartItems = items;
     });
-    // Subscribe to notifications
     this.notificationService.notifications$.subscribe(notifications => {
       this.notifications = notifications;
     });
@@ -58,7 +56,7 @@ export class AdminDheaderComponent implements OnInit {
 
   toggleProfilePopup(): void {
     this.showProfilePopup = !this.showProfilePopup;
-    this.isEditMode = false; // Always start in view mode
+    this.isEditMode = false;
     if (this.showProfilePopup) {
       this.editedUserDetails = { ...this.userDetails };
     }
@@ -91,7 +89,7 @@ export class AdminDheaderComponent implements OnInit {
           text: 'Your profile has been successfully updated.',
           timer: 2000,
           showConfirmButton: false,
-          position: 'center', // Changed from 'top-end' to 'center'
+          position: 'center',
           background: '#fff',
           customClass: {
             popup: 'animated fadeInDown'
@@ -106,7 +104,7 @@ export class AdminDheaderComponent implements OnInit {
           text: 'Failed to update your profile. Please try again.',
           confirmButtonText: 'OK',
           confirmButtonColor: '#0F3B7A',
-          position: 'center' // Added position center for error alert as well
+          position: 'center'
         });
       }
     });
@@ -123,13 +121,12 @@ export class AdminDheaderComponent implements OnInit {
 
   confirmDeleteAccount(): void {
     if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-      // Add delete account logic here
       console.log('Delete account');
     }
   }
 
   toggleCartPopup(): void {
-    console.log('Toggling cart popup');  // Debug log
+    console.log('Toggling cart popup');
     this.showCartPopup = !this.showCartPopup;
   }
 
@@ -162,10 +159,8 @@ export class AdminDheaderComponent implements OnInit {
   }
 
   toggleNotificationsPopup(): void {
-    console.log('Toggling notifications popup'); // Add this debug log
+    console.log('Toggling notifications popup');
     this.showNotificationsPopup = !this.showNotificationsPopup;
-
-    // Close other popups when notifications popup is opened
     if (this.showNotificationsPopup) {
       this.showProfilePopup = false;
       this.showCartPopup = false;
@@ -183,7 +178,7 @@ export class AdminDheaderComponent implements OnInit {
   }
 
   deleteNotification(event: Event, notification: NotificationDTO): void {
-    event.stopPropagation(); // Prevent triggering markAsRead
+    event.stopPropagation();
     if (notification.id) {
       this.notificationService.deleteNotification(notification.id).subscribe({
         next: () => {
