@@ -11,6 +11,8 @@ body {
 }
 
 .dashboard-container {
+  position: relative;
+  z-index: 1; /* Ensure it stays below header and popups */
   display: flex;
   min-height: 100vh;
   background: linear-gradient(145deg, #f8fafc, #f1f5f9);
@@ -88,6 +90,8 @@ body {
 
 /* Main Content Styles */
 .main-content {
+  position: relative;
+  z-index: 1; /* Ensure it stays below header and popups */
   flex: 1;
   margin-left: 0px;
   padding: 2rem;
