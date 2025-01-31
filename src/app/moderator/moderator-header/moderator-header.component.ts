@@ -56,16 +56,6 @@ export class ModeratorHeaderComponent implements OnInit {
     });
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const header = document.querySelector('.header') as HTMLElement;
-    if (window.pageYOffset > 0) {
-      header.classList.add('hidden');
-    } else {
-      header.classList.remove('hidden');
-    }
-  }
-
   toggleProfilePopup(): void {
     this.showProfilePopup = !this.showProfilePopup;
     this.isEditMode = false; // Always start in view mode

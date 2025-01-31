@@ -179,7 +179,11 @@
     <form [formGroup]="requestForm" (ngSubmit)="submitRequest()" class="request-form">
       <div class="form-group">
         <label>Your Name</label>
-        <input type="text" formControlName="userName" placeholder="Enter your name">
+        <input type="text"
+               formControlName="userName"
+               placeholder="Enter your name"
+               [readonly]="userDetails?.name || userDetails?.userName"
+               [class.pre-filled]="userDetails?.name || userDetails?.userName">
         <div class="error-message" *ngIf="requestForm.get('userName')?.touched && requestForm.get('userName')?.invalid">
           Name is required
         </div>
@@ -187,17 +191,25 @@
 
       <div class="form-group">
         <label>Contact Number</label>
-        <input type="tel" formControlName="contactNumber" placeholder="Enter your contact number">
+        <input type="tel"
+               formControlName="contactNumber"
+               placeholder="Enter your contact number"
+               [readonly]="userDetails?.contactNo"
+               [class.pre-filled]="userDetails?.contactNo">
         <div class="error-message" *ngIf="requestForm.get('contactNumber')?.touched && requestForm.get('contactNumber')?.invalid">
           Valid contact number is required (10 digits)
         </div>
       </div>
 
       <div class="form-group">
-        <label>Address</label>
-        <input type="address" formControlName="address" placeholder="Enter your address">
-        <div class="error-message" *ngIf="requestForm.get('address')?.touched && requestForm.get('address')?.invalid">
-          Valid address is required
+        <label>Email Address</label>
+        <input type="email"
+               formControlName="email"
+               placeholder="Enter your email"
+               [readonly]="userDetails?.email"
+               [class.pre-filled]="userDetails?.email">
+        <div class="error-message" *ngIf="requestForm.get('email')?.touched && requestForm.get('email')?.invalid">
+          Valid email address is required
         </div>
       </div>
 
@@ -223,5 +235,9 @@
   color: #666;
   margin-top: 5px;
 }
-</style>
 
+.pre-filled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+</style>

@@ -3,17 +3,17 @@
       <div class="top-bar-content">
           <div class="top-contact">
               <a href="tel:+94112100000">
-                  <i class="fas fa-phone"></i>
+                  <span class="material-icons">phone</span>
                   +94 112 100 000
               </a>
               <a href="mailto:info@gasservice.com">
-                  <i class="fas fa-envelope"></i>
+                  <span class="material-icons">email</span>
                   infogasservice.com
               </a>
           </div>
           <div class="top-contact">
               <a href="#">
-                  <i class="fas fa-clock"></i>
+                  <span class="material-icons">schedule</span>
                   24/7 Support Available
               </a>
           </div>
@@ -23,12 +23,11 @@
   <div class="header-main">
     <div class="header-container">
         <a href="/" class="logo">
-            <i class="fas fa-fire-flame-curved"></i>
+            <span class="material-icons">local_fire_department</span>
             GasByGas
         </a>
 
         <nav class="nav-menu">
-
             <ul class="nav-links">
               <li><a href="/moderator-dashboard">Home</a></li>
               <li><a href="/moderator-products">Products</a></li>
@@ -40,23 +39,23 @@
 
             <div class="nav-icons">
                 <button class="icon-btn" title="User Profile" (click)="toggleProfilePopup()">
-                  <img width="48" height="48" src="https://img.icons8.com/color/48/user-male-circle.png" alt="user-male-circle"/>
+                  <span class="material-icons">account_circle</span>
                 </button>
                 <button class="icon-btn" title="Shopping Cart" (click)="toggleCartPopup()">
-                    <i class="fas fa-shopping-cart"></i>
+                    <span class="material-icons">shopping_cart</span>
                     <span class="cart-count">{{ cartItems.length }}</span>
                 </button>
                 <button class="icon-btn" title="Notifications" (click)="toggleNotificationsPopup()">
-                    <i class="material-icons">notifications</i>
+                    <span class="material-icons">notifications</span>
                     <span class="notification-count">{{notifications.length}}</span>
                 </button>
                 <button class="icon-btn" title="Help Center">
-                    <i class="fas fa-question-circle"></i>
+                    <span class="material-icons">help</span>
                 </button>
             </div>
 
             <button class="mobile-menu-btn" title="Mobile Menu">
-                <i class="fas fa-bars"></i>
+                <span class="material-icons">menu</span>
             </button>
         </nav>
     </div>
@@ -66,7 +65,7 @@
 <div *ngIf="showProfilePopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg shadow-xl p-6 w-96 relative">
         <button (click)="closePopup()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" title="Close">
-            <i class="fas fa-times"></i>
+            <span class="material-icons">close</span>
         </button>
 
         <!-- View Mode -->
@@ -176,11 +175,11 @@
     <div class="cart-popup" (click)="$event.stopPropagation()">
         <div class="cart-header">
             <h3>
-                <i class="fas fa-shopping-cart"></i>
+                <span class="material-icons">shopping_cart</span>
                 Shopping Cart
             </h3>
             <button class="close-btn" (click)="toggleCartPopup()">
-                <i class="fas fa-times"></i>
+                <span class="material-icons">close</span>
             </button>
         </div>
 
@@ -236,40 +235,48 @@
     <div class="notifications-popup" (click)="$event.stopPropagation()">
         <div class="notifications-header">
             <h3>
-                <i class="fas fa-bell"></i>
+                <span class="material-icons">notifications</span>
                 Notifications
             </h3>
             <div class="notification-actions">
-                <button class="clear-all-btn" (click)="clearAllNotifications()" *ngIf="notifications.length > 0">
+                <button class="clear-all-btn pulse-effect" (click)="clearAllNotifications()" *ngIf="notifications.length > 0">
+                    <i class="fas fa-trash-alt"></i>
                     Clear All
                 </button>
-                <button class="close-btn" (click)="toggleNotificationsPopup()">
-                    <i class="fas fa-times"></i>
+                <button class="close-btn ripple-effect" (click)="toggleNotificationsPopup()">
+                    <span class="material-icons">close</span>
                 </button>
             </div>
         </div>
 
-        <div class="notifications-body">
+        <div class="notifications-body custom-scrollbar">
             <div *ngIf="notifications.length === 0" class="empty-notifications">
-                <i class="fas fa-bell-slash"></i>
+                <i class="fas fa-bell-slash animated-empty"></i>
                 <p>No new notifications</p>
             </div>
 
-            <div *ngFor="let notification of notifications"
-                 class="notification-item"
+            <div *ngFor="let notification of notifications; let i = index"
+                 class="notification-item animate-in"
                  [class.unread]="!notification.isRead"
+                 [style.animation-delay]="i * 0.1 + 's'"
                  (click)="markAsRead(notification)">
+                <div class="notification-glow"></div>
                 <div class="notification-icon">
-                    <i class="fas fa-bell"></i>
+                    <span class="material-icons">notifications</span>
                 </div>
                 <div class="notification-content">
-                    <h4>Request from {{notification.name}}</h4>
-                    <p>Contact: {{notification.contactNumber}}</p>
-                    <p>Email: {{notification.email}}</p>
-                    <p>Preferred Date: {{notification.preferredDate}}</p>
-                    <p>Gas Capacity: {{notification.gasCapacity}} kg</p>
+                    <div class="notification-header">
+                        <h4>Request from {{notification.name}}</h4>
+                        
+                    </div>
+                    <div class="notification-details">
+                        <p><i class="fas fa-phone"></i> {{notification.contactNumber}}</p>
+                        <p><i class="fas fa-envelope"></i> {{notification.email}}</p>
+                        <p><i class="fas fa-calendar"></i> {{notification.preferredDate}}</p>
+                        <p><i class="fas fa-gas-pump"></i> {{notification.gasCapacity}} kg</p>
+                    </div>
                 </div>
-                <button class="delete-notification-btn"
+                <button class="delete-notification-btn hover-effect"
                         (click)="deleteNotification($event, notification)"
                         title="Delete Notification">
                     <i class="fas fa-trash-alt"></i>
@@ -303,4 +310,3 @@
   padding-right: 40px;
 }
 </style>
-

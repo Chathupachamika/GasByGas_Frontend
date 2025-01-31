@@ -39,7 +39,7 @@ export class NotificationService {
 
   markAsRead(id: number): void {
     const currentNotifications = this.notificationsSubject.value;
-    const updatedNotifications = currentNotifications.map(n => 
+    const updatedNotifications = currentNotifications.map(n =>
       n.id === id ? { ...n, isRead: true } : n
     );
     this.notificationsSubject.next(updatedNotifications);

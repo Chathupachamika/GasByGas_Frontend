@@ -39,7 +39,7 @@ interface ProductRequest {
 
 
 export class ProductsComponent implements OnInit {
-  outlets: any[] = [];
+
 
   get today() {
 
@@ -85,12 +85,12 @@ export class ProductsComponent implements OnInit {
   showRequestModal = false;
   requestForm: FormGroup;
   selectedRequestProduct: Product | null = null;
+  userDetails: any;
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
     private cartService: CartService,
-     private orderService: OrderService,
     private router: Router,
     private notificationService: NotificationService
   ) {
@@ -105,11 +105,14 @@ export class ProductsComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       requestDate: ['', [Validators.required]]
     });
+
+    // Get user details from localStorage
+    const userDetailsStr = localStorage.getItem('userDetails');
+    this.userDetails = userDetailsStr ? JSON.parse(userDetailsStr) : null;
   }
 
   ngOnInit(): void {
     this.loadProducts();
-    this.loadOutlets();
   }
 
   loadProducts() {
@@ -127,12 +130,6 @@ export class ProductsComponent implements OnInit {
         console.error('Error loading products:', error);
       }
     );
-  }
-
-  loadOutlets(): void {
-    this.orderService.getAllOutlets().subscribe((data: any[]) => {
-      this.outlets = data;
-    });
   }
 
   addNewProduct() {
@@ -403,6 +400,16 @@ export class ProductsComponent implements OnInit {
   requestProduct(product: Product) {
     this.selectedRequestProduct = product;
     this.showRequestModal = true;
+
+    // Pre-fill the form with user details if available
+    if (this.userDetails) {
+        this.requestForm.patchValue({
+            userName: this.userDetails.name || this.userDetails.userName,
+            // Convert contactNo to string and ensure it's a 10-digit number
+            contactNumber: this.userDetails.contactNo?.toString().padStart(10, '0') || '',
+            email: this.userDetails.email
+        });
+    }
   }
 
   submitRequest() {
@@ -410,7 +417,7 @@ export class ProductsComponent implements OnInit {
       const notification: NotificationDTO = {
         name: this.requestForm.value.userName,
         contactNumber: this.requestForm.value.contactNumber,
-        address: this.requestForm.value.address,
+        email: this.requestForm.value.email,
         preferredDate: this.requestForm.value.requestDate,
         gasCapacity: this.selectedRequestProduct.capacity  // Add the gas capacity
       };
