@@ -10,7 +10,8 @@ import { LoginService } from '../../../service/login.service';
 import { PaypalService } from '../../../service/paypal.service';
 import { OrderService } from '../../../service/order.service';
 import { AdminDheaderComponent } from "../../admin-dheader/admin-dheader.component";
-
+import Swal from 'sweetalert2';
+import { AdminSidebarComponent } from "../../admin-sidebar/admin-sidebar.component";
 
 interface Gas {
   id: number;
@@ -22,7 +23,7 @@ interface Gas {
 interface OrderGas {
   gasId: number;
   quantity: number;
-  location?: string;  // Add location field
+  location?: string;
 }
 
 interface Order {
@@ -38,18 +39,21 @@ interface Order {
 
 @Component({
   selector: 'app-admin-order',
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule, AdminDheaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule, AdminDheaderComponent, AdminSidebarComponent],
   templateUrl: './admin-order.component.html',
   styleUrl: './admin-order.component.css'
 })
 export class AdminOrderComponent implements OnInit {
-  paymentSuccess: boolean = false; // To show success popup
-  paymentFailed: boolean = false; // To handle failed payments
+  paymentSuccess: boolean = false;
+  paymentFailed: boolean = false;
+  lastOrderId: number | string | null = null;
+  generatedToken: string | null = null;
   isLoading: boolean = false;
   paypalPaymentId: string = '';
   processingPayment: boolean = false;
   currentStep: number = 1;
   totalSteps: number = 4;
+  tokenKey: string | null = null;
   customerForm!: FormGroup;
   gasSelectionForm!: FormGroup;
   locationForm!: FormGroup;
@@ -58,9 +62,6 @@ export class AdminOrderComponent implements OnInit {
   selectedGases: OrderGas[] = [];
   outlets: any[] = [];
   showTokenPopup: boolean = false;
-  generatedToken: string = '';
-  tokenKey: string = '';
-  orderId: number = 2;
   order: Order = {
     id: 0,
     status: '',
@@ -113,6 +114,7 @@ export class AdminOrderComponent implements OnInit {
     this.loadGases();
     this.showStep(this.currentStep);
     this.loadUserDetails();
+    this.fetchLastOrderId();
     this.loadOrderDetails();
   }
 
@@ -122,6 +124,17 @@ export class AdminOrderComponent implements OnInit {
     });
   }
 
+  fetchLastOrderId(): void {
+    this.orderService.getLastOrderId().subscribe(
+      (response) => {
+        this.lastOrderId = response;
+        console.log('Last Order ID:', this.lastOrderId);
+      },
+      (error) => {
+        console.error('Error fetching last order ID:', error);
+      }
+    );
+  }
   incrementQuantity() {
     const currentValue = this.gasSelectionForm.get('quantity')?.value || 0;
     this.gasSelectionForm.patchValue({ quantity: currentValue + 1 });
@@ -151,7 +164,7 @@ export class AdminOrderComponent implements OnInit {
     this.paypalService.createPayment(paymentDetails).subscribe({
       next: (response) => {
         if (response.redirectUrl) {
-          window.open(response.redirectUrl, '_blank'); // Open PayPal URL in a new tab
+          window.open(response.redirectUrl, '_blank');
         }
       },
       error: (err) => {
@@ -242,7 +255,7 @@ export class AdminOrderComponent implements OnInit {
       quantity: [1],
       hasEmptyCylinder: [false],
       outletId: [''],
-      location: ['']  // Add location control
+      location: ['']
     });
 
     this.locationForm = this.fb.group({
@@ -298,7 +311,7 @@ export class AdminOrderComponent implements OnInit {
   }
 
   public validateCurrentStep(): boolean {
-    return true; // Simplified validation - always returns true
+    return true;
   }
 
   completeOrder(): void {
@@ -358,21 +371,25 @@ export class AdminOrderComponent implements OnInit {
       }
     });
 
-    // Navigate to the order page after completing the order
     this.router.navigate(['/order']).then(() => {
       window.location.reload();
     });
   }
 
   seeToken(orderId: number): void {
+    if (!orderId) {
+      console.error('Invalid order ID');
+      return;
+    }
+
     this.orderService.getOrderById(orderId).subscribe({
       next: (tokenResponse) => {
-        this.generatedToken = tokenResponse.token; // Assuming the tokenResponse contains the token
+        this.generatedToken = tokenResponse.token; // Assuming the response contains a "token" field
         this.showTokenPopup = true;
       },
       error: (err) => {
         console.error('Error fetching order by ID:', err);
-      }
+      },
     });
   }
 
@@ -402,18 +419,25 @@ export class AdminOrderComponent implements OnInit {
   }
 
   displayAlert(message: string, type: 'success' | 'error'): void {
-    this.alertMessage = message;
-    this.alertType = type;
-    this.showAlert = true;
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 3000);
+    Swal.fire({
+      icon: type,
+      title: type === 'success' ? 'Success' : 'Error',
+      text: message,
+      timer: 3000,
+      showConfirmButton: false,
+      position: 'top-end',
+      toast: true
+    });
   }
 
   fetchTokenNumber(orderId: number): void {
+    if (!orderId) {
+      console.error('Invalid order ID');
+      return;
+    }
+
     this.orderService.getToken(orderId).subscribe(
-      (order: { tokenNumber: string; }) => {
+      (order: { tokenNumber: string }) => {
         this.generatedToken = order.tokenNumber; // Assuming the response contains tokenNumber
         this.tokenKey = `New Token Key: ${this.generatedToken}`; // Set your custom token key
         this.showTokenPopup = true; // Show the popup
@@ -425,18 +449,22 @@ export class AdminOrderComponent implements OnInit {
   }
 
   copyToken(): void {
-    console.log(`Token Key: ${this.tokenKey}`);
-    const inputElement = document.createElement('input');
-    inputElement.value = this.generatedToken;
-    document.body.appendChild(inputElement);
-    inputElement.select();
-    document.execCommand('copy');
-    document.body.removeChild(inputElement);
-    alert('Token copied to clipboard!');
+    if (this.generatedToken) {
+      navigator.clipboard.writeText(this.generatedToken).then(
+        () => {
+          console.log('Token copied to clipboard:', this.generatedToken);
+        },
+        (err) => {
+          console.error('Failed to copy token:', err);
+        }
+      );
+    } else {
+      console.error('No token available to copy');
+    }
   }
 
   closeTokenPopup(): void {
-    this.showTokenPopup = false;
+    this.showTokenPopup = false; // Close the popup
   }
 
   addGasToOrder() {
@@ -533,7 +561,7 @@ export class AdminOrderComponent implements OnInit {
     // Token Number (smaller size)
     doc.setFontSize(24);  // Reduced from 32
     doc.setTextColor(59, 130, 246);
-    doc.text(this.generatedToken, pageWidth / 2, tokenBoxY + 10, { align: 'center' });  // Adjusted Y position
+    doc.text(this.generatedToken || '', pageWidth / 2, tokenBoxY + 10, { align: 'center' });  // Adjusted Y position
 
     // Additional Information (moved down)
     doc.setFontSize(12);

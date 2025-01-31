@@ -150,7 +150,7 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateToProducts(): void {
-    this.router.navigate(['/products']);
+    this.router.navigate(['/product']);
     this.toggleCartPopup();
   }
 

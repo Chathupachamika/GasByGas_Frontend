@@ -17,6 +17,12 @@ export class OrderService { // changed from GasCollectService to OrderService
     return this.http.post(`${this.baseUrl}/delieveryShedule`, deliveryCompletionDTO);
   }
 
+  getLastOrderId(): Observable<number | string> {
+    return this.http.get<number | string>(`${this.baseUrl}/orders/last-id`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
   getOrdersByUserId(userId: number): Observable<OrderSummaryDTO[]> {
     return this.http.get<OrderSummaryDTO[]>(`${this.apiUrl}/user/${userId}`);
   }

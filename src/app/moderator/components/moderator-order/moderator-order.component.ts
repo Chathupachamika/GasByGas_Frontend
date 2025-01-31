@@ -9,6 +9,7 @@ import { LoginService } from '../../../service/login.service';
 import { OrderService } from '../../../service/order.service';
 import { PaypalService } from '../../../service/paypal.service';
 import { ModeratorHeaderComponent } from "../../moderator-header/moderator-header.component";
+import { SidebarModeratorComponent } from "../../sidebar-moderator/sidebar-moderator.component";
 
 
 interface Gas {
@@ -37,7 +38,7 @@ interface Order {
 
 @Component({
   selector: 'app-moderator-order',
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule, ModeratorHeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule, ModeratorHeaderComponent, SidebarModeratorComponent],
   templateUrl: './moderator-order.component.html',
   styleUrl: './moderator-order.component.css'
 })

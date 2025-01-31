@@ -152,12 +152,12 @@ export class ModeratorHeaderComponent implements OnInit {
   }
 
   checkout(): void {
-    this.router.navigate(['/order'], { queryParams: { step: '4' } });
+    this.router.navigate(['/moderator-order'], { queryParams: { step: '4' } });
     this.toggleCartPopup();
   }
 
   navigateToProducts(): void {
-    this.router.navigate(['/products']);
+    this.router.navigate(['/moderator-products']);
     this.toggleCartPopup();
   }
 

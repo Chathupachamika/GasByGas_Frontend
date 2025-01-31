@@ -149,12 +149,12 @@ export class AdminDheaderComponent implements OnInit {
   }
 
   checkout(): void {
-    this.router.navigate(['/order'], { queryParams: { step: '4' } });
+    this.router.navigate(['/admin-order'], { queryParams: { step: '4' } });
     this.toggleCartPopup();
   }
 
   navigateToProducts(): void {
-    this.router.navigate(['/products']);
+    this.router.navigate(['/admin-products']);
     this.toggleCartPopup();
   }
 
