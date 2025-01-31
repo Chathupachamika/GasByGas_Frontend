@@ -39,7 +39,7 @@ body {
   height: 100%;
   width: 280px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1001; /* Ensure sidebar is above overlay */
+  z-index: 1001;
   background: rgba(255, 255, 255, 0.65);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
@@ -65,16 +65,16 @@ body {
 
 .profile-section {
   text-align: center;
-  padding: 1.5rem 1.5rem; /* reduced from 2.5rem to 1.5rem */
+  padding: 1.5rem 1.5rem;
   background: linear-gradient(to bottom, rgba(248, 250, 252, 0.5), rgba(255, 255, 255, 0.3));
   border-bottom: 1px solid rgba(229, 231, 235, 0.2);
-  margin-bottom: 0.5rem; /* reduced from 1.5rem to 0.5rem */
+  margin-bottom: 0.5rem;
   animation: gradientShift 8s infinite;
 }
 
 .profile-image {
-  width: 70px; /* reduced from 90px */
-  height: 70px; /* reduced from 90px */
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: #ffffff;
   margin: 0 auto 1rem;
@@ -142,7 +142,7 @@ body {
 }
 
 .nav-item:last-child {
-  margin-bottom: 0; /* Remove bottom margin from last nav item */
+  margin-bottom: 0;
   padding-bottom: 0;
 }
 
@@ -189,7 +189,6 @@ body {
   color: #2563eb;
 }
 
-/* Main Content Styles */
 .main-content {
   flex: 1;
   margin-left: 280px;
@@ -287,12 +286,12 @@ tr:hover {
 }
 
 nav {
-  margin: 1.5rem 0 0 0; /* Remove bottom margin */
+  margin: 1.5rem 0 0 0;
 }
 
 .logout-section {
   position: relative;
-  padding: 0.75rem 1.25rem; /* Reduced top/bottom padding */
+  padding: 0.75rem 1.25rem;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(229, 231, 235, 0.5);
@@ -382,14 +381,12 @@ nav {
   }
 }
 
-/* Add these styles at the end of your CSS file */
 .sweet-alert-center {
   display: flex !important;
   justify-content: center;
   align-items: center;
 }
 
-/* Optional: Customize SweetAlert appearance */
 .swal2-popup {
   font-size: 1rem !important;
   font-family: 'Inter', sans-serif !important;
