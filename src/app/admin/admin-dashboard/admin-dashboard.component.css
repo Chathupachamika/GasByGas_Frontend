@@ -12,14 +12,14 @@ body {
 
 .dashboard-container {
   position: relative;
-  z-index: 1; /* Ensure it stays below header and popups */
+  z-index: 1;
   display: flex;
   min-height: 100vh;
   background: linear-gradient(145deg, #f8fafc, #f1f5f9);
   animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Sidebar Styles */
+
 .sidebar {
   width: 280px;
   background-color: #ffffff;
@@ -88,11 +88,9 @@ body {
   color: #2563eb;
 }
 
-/* Main Content Styles */
 .main-content {
   position: relative;
-  z-index: 1; /* Ensure it stays below header and popups */
-  flex: 1;
+  z-index: 1;
   margin-left: 0px;
   padding: 2rem;
   animation: slideUp 0.5s ease-out;
@@ -353,18 +351,16 @@ tr:hover td {
   }
 
   .main-content {
-      margin-left: 80px; /* Adjusted for collapsed sidebar */
+      margin-left: 80px;
   }
 }
 
-/* Responsive layout */
 @media (max-width: 768px) {
   .main-content {
       margin-left: 0;
   }
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

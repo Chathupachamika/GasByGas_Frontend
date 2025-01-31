@@ -23,14 +23,11 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get the stored user details from localStorage
     const storedDetails = localStorage.getItem('userDetails');
     if (storedDetails) {
       this.userDetails = JSON.parse(storedDetails);
       console.log('Loaded user details:', this.userDetails);
     }
-
-    // Load all order summaries
     this.loadAllOrderSummaries();
   }
 
@@ -58,7 +55,6 @@ export class AdminDashboardComponent implements OnInit {
   deleteOrder(id: number): void {
     this.orderService.deleteOrderSummary(id).subscribe(
       () => {
-        // Remove the deleted order from the list
         this.orders = this.orders.filter(order => order.id !== id);
         console.log(`Order with ID ${id} deleted successfully.`);
       },
