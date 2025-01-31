@@ -43,7 +43,7 @@ interface Order {
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule, SidebarUserComponent, HeaderComponent]
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule, HeaderComponent, SidebarUserComponent]
 })
 export class OrderComponent implements OnInit {
   paymentSuccess: boolean = false;
@@ -707,4 +707,3 @@ export class OrderComponent implements OnInit {
       this.paymentForm.patchValue({ paymentMethod: method });
     }
   }
-  
