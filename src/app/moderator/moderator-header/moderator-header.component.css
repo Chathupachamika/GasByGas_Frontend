@@ -7,6 +7,7 @@
   width: 100%;
   top: 0;
   background-color: white;
+  z-index: 1000;
 }
 
 .header.hidden {
@@ -625,6 +626,7 @@
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
+  z-index: 1200;
 }
 
 .cart-popup {
@@ -633,7 +635,7 @@
   height: 100%;
   position: relative;
   background: white;
-  z-index: 1102;
+  z-index: 1201;
 }
 
 .cart-header {
@@ -1022,7 +1024,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1101;
+  z-index: 1100;
 }
 
 /* Notification popup styles */
@@ -1035,7 +1037,7 @@
   max-width: 400px;
   background: white;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  z-index: 2000; /* Increased z-index to ensure visibility */
+  z-index: 1200; /* Increased z-index to ensure visibility */
   animation: slideIn 0.3s ease-out;
   overflow-y: auto;
 }
@@ -1046,7 +1048,7 @@
   height: 100%;
   background: white;
   position: relative;
-  z-index: 2001; /* Ensure popup content is above overlay */
+  z-index: 1201; /* Ensure popup content is above overlay */
 }
 
 .notifications-header {
@@ -1186,4 +1188,12 @@
   .notifications-popup-overlay {
     max-width: 100%;
   }
+}
+
+.fixed {
+  z-index: 1200 !important;
+}
+
+.bg-black {
+  z-index: 1199 !important;
 }
