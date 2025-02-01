@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit {
 
       this.loginService.loginUser(loginData).subscribe({
         next: (response) => {
-          // After successful login, fetch user details by email
           this.loginService.searchByEmail(loginData.email).subscribe({
             next: (userDetails) => {
               localStorage.setItem('userDetails', JSON.stringify(userDetails));
@@ -106,7 +105,6 @@ export class LoginComponent implements OnInit {
 
   onForgotPasswordSubmit(): void {
     if (this.resetEmail) {
-      // Simply show OTP modal
       this.showForgotPasswordModal = false;
       this.showOtpModal = true;
       this.startOtpTimer();
@@ -159,7 +157,6 @@ export class LoginComponent implements OnInit {
 
   verifyOtp(): void {
     if (this.isOtpValid()) {
-      // Simply show password reset modal
       this.showOtpModal = false;
       this.showPasswordResetModal = true;
     }
@@ -214,13 +211,11 @@ export class LoginComponent implements OnInit {
 
   resendOtp(): void {
     if (this.remainingTime === 0) {
-      // Call your API to resend OTP
       console.log('Resending OTP to:', this.resetEmail);
       this.startOtpTimer();
     }
   }
 
-  // Add new method to handle back button in OTP view
   backToEmailForm(): void {
     this.showOtpModal = false;
     this.showForgotPasswordModal = true;

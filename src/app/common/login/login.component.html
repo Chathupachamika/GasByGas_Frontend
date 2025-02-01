@@ -155,7 +155,6 @@
     </div>
 </div>
 
-<!-- Add this after the forgot password modal -->
 <div *ngIf="showOtpModal" class="modal-backdrop" (click)="showOtpModal = false">
     <div class="otp-modal" (click)="$event.stopPropagation()">
         <div class="modal-content">
@@ -217,7 +216,6 @@
     </div>
 </div>
 
-<!-- Add this after the OTP modal -->
 <div *ngIf="showPasswordResetModal" class="modal-backdrop" (click)="showPasswordResetModal = false">
     <div class="password-reset-modal" (click)="$event.stopPropagation()">
         <div class="modal-content">

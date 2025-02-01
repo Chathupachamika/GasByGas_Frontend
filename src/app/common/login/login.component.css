@@ -12,7 +12,7 @@
 .login-card {
   width: 100%;
   max-width: 420px;
-  background: rgba(255, 255, 255, 0.75); /* Increase transparency */
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2.5rem;
@@ -69,8 +69,8 @@
 
 .input-container input {
   width: 100%;
-  padding: 1rem 2.75rem;  /* Left padding for lock icon */
-  padding-right: 3rem;    /* Right padding for eye icon */
+  padding: 1rem 2.75rem;
+  padding-right: 3rem;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
   font-size: 0.95rem;
@@ -97,10 +97,10 @@
 
 .password-toggle {
   position: absolute;
-  right: 2.50rem;        /* Increased right spacing */
+  right: 2.50rem;
   top: 50%;
   transform: translateY(-50%);
-  background: transparent; /* Make background fully transparent */
+  background: transparent;
   border: none;
   color: #94a3b8;
   cursor: pointer;
@@ -109,7 +109,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  z-index: 2;            /* Ensure icon stays above input */
+  z-index: 2;
 }
 
 .password-toggle:hover {
@@ -776,14 +776,13 @@
 }
 
 .error-message::before {
-  content: '\f071';  /* Font Awesome exclamation triangle */
+  content: '\f071';
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   margin-right: 0.5rem;
   font-size: 0.875rem;
 }
 
-/* SweetAlert2 Custom Styles */
 .my-swal-container {
   z-index: 1100;
   display: flex;
@@ -806,7 +805,6 @@
   font-weight: 600 !important;
 }
 
-/* Override SweetAlert2 styles for better centering */
 .swal2-popup {
   font-size: 1rem !important;
 }
