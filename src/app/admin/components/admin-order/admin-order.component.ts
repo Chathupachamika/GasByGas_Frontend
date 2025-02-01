@@ -384,7 +384,7 @@ export class AdminOrderComponent implements OnInit {
 
     this.orderService.getOrderById(orderId).subscribe({
       next: (tokenResponse) => {
-        this.generatedToken = tokenResponse.token; // Assuming the response contains a "token" field
+        this.generatedToken = tokenResponse.token;
         this.showTokenPopup = true;
       },
       error: (err) => {
@@ -438,9 +438,9 @@ export class AdminOrderComponent implements OnInit {
 
     this.orderService.getToken(orderId).subscribe(
       (order: { tokenNumber: string }) => {
-        this.generatedToken = order.tokenNumber; // Assuming the response contains tokenNumber
-        this.tokenKey = `New Token Key: ${this.generatedToken}`; // Set your custom token key
-        this.showTokenPopup = true; // Show the popup
+        this.generatedToken = order.tokenNumber;
+        this.tokenKey = `New Token Key: ${this.generatedToken}`;
+        this.showTokenPopup = true;
       },
       (error: any) => {
         console.error('Error fetching order:', error);
@@ -464,7 +464,7 @@ export class AdminOrderComponent implements OnInit {
   }
 
   closeTokenPopup(): void {
-    this.showTokenPopup = false; // Close the popup
+    this.showTokenPopup = false;
   }
 
   addGasToOrder() {
@@ -475,13 +475,13 @@ export class AdminOrderComponent implements OnInit {
       this.selectedGases.push({
         gasId: gasForm.gasId,
         quantity: gasForm.quantity,
-        location: gasForm.location  // Include location in the order
+        location: gasForm.location
       });
 
       this.gasSelectionForm.patchValue({
         gasId: '',
         quantity: 1,
-        location: ''  // Reset location field
+        location: ''
       });
 
       console.log('Updated Gas Selection:', {
@@ -520,15 +520,11 @@ export class AdminOrderComponent implements OnInit {
     const pageHeight = doc.internal.pageSize.height;
     const margin = 20;
 
-    // Background with gradient effect
     doc.setFillColor(247, 250, 252);
     doc.rect(0, 0, pageWidth, pageHeight, 'F');
-
-    // Add decorative header band
     doc.setFillColor(59, 130, 246);
     doc.rect(0, 0, pageWidth, 50, 'F');
 
-    // Company Logo/Name
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(28);
     doc.setFont('helvetica', 'bold');
@@ -536,43 +532,35 @@ export class AdminOrderComponent implements OnInit {
     doc.setFontSize(12);
     doc.text('Your Trusted Gas Provider', pageWidth / 2, 42, { align: 'center' });
 
-    // Decorative line
     doc.setDrawColor(59, 130, 246);
     doc.setLineWidth(0.5);
     doc.line(margin, 70, pageWidth - margin, 70);
 
-    // Token Section
     doc.setTextColor(30, 41, 59);
-    doc.setFontSize(20);  // Reduced from 24
+    doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
     doc.text('COLLECTION TOKEN', pageWidth / 2, 90, { align: 'center' });
-
-    // Token Box with shadow effect
     const tokenBoxY = 110;
-    // Shadow effect
+
     doc.setFillColor(230, 236, 241);
-    doc.rect(margin + 2, tokenBoxY - 8, pageWidth - (2 * margin), 50, 'F');  // Increased height to 50
-    // Main box
+    doc.rect(margin + 2, tokenBoxY - 8, pageWidth - (2 * margin), 50, 'F');
+
     doc.setFillColor(255, 255, 255);
     doc.setDrawColor(59, 130, 246);
     doc.setLineWidth(1);
-    doc.rect(margin, tokenBoxY - 10, pageWidth - (2 * margin), 50, 'FD');  // Increased height to 50
+    doc.rect(margin, tokenBoxY - 10, pageWidth - (2 * margin), 50, 'FD');
 
-    // Token Number (smaller size)
-    doc.setFontSize(24);  // Reduced from 32
+    doc.setFontSize(24);
     doc.setTextColor(59, 130, 246);
-    doc.text(this.generatedToken || '', pageWidth / 2, tokenBoxY + 10, { align: 'center' });  // Adjusted Y position
+    doc.text(this.generatedToken || '', pageWidth / 2, tokenBoxY + 10, { align: 'center' });
 
-    // Additional Information (moved down)
     doc.setFontSize(12);
     doc.setTextColor(107, 114, 128);
     doc.setFont('helvetica', 'normal');
-    doc.text('Please present this token at the collection counter', pageWidth / 2, tokenBoxY + 35, { align: 'center' });  // Increased spacing
+    doc.text('Please present this token at the collection counter', pageWidth / 2, tokenBoxY + 35, { align: 'center' });
 
-    // Adjusted validity section starting position
-    const validityY = tokenBoxY + 70;  // Moved down to accommodate larger box
+    const validityY = tokenBoxY + 70;
 
-    // Validity Section
     doc.setFontSize(11);
     doc.setTextColor(30, 41, 59);
     const today = new Date();
@@ -595,7 +583,6 @@ export class AdminOrderComponent implements OnInit {
       day: 'numeric'
     }), margin + 70, validityY + 15);
 
-    // Footer
     doc.setDrawColor(59, 130, 246);
     doc.setLineWidth(0.5);
     doc.line(margin, pageHeight - 30, pageWidth - margin, pageHeight - 30);
@@ -605,7 +592,6 @@ export class AdminOrderComponent implements OnInit {
     doc.text('Gas By Gas Pvt Ltd', margin, pageHeight - 20);
     doc.text('Contact: +94 11 234 5678', pageWidth - margin, pageHeight - 20, { align: 'right' });
 
-    // Save with formatted name
     const formattedDate = new Date().toISOString().split('T')[0];
     doc.save(`GasByGas_Token_${this.generatedToken}_${formattedDate}.pdf`);
   }
@@ -617,7 +603,7 @@ export class AdminOrderComponent implements OnInit {
   loadOrderDetails(): void {
     this.orderService.getAllOrders().subscribe((orders: any[]) => {
       if (orders.length > 0) {
-        const latestOrder = orders[0]; // Assuming the latest order is the first one
+        const latestOrder = orders[0];
         this.order = {
           id: latestOrder.id,
           status: latestOrder.status,
@@ -695,7 +681,7 @@ export class AdminOrderComponent implements OnInit {
   }
 
   get deliveryFee(): number {
-    return 50; // Fixed delivery fee
+    return 50;
   }
 
   calculateTotal(): number {

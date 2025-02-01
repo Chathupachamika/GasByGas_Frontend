@@ -2,7 +2,6 @@
 <app-admin-dheader></app-admin-dheader>
 <div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
   <div class="max-w-3xl mx-auto">
-    <!-- Progress Steps -->
     <div class="mb-8">
       <div class="flex items-center justify-between">
         <div class="flex items-center step-item" [class.text-blue-600]="isStepActive(1)">
@@ -42,7 +41,6 @@
       </div>
     </div>
 
-    <!-- Form Content -->
     <div class="bg-white rounded-lg shadow-lg p-6">
       <!-- Customer Details Step -->
       <div [hidden]="currentStep !== 1">
@@ -388,7 +386,6 @@
         </div>
       </div>
 
-      <!-- Navigation Buttons -->
       <div class="mt-8 flex justify-between">
         <button *ngIf="currentStep > 1" (click)="prevStep()"
           class="bg-gray-100 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors">
