@@ -15,7 +15,6 @@ export class AuthService {
     const userDetails = localStorage.getItem('userDetails');
     if (userDetails) {
       const user = JSON.parse(userDetails);
-      // Assuming the role is stored in the format "ROLE_ADMIN", "ROLE_USER", etc.
       const roleWithPrefix = user.roles?.[0];
       return roleWithPrefix ? roleWithPrefix.replace('ROLE_', '') : null;
     }
