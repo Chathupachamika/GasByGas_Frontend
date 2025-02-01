@@ -13,8 +13,7 @@
           </div>
       </div>
       <div class="banner-image">
-          <img src="https://cdn-bfgmm.nitrocdn.com/SZnNrJtCHNQoEVazTVryKEZBGmHzgakX/assets/images/optimized/rev-fa18e7c/ideausher.com/wp-content/uploads/2021/03/Artboard-2.png"
-              alt="Gas delivery trucks">
+        <img class="gas" alt="">
       </div>
       <div class="customer-table">
           <table>
@@ -37,7 +36,7 @@
                       <td>{{ order.deliveryTime }}</td>
                       <td>{{ order.paymentMethod }}</td>
                       <td>{{ order.mobileNumber }}</td>
-                      <td><button class="action-button" (click)="order.id !== undefined && deleteOrder(order.id)">Cancel</button></td>
+                      <td><button class="action-button" (click)="order.id !== undefined && deleteOrder(order.id)">Finished</button></td>
                   </tr>
               </tbody>
           </table>
