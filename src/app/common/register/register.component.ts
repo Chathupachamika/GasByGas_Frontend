@@ -103,8 +103,6 @@ export class RegisterComponent {
     this.loginService.createUser(backendUser).subscribe({
       next: (response) => {
         console.log('Registration successful', response);
-
-        // After successful registration, fetch user details by email
         this.loginService.searchByEmail(backendUser.email).subscribe({
           next: (userDetails) => {
             localStorage.setItem('userDetails', JSON.stringify(userDetails));
@@ -113,7 +111,6 @@ export class RegisterComponent {
           },
           error: (error) => {
             console.error('Error fetching user details:', error);
-            // Still navigate even if fetching additional details fails
             this.router.navigate(['/login']);
           }
         });

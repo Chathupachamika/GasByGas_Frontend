@@ -12,7 +12,7 @@
 .register-card {
     width: 100%;
     max-width: 480px;
-    background: rgba(255, 255, 255, 0.75); /* Increase transparency */
+    background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 2.5rem;
