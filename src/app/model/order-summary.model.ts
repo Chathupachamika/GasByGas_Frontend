@@ -1,5 +1,5 @@
 export interface OrderSummaryDTO {
-  id?: number; // Optional, as it might not be provided when creating a new order
+  id?: number;
   customerName: string;
   email: string;
   mobileNumber: string;
@@ -12,7 +12,7 @@ export interface OrderSummaryDTO {
   addressLine1: string;
   addressLine2: string;
   city: string;
-  deliveryDate: string; // You can use Date type if needed, but string is common for API responses
+  deliveryDate: string;
   deliveryTime: string;
   postalCode: string;
   paymentMethod: string;

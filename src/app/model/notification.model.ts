@@ -4,6 +4,6 @@ export interface NotificationDTO {
   contactNumber: string;
   email: string;
   preferredDate: string;
-  gasCapacity?: number;  // Added gas capacity field
-  isRead?: boolean; // Added for frontend tracking
+  gasCapacity?: number;
+  isRead?: boolean;
 }
