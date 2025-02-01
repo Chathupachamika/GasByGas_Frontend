@@ -4,7 +4,6 @@
   <div class="hero-section">
     <h1>Premium Gas Solutions</h1>
     <p>High-quality gas cylinders for residential and commercial use</p>
-    <!-- Add this button after the hero section content -->
     <button class="add-product-btn" (click)="addNewProduct()">
       <i class="fas fa-plus"></i>
       Add New Product
@@ -77,7 +76,6 @@
   </div>
 </div>
 
-<!-- Add Product Modal -->
 <div *ngIf="showAddProductModal" class="modal-backdrop" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="modal-header">
@@ -120,7 +118,6 @@
   </div>
 </div>
 
-<!-- Edit Product Modal -->
 <div *ngIf="showEditProductModal" class="modal-backdrop" (click)="closeEditModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="modal-header">
@@ -163,7 +160,6 @@
   </div>
 </div>
 
-<!-- Product Request Modal -->
 <div *ngIf="showRequestModal" class="modal-backdrop" (click)="closeRequestModal()">
   <div class="modal-content request-modal" (click)="$event.stopPropagation()">
     <div class="modal-header">

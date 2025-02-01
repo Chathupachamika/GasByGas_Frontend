@@ -101,7 +101,6 @@ export class AdminProductsComponent implements OnInit {
       requestDate: ['', [Validators.required]]
     });
 
-    // Get user details from localStorage
     const userDetailsStr = localStorage.getItem('userDetails');
     this.userDetails = userDetailsStr ? JSON.parse(userDetailsStr) : null;
   }
@@ -114,7 +113,7 @@ export class AdminProductsComponent implements OnInit {
     this.productService.getAllProducts().subscribe(
       (products) => {
         this.products = products.map(product => ({
-          id: product.id ?? 0, // Ensure id is a number
+          id: product.id ?? 0,
           name: product.name,
           capacity: product.capacity,
           price: product.price,
@@ -135,7 +134,7 @@ export class AdminProductsComponent implements OnInit {
     if (this.productForm.valid) {
       const formValue = this.productForm.value;
       const newProduct: GasDTO = {
-        name: `Gas Cylinder ${formValue.capacity}kg`, // Automatically generate name
+        name: `Gas Cylinder ${formValue.capacity}kg`,
         capacity: Number(formValue.capacity),
         price: Number(formValue.price),
         stock: Number(formValue.stock)
@@ -395,12 +394,9 @@ export class AdminProductsComponent implements OnInit {
   requestProduct(product: Product) {
     this.selectedRequestProduct = product;
     this.showRequestModal = true;
-
-    // Pre-fill the form with user details if available
     if (this.userDetails) {
         this.requestForm.patchValue({
             userName: this.userDetails.name || this.userDetails.userName,
-            // Convert contactNo to string and ensure it's a 10-digit number
             contactNumber: this.userDetails.contactNo?.toString().padStart(10, '0') || '',
             email: this.userDetails.email
         });
@@ -414,7 +410,7 @@ export class AdminProductsComponent implements OnInit {
         contactNumber: this.requestForm.value.contactNumber,
         email: this.requestForm.value.email,
         preferredDate: this.requestForm.value.requestDate,
-        gasCapacity: this.selectedRequestProduct.capacity  // Add the gas capacity
+        gasCapacity: this.selectedRequestProduct.capacity
       };
 
       Swal.fire({
